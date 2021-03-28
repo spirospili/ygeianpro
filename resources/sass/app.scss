@@ -1,0 +1,43 @@
+// Fonts
+@import url('https://fonts.googleapis.com/css?family=Nunito');
+
+// Variables
+@import 'variables';
+
+// Bootstrap
+@import '~bootstrap/scss/bootstrap';
+.sb-avatar__text {background: none !important;}
+
+.sb-avatar__text span {
+    padding: 0 !important;
+    font-size: 16px;
+} 
+.block-style img {
+  cursor: pointer;
+}
+.sidebar-block ul.user-followers li:first-child {
+  position: relative;
+  cursor: pointer;
+}
+.sb-avatar.sb-avatar--text,.sb-avatar.sb-avatar--text * {
+  height: 50px !important;
+  width: 50px !important;
+}
+.black.sb-avatar__text span{color:#000000}
+@media only screen and (max-width:500px){
+.right-menu.hidden-sm-up {display: none;}
+button.navbar-toggler span {
+  width: 20px;
+  display: block;
+  height: 2PX;
+  background: #fff;
+  margin: 5px 0;
+}
+li.nav-item.d-sm-none .sb-avatar__text * {
+  color: #000;
+}
+
+// li.nav-item.d-sm-none a:after {
+//   content: none;
+// }
+}
