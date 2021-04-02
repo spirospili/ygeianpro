@@ -10,6 +10,16 @@
     <link rel="stylesheet" href="{{ asset('admin-assets')}}/vendors/ti-icons/css/themify-icons.css">
     <link rel="stylesheet" href="{{ asset('admin-assets')}}/vendors/font-awesome/css/font-awesome.min.css">
     <link rel="stylesheet" href="{{ asset('admin-assets')}}/vendors/css/vendor.bundle.base.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/uikit/3.0.2/css/uikit.min.css">
+    <link rel="stylesheet" href="https://cdn.datatables.net/1.10.24/css/dataTables.uikit.min.css">
+
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-eOJMYsd53ii+scO/bJGFsiCZc+5NDVN2yr8+0RDqr0Ql0h+rP48ckxlpbzKgwra6" crossorigin="anonymous">
+    <script type="text/javascript" src="https://code.jquery.com/jquery-3.5.1.js"></script>
+    <script type="text/javascript" charset="utf8"src="https://cdn.datatables.net/1.10.19/js/jquery.dataTables.js" defer></script>
+    
+    <script type="text/javascript" charset="utf8"src="https://cdn.datatables.net/1.10.24/js/dataTables.uikit.min.js" ></script>
+
+
     <!-- endinject -->
     <!-- Plugin css for this page -->
     <!-- End plugin css for this page -->
@@ -22,6 +32,7 @@
         .progress { position:relative; width:100%; border: 1px solid #7F98B2; padding: 1px; border-radius: 3px; }
         .bar { background-color: #B4F5B4; width:0%; height:25px; border-radius: 3px; }
         .percent { position:absolute; display:inline-block; top:3px; left:48%; color: #7F98B2;}
+        #doctorstable { padding: 7%;}
     </style>
 </head>
 

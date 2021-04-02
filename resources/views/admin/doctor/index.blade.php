@@ -1,14 +1,15 @@
 @extends('admin.app')
 
 @section('content')
+
 <div class="row mb-4">
-    <div class="col-sm-12">
+    <div class="col-sm-12 dataTables_filter">
         <form method="GET">
             <input type="hidden" name="action" value="{{request()->action}}" />
             <div class="input-group">
-                <input type="text" class="input-sm form-control" name="keywords" placeholder="Search" value="{{ request()->keywords }}">
+                <input type="text" id="keywords" class="input-sm form-control" name="keywords" placeholder="Search" value="{{ request()->keywords }}">
                 <span class="input-group-btn">
-                    <input class="btn btn btn-primary" type="submit" value="Go!">
+                    <!-- <input class="btn btn btn-primary" type="submit" value="Go!"> -->
                 </span>
             </div>
         </form>
@@ -23,12 +24,14 @@
             <div class="card-body">
             <div class="table-responsive">
                 @if($doctors->isNotEmpty())
-                <table class="table">
+                <table class="ui celled table" id="doctorstable">
                     <thead>
                         <tr>
                             <th>ID</th>
                             <th>Title</th>
                             <th>Profile</th>
+                            <th>Tag</th>
+                            <th>Speciality</th>
                             <th>Action</th>
                         </tr>
                     </thead>
@@ -38,6 +41,8 @@
                             <td>{{$doctor->id}}</td>
                             <td>{{ $doctor->name }}</td>
                             <td>{{ $doctor->path }}</td>
+                            <td>{{ $doctor->tags }}</td>
+                            <td>{{ $doctor->speciality }}</td>
                             <td>
                                 <a href="{{ route('admin.doctor.edit', $doctor->id) }}">
                                     Edit
@@ -66,5 +71,14 @@
         </div>
     </div>    
 </div>
-					
+<script>
+$(document).ready(function() {
+    oTable =$('#doctorstable').DataTable({
+        "dom": '<"top"i>rt<"bottom"><"clear">'
+    });
+    $('#keywords').keyup(function(){
+      oTable.search($(this).val()).draw() ;
+    })
+} );
+</script>		
 @endsection

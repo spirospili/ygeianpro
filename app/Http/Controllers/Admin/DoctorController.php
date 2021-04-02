@@ -3,9 +3,11 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Models\Doctor;
+use App\Models\Speciality;
 use App\Models\User;
 use App\Notifications\PushNotification;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
 class DoctorController
 {
@@ -25,12 +27,15 @@ class DoctorController
         ]);
     }
 
+    
     /**
      * Store the request
      */
     public function create()
     {
-        return view('admin.doctor.create');
+        return view('admin.doctor.create',[
+            'specialities' => DB::table('speciality')->get()
+        ]);
     }
 
     /**
@@ -43,9 +48,12 @@ class DoctorController
             'doctor' => 'required|image|mimes:jpeg,jpg,png',
             'logo'=> 'image|mimes:jpeg,jpg,png',
             'description' => 'nullable|max:1000', 
+            'tags'=>'required',
+            'speciality'=>'required'
         ], [
             'doctor.required' => 'Upload doctor image',
-            'doctor.image' => 'The file must be an image'
+            'doctor.image' => 'The file must be an image',
+
         ]);
         
         $doctor = Doctor::create([
@@ -53,6 +61,7 @@ class DoctorController
             'path' => $request->file('doctor')->store('doctors', 'public'),
             'description' => $request->description,
             'tags' => $request->tags ?? null,
+            'subspeciality' => $request->subspeciality,
             'speciality' => $request->speciality ?? null,
             'logo' => $request->file('logo') ? $request->file('logo')->store('doctors', 'public'): null
         ]);

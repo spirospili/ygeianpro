@@ -31,8 +31,10 @@ class SearchController
         })->get();
         $doctors = Doctor::when($request->search, function($query)use($request){
             $query->where('name', 'LIKE', '%' . $request->search .'%')
-            ->orWhere('tags', 'LIKE', '%'.$request->search.'%');
+            ->orWhere('tags', 'LIKE', '%'.$request->search.'%')
+            ->orWhere('speciality', 'LIKE', '%'.$request->search.'%');
         })->get();
+        
         return response()->json([
             'events' => $events, 
             'videos' => $videos, 
