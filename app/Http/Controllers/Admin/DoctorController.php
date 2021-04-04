@@ -87,6 +87,8 @@ class DoctorController
         
         return view('admin.doctor.edit', [
             'doctor' => $doctor
+        ], [
+            'specialities' => DB::table('speciality')->get()
         ]);
     }
 

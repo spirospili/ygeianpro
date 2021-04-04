@@ -28,7 +28,7 @@
                         <select class="form-control form-select" name="speciality"  aria-label="">
                         @foreach($specialities as $speciality)
 
-                            <option  value={{$speciality->speciality}}>{{$speciality->speciality}}</option>
+                            <option  value="{{$speciality->speciality}}">{{$speciality->speciality}}</option>
                     
                         @endforeach
 
@@ -43,7 +43,7 @@
                     <div class="form-group row">
                         <div class="col-lg-3">Sub-Speciality (Add by comma seprated)</div>
                         <div class="col-lg-8">
-                            <input type="text" class="form-control" name="subspeciality" value="{{old('tags')}}" placeholder="trending, uploads, watch">
+                            <input type="text" class="form-control" name="subspeciality" value="{{old('subspeciality')}}" placeholder="trending, uploads, watch">
                             
                             @if ($errors->has('tags') )
                             <span style="color:red">
@@ -54,7 +54,7 @@
                         </div> 
                     </div>
                     <div class="form-group row">
-                        <div class="col-lg-3">Doctor Type:</div>
+                        <div class="col-lg-3">Tag:</div>
                         <div class="col-lg-8">
                         <select class="form-control form-select" name="tags" value="{{old('tags')}}"  aria-label="">
                             <option  value="Regular" selected>Regular</option>

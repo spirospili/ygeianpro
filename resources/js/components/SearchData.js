@@ -130,8 +130,9 @@ function SearchData(){
                                             <div className="col-md-4">
                                                 <NavLink to={`/doctor-details/${doctor.id}`} onClick={() => scrollTo(0,0)}>	
                                                     <img src={`${baseurl}/storage/${doctor.path}`} className="img-fluid" alt="doctor" />
-                                                    <h5>{doctor.name}</h5>
-                                                </NavLink>	
+                                                    <h5>{doctor.name}</h5> 
+                                                    {doctor.speciality}	
+                                                </NavLink>
                                                 <p>{doctor.description}</p>
                                             </div>
                                             )}

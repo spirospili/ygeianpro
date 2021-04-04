@@ -26,7 +26,16 @@
                     <div class="form-group row">
                         <div class="col-lg-3">Speciality</div>
                         <div class="col-lg-8">
-                            <input type="text" class="form-control" name="speciality" value="{{old('speciality') ?? $doctor->speciality}}">
+                        <select class="form-control form-select" name="speciality"  aria-label="">
+                        @foreach($specialities as $speciality)
+                          @if($speciality->speciality==$doctor->speciality)
+                                <option  value="{{$speciality->speciality}}" selected>{{$speciality->speciality}}</option>
+                          @else
+                                <option  value="{{$speciality->speciality}}" >{{$speciality->speciality}}</option>
+                          @endif
+                        @endforeach
+
+                        </select>        
                             @if ($errors->has('speciality') )
                             <span style="color:red">
                                 {{ $errors->first('speciality') }}
@@ -36,9 +45,15 @@
                     </div>
 
                     <div class="form-group row">
-                        <div class="col-lg-3">Tags (Add tags by comma seprated)</div>
+                        <div class="col-lg-3">Tag:</div>
                         <div class="col-lg-8">
-                            <input type="text" class="form-control" name="tags" value="{{old('tags') ?? $doctor->tags}}" placeholder="trending, uploads, watch">
+                        <select class="form-control form-select" name="tags" value="{{old('tags')}}"  aria-label="">
+                            @if ($doctor->tags=="Regular")
+                                	<option  value="Regular" selected>Regular</option>
+                            @else 
+                                	<option  value="Top" selected>Top</option>
+                            @endif
+                        </select>
                             @if ($errors->has('tags') )
                             <span style="color:red">
                                 {{ $errors->first('tags') }}
@@ -47,7 +62,19 @@
 
                         </div> 
                     </div>
+                    <div class="form-group row">
+                        <div class="col-lg-3">Sub-Speciality (Add by comma seprated)</div>
+                        <div class="col-lg-8">
+                            <input type="text" class="form-control" name="subspeciality" value="{{old('subspeciality') ?? $doctor->subspeciality }}" placeholder="trending, uploads, watch">
+                            
+                            @if ($errors->has('tags') )
+                            <span style="color:red">
+                                {{ $errors->first('tags') }}
+                            </span>
+                            @endif
 
+                        </div> 
+                    </div>
                     <div class="form-group row">
                         <div class="col-lg-3">Doctor Description</div>
                         <div class="col-lg-8">
