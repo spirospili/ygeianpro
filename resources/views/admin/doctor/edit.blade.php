@@ -50,8 +50,12 @@
                         <select class="form-control form-select" name="tags" value="{{old('tags')}}"  aria-label="">
                             @if ($doctor->tags=="Regular")
                                 	<option  value="Regular" selected>Regular</option>
+                                    <option  value="Top" >Top</option>
+
                             @else 
                                 	<option  value="Top" selected>Top</option>
+                                    <option  value="Regular">Regular</option>
+
                             @endif
                         </select>
                             @if ($errors->has('tags') )
