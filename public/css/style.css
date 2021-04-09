@@ -15,7 +15,26 @@ body::-webkit-scrollbar-thumb {
   background-color: #44B2E5;
   outline: 1px solid slategrey;
 }
+.emailOverlay {
+    position: fixed;
+    z-index: 500;
+    background-color: white;
+    width: 70%;
+    border: 1px solid #ccc;
+    box-shadow: 1px 1px 1px black;
+    padding: 16px;
+    left: 15%;
+    top: 30%;
+    box-sizing: border-box;
+    transition: all 0.3s ease-out;
+}
 
+@media (min-width: 600px) {
+    .emailOverlay {
+        width: 500px;
+        left: calc(50% - 250px);
+    }
+}
 /* Icon Wobble Horizontal */
 @-webkit-keyframes "hvr-icon-wobble-horizontal" {
   16.65% {
@@ -796,7 +815,6 @@ input[type=number] {
 .sidebar-block ul.user-followers {
     background: #f0f8fb;
     padding: 30px 0;
-    margin-top: 40px;
     display: flex;
 }
 .sidebar-block .profile-detail a {

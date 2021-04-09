@@ -19,7 +19,7 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
 });
 
 Route::post('subscribe', 'Frontend\AuthController@subscribe');
-
+Route::post('invite', 'Frontend\AuthController@invite');
 Route::resource('doctors', 'Frontend\DoctorController');
 Route::get('live/session', 'Frontend\LiveSessionController@index');
 Route::get('search', 'Frontend\SearchController@index');

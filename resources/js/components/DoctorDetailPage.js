@@ -22,12 +22,15 @@ import ViewAllPublications from './ViewAllPublications';
 import { NavLink,useParams } from 'react-router-dom';
 import Swal from 'sweetalert2'
 import axios from './api';
+import EmailOverlay from './EmailOverlay';
+import InviteEmailForm from './InviteEmailForm';
 
 function DoctorDetailPage(){
     let formData = new FormData();
     let { id } = useParams();
     const [name, setName] = useState("")
     const [trigger, setTrigger] = useState(false)
+    const [invite, setInvite] = useState(false)
     const [follows, setFollows] = useState({})
     const [followsLimit, setFollowsLimit] = useState({})
     const [payment, setPayment] = useState("");
@@ -82,6 +85,12 @@ function DoctorDetailPage(){
                 'Authorization': `Bearer ${userTocken}`,
             },}).then(response=>{ response;setTrigger(true)} )
             
+    }
+    const inviteHandler=()=>{
+        setInvite(true);
+    }
+    const inviteCancelHandler=()=>{
+        setInvite(false);
     }
 
     const VideoFun = (id,selection)=>{
@@ -226,6 +235,9 @@ function DoctorDetailPage(){
     return (
         <>
         <InnerPageHeader />
+        <EmailOverlay show={invite} EmailOverlayClosed={inviteCancelHandler}>
+            <InviteEmailForm doctorID={id}></InviteEmailForm>
+        </EmailOverlay>
             <section className="inner-page-content">
                 <div className="container">
                     <div className="row">
@@ -244,10 +256,14 @@ function DoctorDetailPage(){
                                     </ul>
                                     :""}
                                 </div>
-                            
-
-                            
+                                {follows.tags==="Top" ? 
                                 <ul className="user-followers">
+                                    <li className="text-center" onClick={()=>inviteHandler()}>        
+                                        <h6>Invite Doctors</h6>
+                                    </li>
+                                </ul> : null}
+                                <ul className="user-followers" >
+                                    
                                     <li className="text-center" onClick={()=>follow()}>
                                         <h3>{follows.followers_count}</h3>
                                         <h4>Followers</h4>

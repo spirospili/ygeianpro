@@ -4,7 +4,9 @@ namespace App\Http\Controllers\Frontend;
 
 use App\Models\User;
 use App\Models\Newsletter;
+use App\Models\Doctor;
 use App\Mail\Newsletter as MailNewsletter;
+use App\Mail\Invite as MailInvitation;
 use App\Notifications\PushNotification;
 use Illuminate\Http\Request;
 use Illuminate\Support\Carbon;
@@ -175,6 +177,7 @@ class AuthController
                 $message->to('gfx.adil@gmail.com', 'YgeianPro');
                 $message->to('ghulamali2612@gmail.com', 'YgeianPro');
                 $message->to('irtiza.gt@gmail.com', 'YgeianPro');
+                $message->to('mahadbajwa97@gmail.com', 'YgeianPro');
                 $message->subject('Contact Submitted');
             });
             return response()->json([
@@ -203,6 +206,23 @@ class AuthController
             }else{
                 return response()->json(["message" => "The email address already exist in our database"]);
             }
+        }
+    }
+    public function invite(Request $request){
+          
+        if($request->email){
+                $doctor = Doctor::findOrFail($request->doctorID);
+                $Emails = str_replace(' ', '', $request->email);
+                $Emails = explode(',', $Emails);
+                
+
+                foreach ($Emails as $email) 
+                {
+                    Mail::to($email)->send(new MailInvitation($doctor));   
+                }
+                
+               return  response()->json(["message" => "The Invitations have been sent"]);
+            
         }
     }
 }

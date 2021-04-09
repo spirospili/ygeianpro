@@ -518,7 +518,40 @@ footer .copyright p {
 .footer-newsletter .input-group-btn button img {
     width: 28px;
 }
-
+.invite-doctor {
+    background: white;
+    padding: 40px 50px;
+    border-radius: 7px;
+    position: relative;
+    
+}
+.invite-doctor h3 {
+    color: #fff;
+    font-size: 36px;
+    font-weight: 600;
+    margin-top: 20px;
+}
+.invite-doctor p {
+    color: black;
+    font-size: 18px;
+    /* margin-bottom: 0; */
+}
+.invite-doctor .row {
+    margin-bottom: 15px;
+}
+.invite-doctor input.form-control {
+    height: 60px;
+}
+.invite-doctor .input-group-btn button {
+    height: 60px;
+    position: relative;
+    left: -10px;
+    background: #44B2E5;
+    padding: 0 20px;
+}
+.invite-doctor .input-group-btn button img {
+    width: 28px;
+}
 /*SIGNUP & SIGNIN PAGE STYLE*/
 .signup-block {
     padding: 60px 60px 0;
@@ -820,7 +853,11 @@ input[type=number] {
     margin-top: 40px !important;
     display: flex;
 }
+
 .sidebar-block ul.user-followers li {
+    margin: auto;
+}
+.user-followers li {
     margin: auto;
 }
 .sidebar-block ul.user-followers li:first-child {
@@ -850,6 +887,26 @@ input[type=number] {
     text-decoration: none;
     transition: all ease-in .3s;
 }
+.user-followers li h6 {
+    margin: 0;
+    color: #44B2E5;
+    border: 1px solid;
+    border-radius: 40px;
+    padding: 7px 20px;
+    font-size: 15px;
+    text-decoration: none;
+    transition: all ease-in .3s;
+}
+.user-followers li h6:hover 
+{
+    background: #44B2E5;
+    color: #fff;
+}
+.invite-button
+{
+   padding-top: 20px;
+}
+
 .sidebar-block ul.user-followers li h6:hover {background: #44B2E5;
     color: #fff;}
 .sidebar-block ul.sidebar-menu-list li {
