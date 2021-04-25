@@ -139,6 +139,29 @@ function SearchData(){
                                         </div>
                                     </div>
 
+                                    <div class="medical-block">
+                                        <div class="row mb-2">
+                                            <div class="col-md-9">
+                                                <h2 class="heading-style2">Top <span>Teams</span></h2>
+                                            </div>
+                                            <div className="col-md-3">
+                                            {<NavLink to="/ViewAllDoctors" onClick={() => scrollTo(0,0)} className="hvr-icon-wobble-horizontal view-all-btn">View all <img src={nextBlueIcon} className="img-fluid hvr-icon" alt="arrow" /></NavLink>}
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                        {Array.isArray(newsDetail.teams) && newsDetail.teams.map((doctor,index) =>
+                                            <div className="col-md-4">
+                                                <NavLink to={`/team-details/${doctor.team_id}`} onClick={() => scrollTo(0,0)}>	
+                                                    <img src={`${baseurl}/storage/${doctor.path}`} className="img-fluid" alt="doctor" />
+                                                    <h5>{doctor.team_name}</h5> 
+                                                    {doctor.speciality}	
+                                                </NavLink>
+                                                <p>{doctor.name}</p>
+                                            </div>
+                                            )}
+                                        </div>
+                                    </div>
+
 
                                 </div>
                             </div>

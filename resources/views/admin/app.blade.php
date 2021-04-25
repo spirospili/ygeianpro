@@ -7,17 +7,20 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <title>{{ $title ?? 'Dashboard'}}</title>
     <!-- plugins:css -->
+    <link href="//netdna.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
     <link rel="stylesheet" href="{{ asset('admin-assets')}}/vendors/ti-icons/css/themify-icons.css">
     <link rel="stylesheet" href="{{ asset('admin-assets')}}/vendors/font-awesome/css/font-awesome.min.css">
     <link rel="stylesheet" href="{{ asset('admin-assets')}}/vendors/css/vendor.bundle.base.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/uikit/3.0.2/css/uikit.min.css">
     <link rel="stylesheet" href="https://cdn.datatables.net/1.10.24/css/dataTables.uikit.min.css">
+    
 
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-eOJMYsd53ii+scO/bJGFsiCZc+5NDVN2yr8+0RDqr0Ql0h+rP48ckxlpbzKgwra6" crossorigin="anonymous">
     <script type="text/javascript" src="https://code.jquery.com/jquery-3.5.1.js"></script>
     <script type="text/javascript" charset="utf8"src="https://cdn.datatables.net/1.10.19/js/jquery.dataTables.js" defer></script>
     
     <script type="text/javascript" charset="utf8"src="https://cdn.datatables.net/1.10.24/js/dataTables.uikit.min.js" ></script>
+    <!-- <script src="//netdna.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></script> -->
 
 
     <!-- endinject -->
@@ -33,6 +36,21 @@
         .bar { background-color: #B4F5B4; width:0%; height:25px; border-radius: 3px; }
         .percent { position:absolute; display:inline-block; top:3px; left:48%; color: #7F98B2;}
         #doctorstable { padding: 7%;}
+        [data-role="dynamic-fields"] > .form-inline + .form-inline {
+                margin-top: 0.5em;
+            }
+
+            [data-role="dynamic-fields"] > .form-inline [data-role="add"] {
+                display: none;
+            }
+
+            [data-role="dynamic-fields"] > .form-inline:last-child [data-role="add"] {
+                display: inline-block;
+            }
+
+            [data-role="dynamic-fields"] > .form-inline:last-child [data-role="remove"] {
+                display: none;
+            }
     </style>
 </head>
 
@@ -152,7 +170,19 @@
                     </ul>
                     </div>
                 </li>
-                
+                <li class="nav-item {{ request()->segment(2) == 'team' ? 'active' : null }}">
+                    <a class="nav-link" data-toggle="collapse" href="#teams" aria-expanded="false" aria-controls="teams">
+                    <i class="fa fa-file-pdf-o menu-icon"></i>
+                    <span class="menu-title">Teams</span>
+                    <i class="menu-arrow"></i>
+                    </a>
+                    <div class="collapse {{ request()->segment(2) == 'team' ? 'show' : null }}" id="teams">
+                    <ul class="nav flex-column sub-menu">
+                        <li class="nav-item"> <a class="nav-link" href="{{ route('admin.team.create') }}">Add New</a></li>
+                        <li class="nav-item"> <a class="nav-link" href="{{ route('admin.team.index') }}">List</a></li>
+                    </ul>
+                    </div>
+                </li>
                 <li class="nav-item {{ request()->segment(2) == 'image' ? 'active' : null }}">
                     <a class="nav-link" data-toggle="collapse" href="#images" aria-expanded="false" aria-controls="images">
                     <i class="fa fa-medkit menu-icon"></i>

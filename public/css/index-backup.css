@@ -264,6 +264,13 @@ header { position: absolute;width: 100%;z-index: 999; }
     display: block;
     margin-top: 10px;
 }
+.recent-video-btn {  
+    color: #fff;
+    font-weight: 400;
+    text-shadow: 0 0;
+    display: block;
+    margin-top: 10px;
+}
 .view-all-btn:hover {
   color: #fff;
 }

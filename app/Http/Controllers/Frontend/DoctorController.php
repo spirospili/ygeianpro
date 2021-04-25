@@ -17,7 +17,7 @@ class DoctorController extends Controller
     {
         if (array_key_exists('HTTP_AUTHORIZATION', $_SERVER)) {
             //$this->middleware('auth:api');
-            $this->middleware('auth:api', ['only' => ['store', 'show']]);
+            $this->middleware('auth:api', ['only' => ['store', 'show','show_team']]);
         }
         
     }

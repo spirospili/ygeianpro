@@ -2,6 +2,7 @@ import React , {useState} from 'react';
 import FlashMessage from "react-flash-message";
 import { NavLink } from 'react-router-dom';
 import newsletterIcon from "../../../public/images/send.png";
+import greylogo from "../../../public/images/grey-logo.png";
 
 
 const InviteEmailForm =(props) =>{
@@ -35,8 +36,10 @@ return(
               <div>
                 <div className="invite-doctor">
                     <div className="row ">
+                    <NavLink className="navbar-brand main-logo" style={{width:"200px", height:"100px", margin: "auto"}} to="/">
+					    <img src={greylogo} className="img-fluid" alt="logo" />
+				    </NavLink>
                         <div className="row">
-                            
                             <p>Please add Doctor's email you want to invite.</p>
                             <p>For more than one, use comma between them.</p>
                         </div>

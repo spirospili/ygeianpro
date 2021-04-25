@@ -26,6 +26,7 @@ Route::get('search', 'Frontend\SearchController@index');
 Route::resource('videos', 'Frontend\VideoController');
 Route::resource('publications', 'Frontend\PublicationController');
 Route::resource('news', 'Frontend\NewsController');
+Route::resource('teams', 'Frontend\TeamController');
 Route::resource('events', 'Frontend\EventController');
 Route::post('contact', 'Frontend\AuthController@contact');
 

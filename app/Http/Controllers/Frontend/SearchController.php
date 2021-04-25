@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Frontend;
 
 use App\Models\Doctor;
+use App\Models\Team;
 use App\Models\Video;
 use App\Models\File;
 use App\Models\Event;
@@ -34,12 +35,19 @@ class SearchController
             ->orWhere('tags', 'LIKE', '%'.$request->search.'%')
             ->orWhere('speciality', 'LIKE', '%'.$request->search.'%');
         })->get();
+        $teams = Team::when($request->search, function($query)use($request){
+            $query->join('doctors', 'doctors.id','=','teams.TeamLead_id')
+            ->where('team_name', 'LIKE', '%' . $request->search .'%')
+            ->orWhere('speciality', 'LIKE', '%'.$request->search.'%')
+            ->orWhere('name', 'LIKE', '%'.$request->search.'%');
+        })->get();
         
         return response()->json([
             'events' => $events, 
             'videos' => $videos, 
             'publications' => $publications,
-            'doctors' => $doctors
+            'doctors' => $doctors,
+            'teams' => $teams
         ]);
     }
 

@@ -28,6 +28,7 @@ import DoctorVideos from './DoctorVideos';
 import DoctorImages from './DoctorImages';
 import DoctorDocuments from './DoctorDocuments';
 import DoctorTeam from './DoctorTeam';
+import TeamDetails from './TeamDetails';
 import VideoDetailPage from './VideoDetailPage'
 import LikedItems from './Liked';
 import MostViewed from './MostViewed';
@@ -59,6 +60,7 @@ const App = () => {
 				<Route exact path="/eventdetail/:id" component={EventDetail} />
 				<Route exact path="/setting" component={Setting} />
 				<Route exact path="/doctor-details/:id" component={DoctorDetails} />
+				<Route exact path="/team-details/:id" component={TeamDetails} />
 				<Route exact path="/doctor-videos" component={DoctorVideos} />
 				<Route exact path="/doctor-images" component={DoctorImages} />
 				<Route exact path="/doctor-documents" component={DoctorDocuments} />

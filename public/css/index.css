@@ -255,6 +255,13 @@ header { position: absolute;width: 100%;z-index: 999; }
 }
 .slick-next.slick-arrow { right: 10px; }
 .slick-prev.slick-arrow { left: 10px; }
+.recent-video-btn {  
+    color: #fff;
+    font-weight: 400;
+    text-shadow: 0 0;
+    display: block;
+    margin-top: 10px;
+}
 .view-all-btn {  
     color: #fff;
     font-weight: 400;
@@ -801,6 +808,15 @@ input[type=number] {
 .profile-detail > span {
     height: 120px;
     width: 120px;
+    overflow: hidden;
+    border-radius: 100px;
+    display: flex;
+    justify-content: center;
+    margin: 0 auto 20px;
+}
+.team-detail > span {
+    height: 300px;
+    width: 300px;
     overflow: hidden;
     border-radius: 100px;
     display: flex;
@@ -1554,11 +1570,16 @@ li.user-profile.dropdown {
 .pricing-page-block .pricing-block .theme-btn { color: #44B2E5;border: 2px solid #44B2E5;margin: 60px 0 50px;padding: 12px 70px;font-size: 20px;font-weight: 400;border-radius: 4px; }
 .doctor-team-page .sidebar-block { padding: 50px 0 33rem; }
 .doctor-team-page .profile-detail p { color: #666;margin: 25px 15px 0 15px;line-height: 28px; }	
+.doctor-team-page .lead-img img { border-radius: 100%; max-width: 100%; height: auto; border: 5px solid #E8E8E8; }	
+.doctor-team-page .team-img img { border-radius: 50%; max-width: 100%; height: auto; }	
 .doctor-team-page .profile-latest-videos .col-md-4.mb-3 { margin-bottom: 9% !important;padding: 0 5%; }
 .doctor-team-page .profile-latest-videos .col-md-4 h5 { color: #000;font-weight: 600;font-size: 18px;margin-top: 15px; }
 .doctor-team-page .single-doctor h3 { margin-bottom: 11px;font-weight: 600; }
 .doctor-team-page .single-doctor h5 { color: #504f4f;font-weight: 400; }
-
+.doctor-team-page .heading-style3 { color: #44B2E5;font-weight: bold;  }
+.team-member{
+    padding-top: 5%;
+}
 .top-doctor {
     padding: 60px 10px !important;
 }
@@ -1614,3 +1635,7 @@ li.user-profile.dropdown {
 }
 
 .doctor-subscribe{margin-left:22px}
+.container-margin {
+    margin-left: -15px;
+    margin-right: -15px;
+}
