@@ -76,7 +76,7 @@ function SidebarDoctor(){
                     <li><NavLink to="/doctor-videos">Videos <i className="fa fa-chevron-right"></i></NavLink></li>
                     <li><NavLink to="/doctor-images">Images <i className="fa fa-chevron-right"></i></NavLink></li>
                     <li><NavLink to="/doctor-documents">Document listing <i className="fa fa-chevron-right"></i></NavLink></li>
-                    <li><NavLink to="/doctor-team">Team <i className="fa fa-chevron-right"></i></NavLink></li>
+                    <li><NavLink to="/viewallteams">Team <i className="fa fa-chevron-right"></i></NavLink></li>
                 </ul>
             </div>
 		</>

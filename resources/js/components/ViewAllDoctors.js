@@ -39,7 +39,6 @@ function ViewAllDoctors(){
                         </div>
                     </div>
                 </section>
-			<Footer	/>
 		</>
 	)
 }

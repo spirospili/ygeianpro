@@ -284,7 +284,7 @@ function DoctorDetailPage(){
                                     <li><a className="nav-item nav-link" id="dr-img-tab" data-toggle="tab" href="#dr-images" role="tab" aria-controls="dr-images" aria-selected="false">Images <i className="fa fa-chevron-right"></i></a></li>
                                     <li><a className="nav-item nav-link" id="dr-document-tab" data-toggle="tab" href="#dr-document" role="tab" aria-controls="dr-document" aria-selected="false">Document listing <i className="fa fa-chevron-right"></i></a></li>
                                     {/* <li><a className="nav-item nav-link" id="dr-team-tab" data-toggle="tab" href="#dr-team" role="tab" aria-controls="dr-team" aria-selected="false">Team <i className="fa fa-chevron-right"></i></a></li> */}
-                                    <li><NavLink to="/doctor-team" className="nav-item nav-link" onClick={() => scrollTo(0,0)}>	
+                                    <li><NavLink to="/viewallteams" className="nav-item nav-link" onClick={() => scrollTo(0,0)}>	
                                     Team <i className="fa fa-chevron-right"></i>
                                     </NavLink>	</li>
                                 </ul>
