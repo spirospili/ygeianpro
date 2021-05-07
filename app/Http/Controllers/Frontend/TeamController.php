@@ -30,12 +30,13 @@ class TeamController
      *
      * @return \Illuminate\Contracts\Support\Renderable
      */
-    // public function index(Request $request)
-    // {
-    //     return response()->json(Team::when($request->keywords, function ($query) use ($request){
-    //         return $query->where('team_name', 'LIKE', '%' . $request->keywords .'%');
-    //     })->latest()->get());
-    // }
+    public function index(Request $request)
+    {
+       
+        return response()->json(Team::when($request, function($query)use($request){
+            $query->join('doctors', 'doctors.id','=','teams.TeamLead_id');
+        })->get());
+    }
 
     /**
      * show the resourse
@@ -57,6 +58,7 @@ class TeamController
         
     }
 
+    
     /**
      * Store the request
      */

@@ -44,25 +44,19 @@ function TeamDetails(){
         if(id !=undefined){
             localStorage.setItem('teamid',id)
         }
-        const teamId =localStorage.getItem('teamid')
+        const teamId =localStorage.getItem('teamid');
+        
         if(userObj !=null){
-            setName(userObj.user.name)
+            setName(userObj.user.name);
+
             const userTocken= userObj.user.access_token
 
-           axios.get(`/api/teams/${teamId}`,{
-            headers: {      
-                'Accept' : 'application/json',
-                'Authorization': `Bearer ${userTocken}`,
-            }}).then(response=> {
-           
+           axios.get(`/api/teams/${teamId}`,).then(response=> {
+
                 setFollows(response.data)
                 response.data.map(doc => {
             
-                    axios.get(`/api/doctors/${doc.doctor_id}?limit=true`,{
-                        headers: {
-                            'Accept' : 'application/json',
-                            'Authorization': `Bearer ${userTocken}`,
-                        }}).then(response=> {
+                    axios.get(`/api/doctors/${doc.doctor_id}?limit=true`,).then(response=> {
                             console.log(response.data);  
                         setFollowsLimit(Array => [...Array, response.data])});
                    }); 
@@ -78,7 +72,7 @@ function TeamDetails(){
                
                 setFollows(response.data)
                 response.data.map(doc => {
-            
+                  
                     axios.get(`/api/doctors/${doc.doctor_id}?limit=true`,).then(response=> {
                           console.log(response.data);  
                         setFollowsLimit(Array => [...Array, response.data])});
@@ -88,7 +82,7 @@ function TeamDetails(){
                 
             setTrigger(false)
         }
-    },[]);
+    },[trigger]);
     console.log(followsLimit);
     const inviteHandler=()=>{
         setInvite(true);
@@ -182,10 +176,11 @@ function TeamDetails(){
                             <div className="right-content-area">
                                 <div className="row align-items-center mb-4 single-doctor">
                                     <div className="col-md-3"></div>
-                                    <div className="col-md-2 lead-img ">
-                                        
-                                        <img src={`${baseurl}/storage/${follows[0]?.path}`} className="img-fluid" alt="doctor" />
-                                        
+                                    <div className="col-md-3 lead-img team-detail">
+                                        <span>                                        
+                                            <img src={`${baseurl}/storage/${follows[0]?.path}`} className="img-fluid" alt="doctor" />
+                                        </span>
+
                                     </div>
                                     <div className="col-md-5">
                                     <NavLink to={`/doctor-details/${follows[0]?.id}`} onClick={() => scrollTo(0,0)}>	<h2 className="heading-style3" >{follows[0]?.name}</h2></NavLink>

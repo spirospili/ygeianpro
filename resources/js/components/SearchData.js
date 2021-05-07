@@ -145,7 +145,7 @@ function SearchData(){
                                                 <h2 class="heading-style2">Top <span>Teams</span></h2>
                                             </div>
                                             <div className="col-md-3">
-                                            {<NavLink to="/ViewAllDoctors" onClick={() => scrollTo(0,0)} className="hvr-icon-wobble-horizontal view-all-btn">View all <img src={nextBlueIcon} className="img-fluid hvr-icon" alt="arrow" /></NavLink>}
+                                            {<NavLink to="/viewallteams" onClick={() => scrollTo(0,0)} className="hvr-icon-wobble-horizontal view-all-btn">View all <img src={nextBlueIcon} className="img-fluid hvr-icon" alt="arrow" /></NavLink>}
                                             </div>
                                         </div>
                                         <div class="row">
