@@ -196,6 +196,19 @@
                     </ul>
                     </div>
                 </li>
+                <li class="nav-item {{ request()->segment(2) == 'subclass' ? 'active' : null }}">
+                    <a class="nav-link" data-toggle="collapse" href="#subclass" aria-expanded="false" aria-controls="subclass">
+                    <i class="fa fa-file-pdf-o menu-icon"></i>
+                    <span class="menu-title">Subclass</span>
+                    <i class="menu-arrow"></i>
+                    </a>
+                    <div class="collapse {{ request()->segment(2) == 'subclass' ? 'show' : null }}" id="subclass">
+                    <ul class="nav flex-column sub-menu">
+                        <li class="nav-item"> <a class="nav-link" href="{{ route('admin.subclass.create') }}">Add New</a></li>
+                        <li class="nav-item"> <a class="nav-link" href="{{ route('admin.subclass.index') }}">List</a></li>
+                    </ul>
+                    </div>
+                </li>
                 <li class="nav-item {{ request()->segment(2) == 'image' ? 'active' : null }}">
                     <a class="nav-link" data-toggle="collapse" href="#images" aria-expanded="false" aria-controls="images">
                     <i class="fa fa-medkit menu-icon"></i>

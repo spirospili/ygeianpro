@@ -42,39 +42,6 @@
 
                     
                     
-                    <div class="form-group row">
-                            <div class="col-lg-3">Add Masterclass video:</div>
-                            <div class="col-lg-8">
-                                    <div data-role="dynamic-fields">
-                                        <div class="form-inline">
-                                            <div class="form-group">
-                                                <input type="text" class="form-control" name="video_title[]" placeholder="title" value="{{old('name')}}">
-                                                
-                        
-                                                <input type="file" name="videos[]" multiple />
-                                                @if ($errors->has('videos') )
-                                                <span style="color:red">
-                                                    {{ $errors->first('videos') }}
-                                                </span>
-                                                @endif
-                                                <p><small>Supported format: MP4</small></p>
-                                                <textarea name="description[]" class="form-control" placeholder="Video Description">{{ old('description') }}</textarea>
-                                                @if ($errors->has('description') )
-                                                <span style="color:red">
-                                                    {{ $errors->first('description') }}
-                                                </span>
-                                                @endif
-                                            </div>
-                                            <button class="btn btn-danger" data-role="remove">
-                                                <span class="glyphicon glyphicon-remove"></span>
-                                            </button>
-                                            <button class="btn btn-primary" data-role="add">
-                                                <span class="glyphicon glyphicon-plus"></span>
-                                            </button>
-                                        </div>  <!-- /div.form-inline -->
-                                    </div>  <!-- /div[data-role="dynamic-fields"] -->
-                                </div>  <!-- /div.col-md-12 -->
-                            </div>  <!-- /div.row -->
 
                             <div class="form-group row">
                             <div class="col-lg-3">Add Curators</div>

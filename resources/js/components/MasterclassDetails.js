@@ -131,7 +131,7 @@ const displayCancelHandler=()=>{
                             })()}
 
                             <h4 style={{textAlign:"center"}}>{data.video_title}</h4>
-                            <p style={pStyle}> {data.description.length > 50 ? data.description.substring(0, 50) : data.description} {data.description.length > 50 ? "..." : ""}</p>
+                            {/* <p style={pStyle}> {data.description.length > 50 ? data.description.substring(0, 50) : data.description} {data.description.length > 50 ? "..." : ""}</p> */}
                   
                         </div>
                     </div>:""

@@ -59,24 +59,6 @@ class MasterclassController
             'speciality' => $request->speciality,
         ]);
         
-        $count=0;
-        foreach($request->file("videos") as $video)
-        {
-               $subclass=Subclass::create([
-                   'masterclass_id' => $masterclass->id,
-                   'video_title' => $request->video_title[$count],
-                   'path' => $video->store('masterclaseses', 'public'),
-                   'description' =>$request->description[$count],
-                ]);
-                $video_path = "http://localhost:8000/storage/".$subclass->path;
-                        //$path = "storage/".explode('.', $video->video)[0].".jpg";
-                    $path = "storage/".$subclass->path.".jpg";
-                        //$shell = shell_exec("ffmpeg -i http://www.ygeianpro.com/storage/".$video->video." -ss 00:00:01.000 -vframes 1 http://ygeianpro.com/storage/". explode('.', $video->video)[0].".jpg");
-                        $exec = exec("ffmpeg -i $video_path -ss 00:00:01.000 -vframes 1 $path 2>&1");
-                        //$new = shell_exec("ffmpeg -i $video_path -ss 00:00:01 -vframes 1 $path 2>&1");
-                //dd($exec);
-                $count++;
-        }
         foreach($request->curators as $curator)
         {
                Curator::create([
@@ -124,27 +106,7 @@ class MasterclassController
         ]);
 
         $masterclass = Masterclass::findOrFail($id)->update(['masterclass_title' => $request->name, 'speciality' => $request->speciality]);
-        if($request->file("videos"))
-        {
-        $count=0;
-        foreach($request->file("videos") as $video)
-         {
-               $subclass=Subclass::create([
-                   'masterclass_id' => $masterclass->id,
-                   'video_title' => $request->video_title[$count],
-                   'path' => $video->store('masterclaseses', 'public'),
-                   'description' =>$request->description[$count],
-                ]);
-                $video_path = "http://localhost:8000/storage/".$subclass->path;
-                        //$path = "storage/".explode('.', $video->video)[0].".jpg";
-                    $path = "storage/".$subclass->path.".jpg";
-                        //$shell = shell_exec("ffmpeg -i http://www.ygeianpro.com/storage/".$video->video." -ss 00:00:01.000 -vframes 1 http://ygeianpro.com/storage/". explode('.', $video->video)[0].".jpg");
-                        $exec = exec("ffmpeg -i $video_path -ss 00:00:01.000 -vframes 1 $path 2>&1");
-                        //$new = shell_exec("ffmpeg -i $video_path -ss 00:00:01 -vframes 1 $path 2>&1");
-                //dd($exec);
-                $count++;
-         }
-        }
+       
         Curator::where('masterclass_id', $id)->delete();
             foreach($request->curators as $curator)
             {
