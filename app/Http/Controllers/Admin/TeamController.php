@@ -90,8 +90,8 @@ class TeamController
                 ]);
         }
         $details = [
-            'title' => 'Doctor Created',
-            'body' => 'New doctor created  by the admin',
+            'title' => 'Team Created',
+            'body' => 'New Team created  by the admin',
             'doctor' => $team,
         ];
         

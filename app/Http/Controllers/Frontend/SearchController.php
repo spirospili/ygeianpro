@@ -7,6 +7,7 @@ use App\Models\Team;
 use App\Models\Video;
 use App\Models\File;
 use App\Models\Event;
+use App\Models\Masterclass;
 use Illuminate\Http\Request;
 
 class SearchController
@@ -42,12 +43,16 @@ class SearchController
             ->orWhere('name', 'LIKE', '%'.$request->search.'%');
         })->get();
         
+
+        $masterclasses=Masterclass::with(['subclasses'])->where('masterclass_title', 'LIKE', '%' . $request->search .'%')->limit(3)->get();
+
         return response()->json([
             'events' => $events, 
             'videos' => $videos, 
             'publications' => $publications,
             'doctors' => $doctors,
-            'teams' => $teams
+            'teams' => $teams,
+            'masterclasses' => $masterclasses,
         ]);
     }
 

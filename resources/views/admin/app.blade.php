@@ -183,6 +183,19 @@
                     </ul>
                     </div>
                 </li>
+                <li class="nav-item {{ request()->segment(2) == 'masterclass' ? 'active' : null }}">
+                    <a class="nav-link" data-toggle="collapse" href="#masterclass" aria-expanded="false" aria-controls="masterclass">
+                    <i class="fa fa-file-pdf-o menu-icon"></i>
+                    <span class="menu-title">Masterclass</span>
+                    <i class="menu-arrow"></i>
+                    </a>
+                    <div class="collapse {{ request()->segment(2) == 'masterclass' ? 'show' : null }}" id="masterclass">
+                    <ul class="nav flex-column sub-menu">
+                        <li class="nav-item"> <a class="nav-link" href="{{ route('admin.masterclass.create') }}">Add New</a></li>
+                        <li class="nav-item"> <a class="nav-link" href="{{ route('admin.masterclass.index') }}">List</a></li>
+                    </ul>
+                    </div>
+                </li>
                 <li class="nav-item {{ request()->segment(2) == 'image' ? 'active' : null }}">
                     <a class="nav-link" data-toggle="collapse" href="#images" aria-expanded="false" aria-controls="images">
                     <i class="fa fa-medkit menu-icon"></i>

@@ -287,6 +287,9 @@ function DoctorDetailPage(){
                                     <li><NavLink to="/viewallteams" className="nav-item nav-link" onClick={() => scrollTo(0,0)}>	
                                     Team <i className="fa fa-chevron-right"></i>
                                     </NavLink>	</li>
+                                    <li><NavLink to="/viewallmasterclasses" className="nav-item nav-link" onClick={() => scrollTo(0,0)}>	
+                                    Masterclass <i className="fa fa-chevron-right"></i>
+                                    </NavLink>	</li>
                                 </ul>
                             </div>
                         </div>

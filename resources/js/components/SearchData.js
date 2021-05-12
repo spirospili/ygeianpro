@@ -161,7 +161,32 @@ function SearchData(){
                                             )}
                                         </div>
                                     </div>
-
+                                    <div class="medical-block">
+                                        <div class="row mb-2">
+                                            <div class="col-md-9">
+                                                <h2 class="heading-style2">Master<span>classes</span></h2>
+                                            </div>
+                                            <div className="col-md-3">
+                                            {<NavLink to="/viewallmasterclasses" onClick={() => scrollTo(0,0)} className="hvr-icon-wobble-horizontal view-all-btn">View all <img src={nextBlueIcon} className="img-fluid hvr-icon" alt="arrow" /></NavLink>}
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                        {Array.isArray(newsDetail.masterclasses) && newsDetail.masterclasses.map((doctor,index) =>
+                                            <div className="col-md-4">
+                                                <div className="theme-block-style">
+                                                    <NavLink to={`/masterclass-detail/${doctor.id}/0`}>
+                                                        {/* {localStorage.setItem('videourl'+data.id,data.video)}
+                                                        {localStorage.setItem('videoTitle'+data.id,data.name)} */}
+                                                        <video width="100%" className="videoHeight" >
+                                                            <source src={`${baseurl}/storage/${doctor.subclasses[0].path}`} type="video/mp4" />
+                                                        </video>								
+                                                    </NavLink>	
+                                                    <h4>{doctor.masterclass_title}</h4>
+                                                </div>
+                                            </div>
+                                            )}
+                                        </div>
+                                    </div> 
 
                                 </div>
                             </div>

@@ -821,7 +821,26 @@ input[type=number] {
     border-radius: 100px;
     display: flex;
     justify-content: center;
+    position: relative;
     margin: 0 auto 20px;
+    padding-left:3% ;
+}
+.masterclass-detail > span {
+    height: 150px;
+    width: 150px;
+    overflow: hidden;
+    border-radius: 100px;
+    display: flex;
+    justify-content: center;
+    position: relative;
+    margin: 0 auto 20px;
+    padding-left:3% ;
+}
+.border-inside{
+border-right: 2px solid #E8E8E8;
+}
+.border-box {
+    border-bottom: 2px solid #E8E8E8;
 }
 .sidebar-block .profile-detail h2 {
     font-weight: 600;
@@ -1577,6 +1596,9 @@ li.user-profile.dropdown {
 .doctor-team-page .single-doctor h3 { margin-bottom: 11px;font-weight: 600; }
 .doctor-team-page .single-doctor h5 { color: #504f4f;font-weight: 400; }
 .doctor-team-page .heading-style3 { color: #44B2E5;font-weight: bold;  }
+.masterclass-page .lead-img img { border-radius: 100%; max-width: 100%; height: auto; border: 5px solid #E8E8E8; }	
+.masterclass-page .team-img img { border-radius: 50%; max-width: 100%; height: auto; }	
+
 .team-member{
     padding-top: 5%;
 }

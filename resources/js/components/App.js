@@ -12,6 +12,7 @@ import ViewAllVideos from './ViewAllVideos';
 import ViewAllDoctors from './ViewAllDoctors';
 import ViewAllPublications from './ViewAllPublications';
 import ViewAllTeams from './ViewAllTeams';
+import ViewAllMasterclasses from './ViewAllMasterclasses';
 import SignIn from './SignIn';
 import SignUp from './SignUp';
 import Forgot from './Forgot';
@@ -34,6 +35,7 @@ import LikedItems from './Liked';
 import MostViewed from './MostViewed';
 import NotFound from './NotFound'
 import Invoice from './Invoice'
+import MasterclassDetails from './MasterclassDetails';
 
 // import Slick from './Custom';
 import { Switch, Route, Redirect } from 'react-router-dom';
@@ -48,6 +50,7 @@ const App = () => {
 				<Route exact path="/viewallvideos" component={ViewAllVideos} />
 				<Route exact path="/viewalldoctors" component={ViewAllDoctors} />
 				<Route exact path="/viewallteams" component={ViewAllTeams} />
+				<Route exact path="/viewallmasterclasses" component={ViewAllMasterclasses} />
 				<Route exact path="/viewallpublications" component={ViewAllPublications} />
 				<Route exact path="/signin" component={SignIn} />
 				<Route exact path="/signup" component={SignUp} />
@@ -66,7 +69,8 @@ const App = () => {
 				<Route exact path="/doctor-images" component={DoctorImages} />
 				<Route exact path="/doctor-documents" component={DoctorDocuments} />
 				<Route exact path="/video-detail/:id" component={VideoDetailPage} />
-				<Route exact path="/liked" component={LikedItems} />
+				<Route exact path="/masterclass-detail/:id/:videoID" component={MasterclassDetails} />
+ 				<Route exact path="/liked" component={LikedItems} />
 				<Route exact path="/most-viewed" component={MostViewed} />
 				<Route exact path="/publication" component={Publication} />
 				<Route exact path="/not-found" component={NotFound} />
