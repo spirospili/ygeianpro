@@ -119,9 +119,10 @@ const displayCancelHandler=()=>{
                                             {/* {localStorage.setItem('videourl' + data.id, data.path)}
                                             {localStorage.setItem('videoTitle' + data.id, data.video_title)} */}
                                             <video width="100%" className="videoHeight"
-                                                    poster={`${baseurl}/storage/${data.path}.jpg`}
+                                                    poster={`${baseurl}/storage/${data.path.jpg}`}
                                             >
                                                 <source
+                                                
                                                     src={`${baseurl}/storage/${data.path}`}
                                                     type="video/mp4"/>
                                             </video>
