@@ -1,7 +1,7 @@
 .emailOverlay {
     position: fixed;
     z-index: 500;
-    top: 30%;
+    top: 10%;
     box-sizing: border-box;
     transition: all 0.3s ease-out;
 }

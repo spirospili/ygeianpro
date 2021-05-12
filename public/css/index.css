@@ -826,8 +826,8 @@ input[type=number] {
     padding-left:3% ;
 }
 .masterclass-detail > span {
-    height: 150px;
-    width: 150px;
+    height: 100px;
+    width: 100px;
     overflow: hidden;
     border-radius: 100px;
     display: flex;

@@ -52,7 +52,7 @@ const displayCancelHandler=()=>{
                       <img src={`${baseurl}/storage/${data?.path}`} className="img-fluid" alt="doctor" />
                   </span>
               </div>
-              <h5 className="" style={{textAlign:"center", paddingTop:"65px", paddingLeft:"10px"}}>{data.name}</h5>
+              <h6 className="" style={{textAlign:"center", paddingTop:"40px", paddingLeft:"5px"}}>{data.name}</h6>
           </div>
          )}
          </div>
