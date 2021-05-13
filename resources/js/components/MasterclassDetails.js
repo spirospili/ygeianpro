@@ -119,7 +119,7 @@ const displayCancelHandler=()=>{
                                             {/* {localStorage.setItem('videourl' + data.id, data.path)}
                                             {localStorage.setItem('videoTitle' + data.id, data.video_title)} */}
                                              <video width="100%" className="videoHeight" >
-                                                            <source src={`${baseurl}/storage/${data.path}`} type="video/mp4" />
+                                                            <source src={`${baseurl}/storage/${data?.path}`} type="video/mp4" />
                                                         </video>	
                                         </NavLink>
                                     )

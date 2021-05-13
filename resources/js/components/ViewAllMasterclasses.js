@@ -31,7 +31,7 @@ function ViewAllMasterclasses(){
                                                         {/* {localStorage.setItem('videourl'+data.id,data.video)}
                                                         {localStorage.setItem('videoTitle'+data.id,data.name)} */}
                                                         <video width="100%" className="videoHeight" >
-                                                            <source src={`${baseurl}/storage/${doctor.subclasses[0].path}`} type="video/mp4" />
+                                                            <source src={`${baseurl}/storage/${doctor?.subclasses[0]?.path}`} type="video/mp4" />
                                                         </video>								
                                        </NavLink>	
                                     <h4>{doctor.masterclass_title}</h4>
