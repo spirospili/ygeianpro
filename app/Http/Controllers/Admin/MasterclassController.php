@@ -49,9 +49,7 @@ class MasterclassController
     public function store(Request $request)
     {
         $request->validate([
-            'name' => 'required|min:3|max:100',
-            'videos' => 'required',
-            'video_title' => 'required',
+            'name' => 'required|min:3|max:100'
 
         ]);
         $masterclass = Masterclass::create([
