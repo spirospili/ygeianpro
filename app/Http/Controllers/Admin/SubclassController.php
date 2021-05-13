@@ -73,7 +73,7 @@ class SubclassController
         ];
         
 
-        return redirect()->route('admin.video.index');
+        return redirect()->route('admin.subclass.index');
     }
 
     /**
