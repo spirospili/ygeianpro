@@ -27,6 +27,7 @@
                 <table class="ui celled table" id="masterclasstable">
                     <thead>
                         <tr>
+                            <th></th>
                             <th>ID</th>
                             <th>Masterclass Title</th>
                             <th>Speciality</th>
@@ -36,6 +37,7 @@
                     <tbody>
                         @foreach($masterclasses as $masterclass)
                         <tr>
+                            <td class="details-control"></td>
                             <td>{{$masterclass->id}}</td>
                             <td>{{ $masterclass->masterclass_title }}</td>
                             <td>{{ $masterclass->speciality }}</td>
@@ -69,12 +71,36 @@
 </div>
 <script>
 $(document).ready(function() {
+    /* Formatting function for row details - modify as you need */
+    function format ( d ) {
+    // `d` is the original data object for the row
+    return '<table cellpadding="5" cellspacing="0" border="0" style="padding-left:50px;">'+
+        '<tr>'+
+            '<td>Full name:</td>'+
+            '<td>'+d.name+'</td>'+
+        '</tr>'+
+        '<tr>'+
+            '<td>Extension number:</td>'+
+            '<td>'+d.extn+'</td>'+
+        '</tr>'+
+        '<tr>'+
+            '<td>Extra info:</td>'+
+            '<td>And any further details here (images etc)...</td>'+
+        '</tr>'+
+    '</table>';
+    }
+
+    
     oTable =$('#masterclasstable').DataTable({
         "dom": '<"top"i>rt<"bottom"><"clear">'
     });
     $('#keywords').keyup(function(){
       oTable.search($(this).val()).draw() ;
     })
+
+     
 } );
+
+
 </script>		
 @endsection

@@ -3,6 +3,8 @@
 namespace App\Http\Controllers\Frontend;
 
 use App\Models\Doctor;
+use App\Models\Team;
+use App\Models\Masterclass;
 use App\Models\DoctorImage;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
@@ -49,6 +51,8 @@ class DoctorController extends Controller
      */
     public function show($id, Request $request)
     {
+
+
         return response()->json(
             Doctor::with(['videos' => function($q) use ($request){
                 $q->when($request->limit == "true", function ($q){
@@ -62,7 +66,7 @@ class DoctorController extends Controller
                 $q->when($request->limit == "true", function ($q){
                     $q->limit(3);
                 });
-            }])->withCount(['followers AS isFollow' => function($query){
+            }, 'curators' , 'Team_Doctors'])->withCount(['followers AS isFollow' => function($query){
                 if(auth()->user())
                     return $query->where('user_id', auth()->user()->id);
                 else

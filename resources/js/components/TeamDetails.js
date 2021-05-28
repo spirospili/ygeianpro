@@ -186,7 +186,7 @@ function TeamDetails(){
                                     <NavLink to={`/doctor-details/${follows[0]?.id}`} onClick={() => scrollTo(0,0)}>	<h2 className="heading-style3" >{follows[0]?.name}</h2></NavLink>
                                       <h5>{follows[0]?.speciality} | Head Doctor</h5>
                                         <p>{follows[0]?.description}</p>
-                                        <img src={memberlogo} className="img-fluid " alt="doctor" />
+                                        <img src={`${baseurl}/storage/${follows[0]?.logo_path}`} className="img-fluid " alt="doctor" />
                                         <ul className="user-followers" style={{width:"25%"}}>
                                             <li className="text-center" onClick={()=>inviteHandler()}>        
                                                 <h6>Invite Doctors</h6>

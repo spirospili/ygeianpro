@@ -9,7 +9,10 @@ use App\Models\Follower;
 use App\Models\News;
 use App\Models\User;
 use App\Models\Video;
+use App\Models\Masterclass;
 use Illuminate\Http\Request;
+use App\Models\Team;
+
 
 class DashboardController
 {
@@ -29,7 +32,9 @@ class DashboardController
             'total_publishers' => File::count(),
             'total_news' => News::count(),
             'total_video_likes' => Video::sum('likes'),
-            'total_events' => Event::count()
+            'total_events' => Event::count(),
+            'total_masterclasses' => Masterclass::count(),
+            'total_teams' => Team::count(),
         ]);
     }
 }

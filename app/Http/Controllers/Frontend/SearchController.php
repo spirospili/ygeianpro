@@ -25,7 +25,7 @@ class SearchController
         })->get();
         $videos = Video::when($request->search, function($query)use($request){
             $query->where('name', 'LIKE', '%' . $request->search .'%')
-            ->orWhere('tags', 'LIKE', '%'.$request->search.'%');
+            ->orWhere('type', 'LIKE', '%'.$request->search.'%');
         })->get();
         $publications = File::when($request->search, function($query)use($request){
             $query->where('name', 'LIKE', '%' . $request->search .'%')

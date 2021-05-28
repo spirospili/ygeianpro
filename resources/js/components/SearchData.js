@@ -15,6 +15,9 @@ import axios from './api'
 function SearchData(){
     let { id } = useParams();
     const [newsDetail, setNewsDetail] = useState({})
+    var duration;
+    const [metadata, setMetadata] = useState([]);
+
     useEffect(() => {
      axios.get(`/api/search?search=${id}`)
      .then((response) => {setNewsDetail(response.data);console.log(response)})
@@ -52,11 +55,30 @@ function SearchData(){
                                                     <NavLink to={`/video-detail/${data.id}`}>
                                                         {localStorage.setItem('videourl'+data.id,data.video)}
                                                         {localStorage.setItem('videoTitle'+data.id,data.name)}
-                                                        <video width="100%" className="videoHeight" >
+                                                        <video width="100%" className="videoHeight"                    
+                                                                        onLoadedMetadata={e => {        
+                                                                                duration=e.target.duration;
+    
+                                                                                setMetadata(
+                                                                    
+                                                                                  Array => [...Array, duration]
+                                                                                  
+                                                                                );
+                                                                              }} >
                                                             <source src={`${baseurl}/storage/${data.video}`} type="video/mp4" />
                                                         </video>								
                                                     </NavLink>	
                                                     <h4>{data.name}</h4>
+                                                    {metadata.length===newsDetail.videos.length? (
+                                                            
+                                                            
+                                                            <p >
+                                                                <b>Duration:</b> {(parseInt(metadata[index]/60)) +" min"} 
+                                                            </p>
+                                                        
+                                                        ):""}
+                                                    <p > <b>Published date:</b> {data.created_at.split("T")[0]}</p>
+
                                                     <ul className="block-style">
                                                         <li>
                                                             { localStorage.getItem('likeint'+data.id)<2?

@@ -26,6 +26,7 @@ import EmailOverlay from './EmailOverlay';
 import InviteEmailForm from './InviteEmailForm';
 
 function DoctorDetailPage(){
+    var duration;
     let formData = new FormData();
     let { id } = useParams();
     const [name, setName] = useState("")
@@ -33,6 +34,11 @@ function DoctorDetailPage(){
     const [invite, setInvite] = useState(false)
     const [follows, setFollows] = useState({})
     const [followsLimit, setFollowsLimit] = useState({})
+    const [masterclass, setmasterclass] = useState([])
+    const [team, setteams] = useState([])
+    const [metadata, setMetadata] = useState([]);
+
+    
     const [payment, setPayment] = useState("");
     const pStyle = {
         margin: "10px"
@@ -55,23 +61,74 @@ function DoctorDetailPage(){
                 'Accept' : 'application/json',
                 'Authorization': `Bearer ${userTocken}`,
             }}).then(response=> {
-                setFollows(response.data)})
+                console.log(response.data);
+                setFollows(response.data)
+                
+                
+            })
             setTrigger(false)
             axios.get(`/api/doctors/${docId}?limit=true`,{
                 headers: {
                     'Accept' : 'application/json',
                     'Authorization': `Bearer ${userTocken}`,
                 }}).then(response=> {
-                setFollowsLimit(response.data)})
+                    console.log(response.data);
+                setFollowsLimit(response.data)
+                var count=0;
+                    response.data.curators.map((data, index) =>{
+                        if(count<3){
+                        axios.get(`/api/masterclasses/${data.masterclass_id}?limit=true`)
+                          .then(response=> { 
+                        console.log(response);
+                        setmasterclass(Array => [...Array, response.data])
+                    
+                        
+                    }
+                      );}count++;})
+                      count=0
+                      response.data.team__doctors.map((data, index) =>{
+                        if(count<3){
+                        axios.get(`/api/teams/${data.team_id}?limit=true`)
+                          .then(response=> { 
+                        console.log(response);
+                        setteams(Array => [...Array, response.data])
+                         }
+                      );}count++;})         
+            })
 
         } else {
             axios.get(`/api/doctors/${docId}`)
             .then(response=> {
-                setFollows(response.data)})
+                console.log(response.data);
+                setFollows(response.data)
+                
+            })
 
             axios.get(`/api/doctors/${docId}?limit=true`)
                 .then(response=> {
-                    setFollowsLimit(response.data)})
+                    console.log(response.data);
+                    setFollowsLimit(response.data)
+                    var count=0;
+                    response.data.curators.map((data, index) =>{
+                        if(count<3){
+                        axios.get(`/api/masterclasses/${data.masterclass_id}?limit=true`)
+                          .then(response=> { 
+                        console.log(response);
+                        setmasterclass(Array => [...Array, response.data])
+                    
+                        
+                    }
+                      );}count++;})
+                      count=0
+                      response.data.team__doctors.map((data, index) =>{
+                        if(count<3){
+                        axios.get(`/api/teams/${data.team_id}?limit=true`)
+                          .then(response=> { 
+                        console.log(response);
+                        setteams(Array => [...Array, response.data])
+                         }
+                      );}count++;})
+                })
             setTrigger(false)
         }
     },[trigger])
@@ -140,6 +197,9 @@ function DoctorDetailPage(){
         document.getElementById("dr-video-tab").classList.remove("active");
         document.getElementById("dr-img-tab").classList.remove("active");
         document.getElementById("dr-document-tab").classList.remove("active");
+        document.getElementById("dr-team-tab").classList.remove("active");
+        document.getElementById("dr-masterclass-tab").classList.remove("active");
+
         document.getElementById(e.target.id).classList.add("active");
         scrollTo(0,0)
     }
@@ -256,7 +316,7 @@ function DoctorDetailPage(){
                                     </ul>
                                     :""}
                                 </div>
-                                {follows.tags==="Top" ? 
+                                {follows.tags==="Top" && follows.name===name ? 
                                 <ul className="user-followers">
                                     <li className="text-center" onClick={()=>inviteHandler()}>        
                                         <h6>Invite Doctors</h6>
@@ -283,13 +343,13 @@ function DoctorDetailPage(){
                                     </li>
                                     <li><a className="nav-item nav-link" id="dr-img-tab" data-toggle="tab" href="#dr-images" role="tab" aria-controls="dr-images" aria-selected="false">Images <i className="fa fa-chevron-right"></i></a></li>
                                     <li><a className="nav-item nav-link" id="dr-document-tab" data-toggle="tab" href="#dr-document" role="tab" aria-controls="dr-document" aria-selected="false">Document listing <i className="fa fa-chevron-right"></i></a></li>
-                                    {/* <li><a className="nav-item nav-link" id="dr-team-tab" data-toggle="tab" href="#dr-team" role="tab" aria-controls="dr-team" aria-selected="false">Team <i className="fa fa-chevron-right"></i></a></li> */}
-                                    <li><NavLink to="/viewallteams" className="nav-item nav-link" onClick={() => scrollTo(0,0)}>	
+                                    <li><a className="nav-item nav-link" id="dr-team-tab" data-toggle="tab" href="#dr-team" role="tab" aria-controls="dr-team" aria-selected="false">Team <i className="fa fa-chevron-right"></i></a></li>
+                                    <li><a className="nav-item nav-link" id="dr-masterclass-tab" data-toggle="tab" href="#dr-masterclass" role="tab" aria-controls="dr-masterclass" aria-selected="false">Masterclass <i className="fa fa-chevron-right"></i></a></li>
+
+                                    {/* <li><NavLink to="/viewallteams" className="nav-item nav-link" onClick={() => scrollTo(0,0)}>	
                                     Team <i className="fa fa-chevron-right"></i>
-                                    </NavLink>	</li>
-                                    <li><NavLink to="/viewallmasterclasses" className="nav-item nav-link" onClick={() => scrollTo(0,0)}>	
-                                    Masterclass <i className="fa fa-chevron-right"></i>
-                                    </NavLink>	</li>
+                                    </NavLink>	</li> */}
+                                    
                                 </ul>
                             </div>
                         </div>
@@ -318,13 +378,26 @@ function DoctorDetailPage(){
 
 
                                                             {(() => {
+                                                                
                                                                 if (payment && data.type == 'paid') {
                                                                     return (
                                                                         <NavLink to={`/video-detail/${data.id}`}>
-                                                                            <video width="100%" className="videoHeight"    poster={`${baseurl}/storage/${data.video.jpg}`}>
+                                                                            <video width="100%" className="videoHeight"
+                                                                            onLoadedMetadata={e => {
+                                                                                
+                                                                                duration=e.target.duration;
+    
+                                                                                setMetadata(
+                                                                    
+                                                                                  Array => [...Array, duration]
+                                                                                  
+                                                                                );
+                                                                              }} 
+                                                                               poster={`${baseurl}/storage/${data.video.jpg}`}>
                                                                                 <source
                                                                                     src={`${baseurl}/storage/${data.video}`}
-                                                                                    type="video/mp4"/>
+                                                                                    type="video/mp4"
+                                                                                    />
                                                                             </video>
                                                                         </NavLink>
                                                                     )
@@ -341,18 +414,43 @@ function DoctorDetailPage(){
                                                                             {localStorage.setItem('videoTitle' + data.id, data.name)}
                                                                             <video width="100%" className="videoHeight"
                                                                                    poster={`${baseurl}/storage/${data.video}.jpg`}
+                                                                                   onLoadedMetadata={e => {
+                                                                                    
+                                                                                    const el1 = document.querySelector("#index"+index)
+                                                                                    duration=e.target.duration; 
+                                                                                    setMetadata(
+                                                                                    
+                                                                                         Array => [...Array, duration]
+                                                                                    );
+
+                                                                                   
+
+
+                                                                                  }}
                                                                             >
                                                                                 <source
                                                                                     src={`${baseurl}/storage/${data.video}`}
                                                                                     type="video/mp4"/>
                                                                             </video>
+                                    
                                                                         </NavLink>
                                                                     )
                                                                 }
                                                             })()}
-
+                                                           
+                                                            
+                                                            
                                                             <h4>{data.name}</h4>
                                                             <p style={pStyle}> {data.description.length > 50 ? data.description.substring(0, 50) : data.description} {data.description.length > 50 ? "..." : ""}</p>
+                                                            {metadata.length===followsLimit.videos.length? (
+                                                            
+                                                            
+                                                                <p style={pStyle}>
+                                                                    <b>Duration:</b> {(parseInt(metadata[index]/60)) +" min"} 
+                                                                </p>
+                                                            
+                                                            ):""}
+                                                            <p style={pStyle}> <b>Published date:</b> {data.created_at.split("T")[0]}</p>
                                                             <p className="doctor-subscribe">{!payment && data.type == 'paid' ? 'Subscribe to watch video' : ''}</p>
                                                             <ul className="block-style">
                                                                 <li onClick={() => VideoFun(data.id, "like")}>
@@ -430,6 +528,58 @@ function DoctorDetailPage(){
                                         <div className="medical-block">
                                             <div className="row mb-2">
                                                 <div className="col-md-9">
+                                                    <h2 className="heading-style2">Teams</h2>
+                                                </div>
+                                                <div className="col-md-3">
+                                                   <a  id="dr-team-tab" onClick={tabActive} data-toggle="tab" href="#dr-team" role="tab" aria-controls="dr-team" aria-selected="true" className="hvr-icon-wobble-horizontal view-all-btn nav-item nav-link">View all <img src={nextBlueIcon} className="img-fluid hvr-icon" alt="arrow" /></a>
+                                                </div>
+                                            </div>
+                                            <div className="row mb-5">
+                                                {Array.isArray(team) && team.map((data, index) =>
+                                                    <div className="col-md-4">
+                                                    <NavLink to={`/team-details/${data.team_id}`} onClick={() => scrollTo(0,0)}>	
+                                                        <img src={`${baseurl}/storage/${data.path}`} className="img-fluid" alt="doctor" />
+                                                        <h5>{data.team_name}</h5> 
+                                                        {data.speciality}	
+                                                    </NavLink>
+                                                    <p>{data.name}</p>
+                                                </div>
+                                                )}
+
+                                            </div>
+                                        </div>
+
+                                        <div className="medical-block">
+                                            <div className="row mb-2">
+                                                <div className="col-md-9">
+                                                    <h2 className="heading-style2">Master<span>class</span></h2>
+                                                </div>
+                                                <div className="col-md-3">
+                                                   <a  id="dr-masterclass-tab" onClick={tabActive} data-toggle="tab" href="#dr-masterclass" role="tab" aria-controls="dr-masterclass" aria-selected="true" className="hvr-icon-wobble-horizontal view-all-btn nav-item nav-link">View all <img src={nextBlueIcon} className="img-fluid hvr-icon" alt="arrow" /></a>
+                                                </div>
+                                            </div>
+                                            <div className="row mb-5">
+                                            {Array.isArray(masterclass) && masterclass.map((doctor,index) =>
+                                            <div className="col-md-4">
+                                                <div className="theme-block-style">
+                                                    <NavLink to={`/masterclass-detail/${doctor.id}/0`}>
+                                                        {/* {localStorage.setItem('videourl'+data.id,data.video)}
+                                                        {localStorage.setItem('videoTitle'+data.id,data.name)} */}
+                                                        <video width="100%" className="videoHeight" >
+                                                            <source src={`${baseurl}/storage/${doctor?.subclasses[0]?.path}`} type="video/mp4" />
+                                                        </video>								
+                                                    </NavLink>	
+                                                    <h4>{doctor.masterclass_title}</h4>
+                                                </div>
+                                            </div>
+                                            )}
+
+                                            </div>
+                                        </div>
+
+                                        <div className="medical-block">
+                                            <div className="row mb-2">
+                                                <div className="col-md-9">
                                                     <h2 className="heading-style2">Medical <span>Publications</span>
                                                     </h2>
                                                 </div>
@@ -489,19 +639,20 @@ function DoctorDetailPage(){
                                                 </NavLink>*/}
                                                 </div>
                                             </div>
-                                            <div class="row">
+                                            <div className="row">
                                             {Array.isArray(follows.videos) && follows.videos.map((data,index) =>
 
-                                                <div class="col-md-4">
+                                                <div className="col-md-4">
                                                     <div className="theme-block-style">
 
                                                         {(() => {
                                                             if (payment && data.type == 'paid') {
                                                                     return (
                                                                         <NavLink to={`/video-detail/${data.id}`}>
-                                                                        <video width="100%" className="videoHeight"
+                                                                        <video width="100%" className="videoHeight"  preload="metadata"
                                                                                poster={`${baseurl}/storage/${data.video}.jpg`}
                                                                         >
+                                                                            
                                                                             <source
                                                                                 src={`${baseurl}/storage/${data.video}`}
 
@@ -520,7 +671,7 @@ function DoctorDetailPage(){
                                                                             {localStorage.setItem('videoTitle'+data.id,data.name)}
                                                                             <video width="100%" className="videoHeight"
                                                                                    poster={`${baseurl}/storage/${data.video}.jpg`}
-
+                                                                                   
                                                                             >
                                                                                 <source
                                                                                     src={`${baseurl}/storage/${data.video}`}
@@ -594,9 +745,62 @@ function DoctorDetailPage(){
                                                 )}
                                                 
                                             </div>
+                                        </div>
+
+                                        <div className="tab-pane fade show" id="dr-team" role="tabpanel" aria-labelledby="dr-team-tab">
+                                        <div class="medical-block">
+                                            <div class="row mb-2">
+                                                <div class="col-md-9">
+                                                    <h2 class="heading-style2">Teams</h2>
+                                                </div>
+                                                <div className="col-md-3">
+                                                    {/*<NavLink to="#" className="hvr-icon-wobble-horizontal view-all-btn">View all <img src={nextBlueIcon} className="img-fluid hvr-icon" alt="arrow" /></NavLink>*/}
+                                                </div>
+                                            </div>
+                                            <div class="row mb-5">
+                                            {Array.isArray(team) && team.map((data, index) =>
+                                                    <div className="col-md-4">
+                                                    <NavLink to={`/team-details/${data.team_id}`} onClick={() => scrollTo(0,0)}>	
+                                                        <img src={`${baseurl}/storage/${data.path}`} className="img-fluid" alt="doctor" />
+                                                        <h5>{data.team_name}</h5> 
+                                                        {data.speciality}	
+                                                    </NavLink>
+                                                    <p>{data.name}</p>
+                                                </div>
+                                                )}
+                                                
+                                            </div>
                                         </div>	
 
                                     </div>
+
+                                    <div className="tab-pane fade" id="dr-masterclass" role="tabpanel" aria-labelledby="dr-masterclass-tab">
+                                        <div class="medical-block">
+                                            <div class="row mb-2">
+                                                <div class="col-md-9">
+                                                    <h2 class="heading-style2">Master<span>classes</span></h2>
+                                                </div>
+                                                <div className="col-md-3">
+                                                    {/*<NavLink to="#" className="hvr-icon-wobble-horizontal view-all-btn">View all <img src={nextBlueIcon} className="img-fluid hvr-icon" alt="arrow" /></NavLink>*/}
+                                                </div>
+                                            </div>
+                                            <div class="row mb-5">
+                                            {Array.isArray(masterclass) && masterclass.map((data, index) =>
+                                                    <div className="col-md-4">
+                                                    <NavLink to={`/team-details/${data.team_id}`} onClick={() => scrollTo(0,0)}>	
+                                                        <img src={`${baseurl}/storage/${data.path}`} className="img-fluid" alt="doctor" />
+                                                        <h5>{data.team_name}</h5> 
+                                                        {data.speciality}	
+                                                    </NavLink>
+                                                    <p>{data.name}</p>
+                                                </div>
+                                                )}
+                                                
+                                            </div>
+                                        </div>	
+
+                                    </div>
+
                                     <div className="tab-pane fade" id="dr-document" role="tabpanel" aria-labelledby="dr-document-tab">
                                         <div class="medical-block">
                                             <div class="row mb-2">
@@ -636,136 +840,17 @@ function DoctorDetailPage(){
                                             </div>
                                         </div>		
                                     </div>
-                                    <div className="tab-pane fade" id="dr-team" role="tabpanel" aria-labelledby="dr-team-tab">
-                                        <section className="inner-page-content doctor-team-page">
-                                            <div className="container">
-                                                <div className="row">
-                                                    <div className="col-md-12">
-                                                        <div className="right-content-area">
-                                                            <div className="row align-items-center mb-4 single-doctor">
-                                                                <div className="col-md-4">
-                                                                    <img src={teammember} className="img-fluid" alt="doctor" />
-                                                                </div>
-                                                                <div className="col-md-5">
-                                                                    <h3>Prapas Ygeian</h3>
-                                                                    <h5>General Physician | Head Doctor</h5>
-                                                                    <img src={memberlogo} className="img-fluid" alt="doctor" />
-                                                                </div>
-                                                            </div>
-
-                                                            <div className="profile-latest-videos">
-                                                                <div className="row mb-2">
-                                                                    <div className="col-md-9">
-                                                                        <h2 className="heading-style2">Team</h2>
-                                                                    </div>
-                                                                    <div className="col-md-3">
-                                                                        <NavLink to="/view-all-doctors" className="hvr-icon-wobble-horizontal view-all-btn">View all <img src={nextBlueIcon} className="img-fluid hvr-icon" alt="arrow" /></NavLink>
-                                                                    </div>
-                                                                </div>
-                                                                <div className="row text-center">
-                                                                    <div className="col-md-4 mb-3">
-                                                                        <NavLink to="/view-all-doctors">	
-                                                                            <img src={doctorList1} className="img-fluid" alt="doctor" />
-                                                                            <h5>Neque porro quisquam</h5>
-                                                                        </NavLink>
-                                                                        <p>Sed ut perspiciatis unde omnis iste natus error sit volu ptatem</p>
-                                                                    </div>
-                                                                    <div className="col-md-4 mb-3">
-                                                                        <NavLink to="/view-all-doctors">	
-                                                                            <img src={doctorList2} className="img-fluid" alt="doctor" />
-                                                                            <h5>Neque porro quisquam</h5>
-                                                                        </NavLink>
-                                                                        <p>Sed ut perspiciatis unde omnis iste natus error sit volu ptatem</p>
-                                                                    </div>
-                                                                    <div className="col-md-4 mb-3">
-                                                                        <NavLink to="/view-all-doctors">	
-                                                                            <img src={doctorList1} className="img-fluid" alt="doctor" />
-                                                                            <h5>Neque porro quisquam</h5>
-                                                                        </NavLink>
-                                                                        <p>Sed ut perspiciatis unde omnis iste natus error sit volu ptatem</p>
-                                                                    </div>
-                                                                </div>
-                                                            </div>
-
-                                                            <div className="row mb-2">
-                                                                <div className="col-md-9">
-                                                                    <h2 className="heading-style2">Recent <span>Activity</span></h2>
-                                                                </div>
-                                                                <div className="col-md-3">
-                                                                    <NavLink to="/ViewAllVideos" className="hvr-icon-wobble-horizontal view-all-btn">View all <img src={nextBlueIcon} className="img-fluid hvr-icon" alt="arrow" /></NavLink>
-                                                                </div>
-                                                            </div>
-                                                            <div class="row">
-                                                                <div class="col-md-4">		 
-                                                                    <div className="theme-block-style">
-                                                                        <NavLink to="#" data-toggle="modal" data-target="#videoModal">
-                                                                            <img src={VideoImgModal} className="img-fluid" alt="medical" />										
-                                                                        </NavLink>		
-                                                                        <h4>Neque porro quisquam</h4>
-                                                                        <ul className="block-style">
-                                                                            <li>
-                                                                                <img src={likeIcon} className="img-fluid" alt="icon" />
-                                                                                <h6>137</h6>
-                                                                            </li>
-                                                                            <li>
-                                                                                <img src={shareIcon} className="img-fluid" alt="icon" />
-                                                                                <h6>200</h6>
-                                                                            </li>
-                                                                        </ul>
-                                                                    </div>
-                                                                </div>
-                                                                <div class="col-md-4">
-                                                                    <div className="theme-block-style">
-                                                                        <NavLink to="#" data-toggle="modal" data-target="#videoModal">
-                                                                            <img src={VideoImgModal} className="img-fluid" alt="medical" />										
-                                                                        </NavLink>		
-                                                                        <h4>Neque porro quisquam</h4>
-                                                                        <ul className="block-style">
-                                                                            <li>
-                                                                                <img src={likeIcon} className="img-fluid" alt="icon" />
-                                                                                <h6>137</h6>
-                                                                            </li>
-                                                                            <li>
-                                                                                <img src={shareIcon} className="img-fluid" alt="icon" />
-                                                                                <h6>200</h6>
-                                                                            </li>
-                                                                        </ul>
-                                                                    </div>
-                                                                </div>
-                                                                <div class="col-md-4">
-                                                                    <div className="theme-block-style">
-                                                                        <NavLink to="#" data-toggle="modal" data-target="#videoModal">
-                                                                            <img src={VideoImgModal} className="img-fluid" alt="medical" />										
-                                                                        </NavLink>		
-                                                                        <h4>Neque porro quisquam</h4>
-                                                                        <ul className="block-style">
-                                                                            <li>
-                                                                                <img src={likeIcon} className="img-fluid" alt="icon" />
-                                                                                <h6>137</h6>
-                                                                            </li>
-                                                                            <li>
-                                                                                <img src={shareIcon} className="img-fluid" alt="icon" />
-                                                                                <h6>200</h6>
-                                                                            </li>
-                                                                        </ul>
-                                                                    </div>
-                                                                </div>	
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </section> 
-                                    </div>
+                                    
                                     
                                 </div>
                             </div>
                         </div>
                     </div>
                 </div>
+                </div>
             </section>  
         {Array.isArray(follows.publications) && follows.publications.map((data,index) =>
-            <div className="modal fade" id={'publicationModal-'+data.id} tabindex="-1" role="dialog" aria-labelledby="videoModalLabel" aria-hidden="true">
+            <div className="modal fade" id={'publicationModal-'+data.id} tabIndex="-1" role="dialog" aria-labelledby="videoModalLabel" aria-hidden="true">
                 <div className="modal-dialog-full-width modal-dialog momodel modal-fluid" role="document">
                     <div className="modal-content-full-width modal-content ">
                         <div className=" modal-header-full-width modal-header text-center">
@@ -782,7 +867,7 @@ function DoctorDetailPage(){
         )}
 
         {Array.isArray(follows.images) && follows.images.map((data,index) =>
-            <div className="modal fade" id={'imageModal-'+data.id} tabindex="-1" role="dialog" aria-labelledby="videoModalLabel" aria-hidden="true">
+            <div className="modal fade" id={'imageModal-'+data.id} tabIndex="-1" role="dialog" aria-labelledby="videoModalLabel" aria-hidden="true">
                 <div className="modal-dialog-full-width modal-dialog momodel modal-fluid" role="document">
                     <div className="modal-content-full-width modal-content ">
                         <div className=" modal-header-full-width modal-header text-center">

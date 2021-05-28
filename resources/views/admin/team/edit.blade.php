@@ -98,6 +98,18 @@
                                     </div>  <!-- /div[data-role="dynamic-fields"] -->
                                 </div>  <!-- /div.col-md-12 -->
                             </div>  <!-- /div.row -->
+                    <div class="form-group row">
+                        <div class="col-lg-3">Upload Logo</div>
+                            <div class="col-lg-8">
+                                <input type="file" name="logo" />
+                                @if ($errors->has('logo') )
+                                <span style="color:red">
+                                    {{ $errors->first('logo') }}
+                                </span>
+                                @endif
+                            <p><small>Supported format: JPG, JPEG, PNG</small></p>
+                        </div> 
+                    </div>
                     
                     <input class="btn btn-primary" type="submit" value="Upload">
                    

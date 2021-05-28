@@ -10,7 +10,8 @@ function MasterclassDetails() {
   const videoGet =localStorage.getItem(`videourl${id}`)
   const videoHeading =localStorage.getItem(`videoTitle${id}`)
   const [display, setDisplay] = useState(false)
-
+  const [metadata, setMetadata] = useState([]);
+  var duration;
   const pStyle = {
     margin: "10px"
 };
@@ -26,7 +27,7 @@ function MasterclassDetails() {
         setVideoDetail(response.data)
         
               response.data.curators.map((data, index) =>{
-                axios.get(`/api/doctors/${data.doctors_id}`)
+                axios.get(`/api/doctors/${data.doctor_id}`)
                   .then(response=> { 
                 console.log(response);
                 setDoctorDetail(Array => [...Array, response.data])}
@@ -118,15 +119,33 @@ const displayCancelHandler=()=>{
                                         <NavLink to={`/masterclass-detail/${id}/${index}`}>
                                             {/* {localStorage.setItem('videourl' + data.id, data.path)}
                                             {localStorage.setItem('videoTitle' + data.id, data.video_title)} */}
-                                             <video width="100%" className="videoHeight" >
-                                                            <source src={`${baseurl}/storage/${data?.path}`} type="video/mp4" />
-                                                        </video>	
+                                             <video width="100%" className="videoHeight"
+                                               onLoadedMetadata={e => {
+                                                                                    
+                                                const el1 = document.querySelector("#index"+index)
+                                                duration=e.target.duration; 
+                                                setMetadata(
+                                                
+                                                     Array => [...Array, duration]
+                                                );
+                                              }}
+                                             >
+                                                  <source src={`${baseurl}/storage/${data?.path}`} type="video/mp4"/>
+                                             </video>	
                                         </NavLink>
                                     )
-                                    
                             })()}
 
                             <h4 style={{textAlign:"center"}}>{data.video_title}</h4>
+                            {metadata.length===videoDetail.subclasses.length-1? (
+                                                            
+                                                            
+                                                            <p style={pStyle}>
+                                                                <b>Duration:</b> {(parseInt(metadata[index]/60)) +" min"} 
+                                                            </p>
+                                                        
+                                                        ):""}
+                                                        <p style={pStyle}> <b>Published date:</b> {data.created_at.split("T")[0]}</p>
                             {/* <p style={pStyle}> {data.description.length > 50 ? data.description.substring(0, 50) : data.description} {data.description.length > 50 ? "..." : ""}</p> */}
                   
                         </div>

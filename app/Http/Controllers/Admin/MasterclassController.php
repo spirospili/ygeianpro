@@ -23,11 +23,14 @@ class MasterclassController
      */
     public function index(Request $request)
     {
+        $data=(object) Masterclass::when($request->keywords, function ($query) use ($request){
+            return $query->where('masterclass_title', 'LIKE', '%' . $request->keywords .'%');
+        })->latest()->get();
+        
+       
         return view('admin.masterclass.index', [
             'title' => 'Masterclass',
-            'masterclasses' => Masterclass::when($request->keywords, function ($query) use ($request){
-                return $query->where('masterclass_title', 'LIKE', '%' . $request->keywords .'%');
-            })->latest()->get()
+            'masterclasses' => $data
         ]);
     }
 
@@ -61,7 +64,7 @@ class MasterclassController
         {
                Curator::create([
                    'masterclass_id' => $masterclass->id,
-                   'doctors_id' => $curator
+                   'doctor_id' => $curator
                 ]);
                 
         }
@@ -99,7 +102,8 @@ class MasterclassController
      */
     public function update(Request $request, $id)
     {
-        $request->validate([
+        $request->validate
+        ([
             'name' => 'required|min:3|max:100', 
         ]);
 
@@ -110,7 +114,7 @@ class MasterclassController
             {
                 Curator::create([
                     'masterclass_id' => $id,
-                    'doctors_id' => $curator
+                    'doctor_id' => $curator
                     ]);            
             }
         

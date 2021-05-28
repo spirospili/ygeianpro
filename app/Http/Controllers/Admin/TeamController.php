@@ -69,13 +69,15 @@ class TeamController
         $request->validate([
             'name' => 'required|min:3|max:100',
             'lead_doctor_name' => 'required', 
-            'speciality'=>'required'
+            'speciality'=>'required',
+            'logo'=> 'image|mimes:jpeg,jpg,png|required'
         ]);
         
         $team = Team::create([
             'team_name' => $request->name,
             'TeamLead_id' => $request->lead_doctor_name,
             'team_speciality' => $request->speciality ?? null,
+            'logo_path' => $request->file('logo') ? $request->file('logo')->store('teams', 'public'): null
         ]);
         $added_team=Team::where('team_name', $request->name)
         ->Where('TeamLead_id', $request->lead_doctor_name)
@@ -129,8 +131,9 @@ class TeamController
             'lead_doctor_name' => 'required', 
             'speciality'=>'required'
         ]);
+         
 
-        $team = Team::where('team_id', $id)->update(['team_name'=> $request->name, 'TeamLead_id'=> $request->lead_doctor_name, 'team_speciality' => $request->speciality]); 
+        $team = Team::where('team_id', $id)->update(['team_name'=> $request->name, 'TeamLead_id'=> $request->lead_doctor_name, 'team_speciality' => $request->speciality, 'logo_path' => $request->file('logo') ? $request->file('logo')->store('teams', 'public'): null]); 
         
         $doctors=Team_Doctors::where('team_id', $id)->delete();
       

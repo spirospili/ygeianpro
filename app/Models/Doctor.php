@@ -36,4 +36,13 @@ class Doctor extends Model
         return $this->hasMany('App\Models\DoctorImage')->latest();
     }
 
+    public function curators()
+    {
+        return $this->hasMany('App\Models\Curator')->latest();
+    }
+    public function Team_Doctors()
+    {
+        return $this->hasMany('App\Models\Team_Doctors')->latest();
+    }
+
 }
