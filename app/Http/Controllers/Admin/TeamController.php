@@ -83,12 +83,21 @@ class TeamController
         ->Where('TeamLead_id', $request->lead_doctor_name)
         ->Where('team_speciality', $request->speciality ?? null)
         ->get();
+
+        Team_Doctors::create
+        ([
+                   'team_id' => $added_team[0]->team_id,
+                   'doctor_id' => $request->lead_doctor_name,
+                   'type' => "lead"
+        ]);
+
         foreach($request->team_member as $team_member)
         {
                Team_Doctors::create
                ([
                    'team_id' => $added_team[0]->team_id,
-                   'doctor_id' => $team_member
+                   'doctor_id' => $team_member,
+                   'type' => "member"
                 ]);
         }
         $details = [
@@ -136,13 +145,21 @@ class TeamController
         $team = Team::where('team_id', $id)->update(['team_name'=> $request->name, 'TeamLead_id'=> $request->lead_doctor_name, 'team_speciality' => $request->speciality, 'logo_path' => $request->file('logo') ? $request->file('logo')->store('teams', 'public'): null]); 
         
         $doctors=Team_Doctors::where('team_id', $id)->delete();
-      
+        
+        Team_Doctors::create
+        ([
+                   'team_id' => $id,
+                   'doctor_id' => $request->lead_doctor_name,
+                   'type' => "lead"
+        ]);
+
         foreach($request->team_member as $team_member)
         {
                Team_Doctors::create
                ([
                    'team_id' => $id,
-                   'doctor_id' => $team_member
+                   'doctor_id' => $team_member,
+                   'type' => "member"
                 ]);
         }
         

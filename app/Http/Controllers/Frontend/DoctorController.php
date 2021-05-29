@@ -34,7 +34,7 @@ class DoctorController extends Controller
             return $query->where('name', 'LIKE', '%' . $request->keywords .'%')
                 ->orWhere('tags', 'LIKE', '%'.$request->keywords.'%');
         })->when($request->page, function($query){
-            return $query->limit(2);
+            return $query->inRandomOrder()->limit(2);
         })->latest()->get());
     }
 

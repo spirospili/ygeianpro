@@ -213,6 +213,7 @@ function TeamDetails(){
                                         </div>
                                     </div>
                                     {Array.isArray(followsLimit) && followsLimit.map((data, index) => 
+                                    data.name!=follows[0]?.name ?
                                      <div className="row  single-doctor" style={{paddingLeft:'10%'}}>
                                         <div className="col-md-6 row">  
                                             <div className="col lead-img team-detail">
@@ -292,7 +293,7 @@ function TeamDetails(){
                                                     </div>
                                                 )}
                                             </div>  
-                                    
+                                       :""
                                     )}
                                 </div>
                             </div>

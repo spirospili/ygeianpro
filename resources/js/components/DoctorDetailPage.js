@@ -62,9 +62,7 @@ function DoctorDetailPage(){
                 'Authorization': `Bearer ${userTocken}`,
             }}).then(response=> {
                 console.log(response.data);
-                setFollows(response.data)
-                
-                
+                setFollows(response.data);
             })
             setTrigger(false)
             axios.get(`/api/doctors/${docId}?limit=true`,{
@@ -88,10 +86,12 @@ function DoctorDetailPage(){
                       count=0
                       response.data.team__doctors.map((data, index) =>{
                         if(count<3){
-                        axios.get(`/api/teams/${data.team_id}?limit=true`)
+                        axios.get(`/api/teams/${data.team_id}`)
                           .then(response=> { 
-                        console.log(response);
+                       
                         setteams(Array => [...Array, response.data])
+                        console.log(response.data);
+
                          }
                       );}count++;})         
             })
@@ -112,20 +112,20 @@ function DoctorDetailPage(){
                     response.data.curators.map((data, index) =>{
                         if(count<3){
                         axios.get(`/api/masterclasses/${data.masterclass_id}?limit=true`)
-                          .then(response=> { 
-                        console.log(response);
-                        setmasterclass(Array => [...Array, response.data])
-                    
-                        
-                    }
+                          .then(response=> 
+                            { 
+                                console.log(response);
+                                setmasterclass(Array => [...Array, response.data])
+                            }
                       );}count++;})
                       count=0
                       response.data.team__doctors.map((data, index) =>{
                         if(count<3){
-                        axios.get(`/api/teams/${data.team_id}?limit=true`)
+                        axios.get(`/api/teams/${data.team_id}`)
                           .then(response=> { 
-                        console.log(response);
+                        
                         setteams(Array => [...Array, response.data])
+                        console.log(response.data);
                          }
                       );}count++;})
                 })
@@ -536,14 +536,15 @@ function DoctorDetailPage(){
                                             </div>
                                             <div className="row mb-5">
                                                 {Array.isArray(team) && team.map((data, index) =>
+                                                     data[0] ?
                                                     <div className="col-md-4">
-                                                    <NavLink to={`/team-details/${data.team_id}`} onClick={() => scrollTo(0,0)}>	
-                                                        <img src={`${baseurl}/storage/${data.path}`} className="img-fluid" alt="doctor" />
-                                                        <h5>{data.team_name}</h5> 
-                                                        {data.speciality}	
+                                                    <NavLink to={`/team-details/${data[0]?.team_id}`} onClick={() => scrollTo(0,0)}>	
+                                                        <img src={`${baseurl}/storage/${data[0]?.path}`} className="img-fluid" alt="doctor" />
+                                                        <h5>{data[0]?.team_name}</h5> 
+                                                        {data[0]?.speciality}	
                                                     </NavLink>
-                                                    <p>{data.name}</p>
-                                                </div>
+                                                    <p>{data[0]?.name}</p>
+                                                </div>:""
                                                 )}
 
                                             </div>
@@ -759,14 +760,15 @@ function DoctorDetailPage(){
                                             </div>
                                             <div class="row mb-5">
                                             {Array.isArray(team) && team.map((data, index) =>
+                                            data[0] ?
                                                     <div className="col-md-4">
-                                                    <NavLink to={`/team-details/${data.team_id}`} onClick={() => scrollTo(0,0)}>	
-                                                        <img src={`${baseurl}/storage/${data.path}`} className="img-fluid" alt="doctor" />
-                                                        <h5>{data.team_name}</h5> 
-                                                        {data.speciality}	
+                                                    <NavLink to={`/team-details/${data[0]?.team_id}`} onClick={() => scrollTo(0,0)}>	
+                                                        <img src={`${baseurl}/storage/${data[0]?.path}`} className="img-fluid" alt="doctor" />
+                                                        <h5>{data[0]?.team_name}</h5> 
+                                                        {data[0]?.speciality}	
                                                     </NavLink>
-                                                    <p>{data.name}</p>
-                                                </div>
+                                                    <p>{data[0]?.name}</p>
+                                                </div>:""
                                                 )}
                                                 
                                             </div>

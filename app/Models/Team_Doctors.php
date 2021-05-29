@@ -16,7 +16,7 @@ class Team_Doctors extends Model
      */
     protected $fillable = 
     [
-        'team_id', 'doctor_id'
+        'team_id', 'doctor_id','type'
     ];
 
 }
