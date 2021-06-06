@@ -493,7 +493,7 @@ function DoctorDetailPage(){
                                                 )}
                                             </div>
                                         </div>
-
+                                        {suggestedDoctors.length>0?
                                         <div className="medical-block" >
                                             <div className="row mb-2">
                                                 <div className="col-md-9">
@@ -515,7 +515,7 @@ function DoctorDetailPage(){
                                                 )}
 
                                             </div>
-                                        </div>
+                                        </div>:""}
 
                                         <div className="medical-block">
                                             <div className="row mb-2">
