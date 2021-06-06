@@ -223,11 +223,13 @@ function TeamDetails(){
                                       <h5>{follows[0]?.speciality} | Head Doctor</h5>
                                         <p>{follows[0]?.description}</p>
                                         <img src={`${baseurl}/storage/${follows[0]?.logo_path}`} className="img-fluid " alt="doctor" />
-                                        <ul className="user-followers" style={{width:"25%"}}>
-                                            <li className="text-center" onClick={()=>inviteHandler()}>        
-                                                <h6>Invite Doctors</h6>
-                                            </li>
-                                        </ul>
+                                        
+                                        {follows[0]?.name===name ? 
+                                            <ul className="user-followers" style={{width:"25%"}}>
+                                                <li className="text-center" onClick={()=>inviteHandler()}>        
+                                                    <h6>Invite Doctors</h6>
+                                                </li>
+                                            </ul> : null}
                                     </div>
                                 </div>
                                 {/* <hr
