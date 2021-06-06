@@ -33,6 +33,8 @@ class Home extends Component {
             videos: null,
             publications: null,
             doctors: null,
+            teams: null,
+            masterclasses:null,
             isLoading: null,
             isLoggedIn: false,
             user: {}
@@ -159,6 +161,8 @@ class Home extends Component {
         this.getVideos();
         this.getPublications();
         this.getDoctors();
+        this.getMasterclasses();
+        this.getTeams();
     }
 
     async getLiveVideo() {
@@ -180,7 +184,42 @@ class Home extends Component {
             }
         }
     }
-
+    async getTeams() {
+        if (!this.state.teams) {
+            try {
+                this.setState({isLoading: true});
+                //const accessToken = await this.props.auth.getAccessToken();
+                const response = await fetch('/api/teams?page=home', {
+                    /*headers: {
+                        Authorization: `Bearer ${accessToken}`,
+                    },*/
+                });
+                const teams = await response.json();
+                this.setState({teams: teams, isLoading: false});
+            } catch (err) {
+                this.setState({isLoading: false});
+                console.error(err);
+            }
+        }
+    }
+    async getMasterclasses() {
+        if (!this.state.masterclasses) {
+            try {
+                this.setState({isLoading: true});
+                //const accessToken = await this.props.auth.getAccessToken();
+                const response = await fetch('/api/masterclasses?page=home', {
+                    /*headers: {
+                        Authorization: `Bearer ${accessToken}`,
+                    },*/
+                });
+                const masterclasses = await response.json();
+                this.setState({masterclasses: masterclasses, isLoading: false});
+            } catch (err) {
+                this.setState({isLoading: false});
+                console.error(err);
+            }
+        }
+    }
     async getVideos() {
         if (!this.state.videos) {
             try {
@@ -522,6 +561,76 @@ class Home extends Component {
                     </div>
                 </section>
 
+                <section className="trending-section">
+                    <div className="container-fluid">
+                        <div className="row">
+                            <div className="col-md-6 trending-block">
+                                <div className="row mb-2">
+                                    <div className="col-md-9">
+                                        <h2 className="heading-style2">Top <span>Teams</span></h2>
+                                    </div>
+                                    <div className="col-md-3">
+                                        <NavLink to="/ViewAllTeams" onClick={() => scrollTo(0, 0)}
+                                                 className="hvr-icon-wobble-horizontal view-all-btn">
+                                            View all <img src={nextWhiteIcon} className="img-fluid hvr-icon"
+                                                          alt="arrow"/>
+                                        </NavLink>
+                                    </div>
+                                </div>
+
+                                {this.state.teams &&
+
+                                <div className="trending-slider row">
+                                    {this.state.teams.map( doctor=>
+                                      <div className="col-md-6">
+                                         <NavLink to={`/team-details/${doctor.team_id}`} onClick={() => scrollTo(0,0)}>	
+                                         <img src={`${baseurl}/storage/${doctor.path}`} className="img-fluid" alt="doctor" />                
+                                         <h5>{doctor.team_name}</h5> 
+                                             {doctor.speciality}
+                                         </NavLink>	
+                                         <p>{doctor.description}</p>
+                                     </div>
+                                    )}
+                                </div>
+                                }
+                            </div>
+                            <div className="col-md-6 doctor-block">
+                                <div className="top-doctor">
+                                    <div className="row">
+                                        <div className="col-md-9">
+                                            <h2 className="heading-style1">Master<span>classes</span></h2>
+                                        </div>
+                                        <div className="col-md-3">
+                                            <NavLink to="/ViewAllMasterclasses" onClick={() => scrollTo(0, 0)}
+                                                     className="hvr-icon-wobble-horizontal view-all-btn">
+                                                View all <img src={nextWhiteIcon} className="img-fluid hvr-icon blue"
+                                                              alt="arrow"/>
+                                            </NavLink>
+                                        </div>
+                                    </div>
+                                    {this.state.masterclasses &&
+                                    <div className="row text-center">
+                                        {this.state.masterclasses.map(
+                                            doctor =>
+                                            <div className="col-md-6">
+                                            <NavLink to={`/masterclass-detail/${doctor.id}/0`}>
+                                                              {/* {localStorage.setItem('videourl'+data.id,data.video)}
+                                                              {localStorage.setItem('videoTitle'+data.id,data.name)} */}
+                                                              <video width="100%" className="videoHeight" >
+                                                                  <source src={`${baseurl}/storage/${doctor?.subclasses[0]?.path}`} type="video/mp4" />
+                                                              </video>								
+                                             </NavLink>	
+                                          <h4>{doctor.masterclass_title}</h4>
+                                          <p>{doctor.description}</p>
+                                      </div>
+                                        )}
+                                    </div>
+                                    }
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </section>
                 {/* {this.state.videos &&
 			<div>
 				{this.state.videos.map(

@@ -51,28 +51,31 @@ class DoctorController extends Controller
      */
     public function show($id, Request $request)
     {
-
-
-        return response()->json(
-            Doctor::with(['videos' => function($q) use ($request){
-                $q->when($request->limit == "true", function ($q){
-                        $q->limit(3);
-                });
-            }, 'publications' => function($q) use ($request){
-                $q->when($request->limit == "true", function ($q){
+        $doctor=Doctor::with(['videos' => function($q) use ($request){
+            $q->when($request->limit == "true", function ($q){
                     $q->limit(3);
-                });
-            }, 'images' => function($q) use ($request){
-                $q->when($request->limit == "true", function ($q){
-                    $q->limit(3);
-                });
-            }, 'curators' , 'Team_Doctors'])->withCount(['followers AS isFollow' => function($query){
-                if(auth()->user())
-                    return $query->where('user_id', auth()->user()->id);
-                else
-                    return $query->where('user_id', 0);
-            }])->withCount('followers')->findOrFail($id)
-        );
+            });
+        }, 'publications' => function($q) use ($request){
+            $q->when($request->limit == "true", function ($q){
+                $q->limit(3);
+            });
+        }, 'images' => function($q) use ($request){
+            $q->when($request->limit == "true", function ($q){
+                $q->limit(3);
+            });
+        }, 'curators' , 'Team_Doctors'])->withCount(['followers AS isFollow' => function($query){
+            if(auth()->user())
+                return $query->where('user_id', auth()->user()->id);
+            else
+                return $query->where('user_id', 0);
+        }])->withCount('followers')->findOrFail($id);
+        
+        $suggestedDoctors=Doctor::where([['speciality', $doctor->speciality],['id','!=',$doctor->id ]])->limit(3)->get();
+
+        return response()->json([
+            'doctor' => $doctor,
+            'suggestedDoctors' => $suggestedDoctors 
+        ]);
     }
 
     /**

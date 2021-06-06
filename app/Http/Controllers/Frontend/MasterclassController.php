@@ -34,7 +34,9 @@ class MasterclassController extends Controller
      */
     public function index(Request $request)
     {
-        return response()->json( Masterclass::with(['subclasses' ,'curators'])->get());
+        return response()->json( Masterclass::with(['subclasses' ,'curators'])->when($request->page, function($query){
+            return $query->inRandomOrder()->limit(2);
+        })->get());
 
     }
 

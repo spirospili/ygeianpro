@@ -23,6 +23,8 @@ import { NavLink,useParams } from 'react-router-dom';
 import Swal from 'sweetalert2'
 import axios from './api';
 import EmailOverlay from './EmailOverlay';
+import SearchBar from './SearchBar';
+
 import InviteEmailForm from './InviteEmailForm';
 
 function DoctorDetailPage(){
@@ -35,8 +37,12 @@ function DoctorDetailPage(){
     const [follows, setFollows] = useState({})
     const [followsLimit, setFollowsLimit] = useState({})
     const [masterclass, setmasterclass] = useState([])
+    const [suggestedDoctors, setsuggestedDoctors] = useState([])
+    const [relatedMasterclasses, setrelatedMasterclasses] = useState([])
+
     const [team, setteams] = useState([])
     const [metadata, setMetadata] = useState([]);
+    const [searchKey, setSearchKey] = useState('')
 
     
     const [payment, setPayment] = useState("");
@@ -62,7 +68,9 @@ function DoctorDetailPage(){
                 'Authorization': `Bearer ${userTocken}`,
             }}).then(response=> {
                 console.log(response.data);
-                setFollows(response.data);
+                setFollows(response.data.doctor);
+                setsuggestedDoctors(response.data.suggestedDoctors);
+
             })
             setTrigger(false)
             axios.get(`/api/doctors/${docId}?limit=true`,{
@@ -71,9 +79,9 @@ function DoctorDetailPage(){
                     'Authorization': `Bearer ${userTocken}`,
                 }}).then(response=> {
                     console.log(response.data);
-                setFollowsLimit(response.data)
+                setFollowsLimit(response.data.doctor);
                 var count=0;
-                    response.data.curators.map((data, index) =>{
+                    response.data.doctor.curators.map((data, index) =>{
                         if(count<3){
                         axios.get(`/api/masterclasses/${data.masterclass_id}?limit=true`)
                           .then(response=> { 
@@ -84,7 +92,7 @@ function DoctorDetailPage(){
                     }
                       );}count++;})
                       count=0
-                      response.data.team__doctors.map((data, index) =>{
+                      response.data.doctor.team__doctors.map((data, index) =>{
                         if(count<3){
                         axios.get(`/api/teams/${data.team_id}`)
                           .then(response=> { 
@@ -100,16 +108,16 @@ function DoctorDetailPage(){
             axios.get(`/api/doctors/${docId}`)
             .then(response=> {
                 console.log(response.data);
-                setFollows(response.data)
-                
+                setFollows(response.data.doctor)
+                setsuggestedDoctors(response.data.suggestedDoctors);
             })
 
             axios.get(`/api/doctors/${docId}?limit=true`)
                 .then(response=> {
                     console.log(response.data);
-                    setFollowsLimit(response.data)
+                    setFollowsLimit(response.data.doctor)
                     var count=0;
-                    response.data.curators.map((data, index) =>{
+                    response.data.doctor.curators.map((data, index) =>{
                         if(count<3){
                         axios.get(`/api/masterclasses/${data.masterclass_id}?limit=true`)
                           .then(response=> 
@@ -119,7 +127,7 @@ function DoctorDetailPage(){
                             }
                       );}count++;})
                       count=0
-                      response.data.team__doctors.map((data, index) =>{
+                      response.data.doctor.team__doctors.map((data, index) =>{
                         if(count<3){
                         axios.get(`/api/teams/${data.team_id}`)
                           .then(response=> { 
@@ -196,9 +204,10 @@ function DoctorDetailPage(){
         document.getElementById("dr-feed-tab").classList.remove("active");
         document.getElementById("dr-video-tab").classList.remove("active");
         document.getElementById("dr-img-tab").classList.remove("active");
-        document.getElementById("dr-document-tab").classList.remove("active");
         document.getElementById("dr-team-tab").classList.remove("active");
         document.getElementById("dr-masterclass-tab").classList.remove("active");
+        document.getElementById("dr-document-tab").classList.remove("active");
+       
 
         document.getElementById(e.target.id).classList.add("active");
         scrollTo(0,0)
@@ -341,10 +350,10 @@ function DoctorDetailPage(){
                                             Videos <i className="fa fa-chevron-right"></i>
                                         </a>
                                     </li>
-                                    <li><a className="nav-item nav-link" id="dr-img-tab" data-toggle="tab" href="#dr-images" role="tab" aria-controls="dr-images" aria-selected="false">Images <i className="fa fa-chevron-right"></i></a></li>
-                                    <li><a className="nav-item nav-link" id="dr-document-tab" data-toggle="tab" href="#dr-document" role="tab" aria-controls="dr-document" aria-selected="false">Document listing <i className="fa fa-chevron-right"></i></a></li>
-                                    <li><a className="nav-item nav-link" id="dr-team-tab" data-toggle="tab" href="#dr-team" role="tab" aria-controls="dr-team" aria-selected="false">Team <i className="fa fa-chevron-right"></i></a></li>
-                                    <li><a className="nav-item nav-link" id="dr-masterclass-tab" data-toggle="tab" href="#dr-masterclass" role="tab" aria-controls="dr-masterclass" aria-selected="false">Masterclass <i className="fa fa-chevron-right"></i></a></li>
+                                    <li><a className="nav-item nav-link" id="dr-img-tab" data-toggle="tab" href="#dr-images" role="tab" aria-controls="dr-images" aria-selected="true">Images <i className="fa fa-chevron-right"></i></a></li>
+                                    <li><a className="nav-item nav-link" id="dr-document-tab" data-toggle="tab" href="#dr-document" role="tab" aria-controls="dr-document" aria-selected="true">Document listing <i className="fa fa-chevron-right"></i></a></li>
+                                    <li><a className="nav-item nav-link" id="dr-team-tab" data-toggle="tab" href="#dr-team" role="tab" aria-controls="dr-team" aria-selected="true">Team <i className="fa fa-chevron-right"></i></a></li>
+                                    <li><a className="nav-item nav-link" id="dr-masterclass-tab" data-toggle="tab" href="#dr-masterclass" role="tab" aria-controls="dr-masterclass" aria-selected="true">Masterclass <i className="fa fa-chevron-right"></i></a></li>
 
                                     {/* <li><NavLink to="/viewallteams" className="nav-item nav-link" onClick={() => scrollTo(0,0)}>	
                                     Team <i className="fa fa-chevron-right"></i>
@@ -354,12 +363,20 @@ function DoctorDetailPage(){
                             </div>
                         </div>
                         <div className="col-md-9">
-                            <div className="right-content-area" id="nav-tab" role="tablist">
+                            <div className="right-content-area" >
+                            <form action="" className="searchbar-style mt-5 mb-5">
+                                <div className="input-group">
+                                    <input type="text" value={searchKey} onChange={(e)=>{setSearchKey(e.target.value)}} className="form-control" placeholder="Search by keyword" />
+                                    <span className="input-group-btn">
+                                        <button className="btn" disabled={true}>Search</button>
+                                    </span>
+                                </div>
+                            </form>
+
                                 <div className="tab-content" id="nav-tabContent">
+                                   
 
-
-                                    <div className="tab-pane fade show active" id="dr-feed" role="tabpanel"
-                                         aria-labelledby="dr-video-tab">
+                                    <div className="tab-pane fade show active" id="dr-feed" role="tabpanel">
                                         <div className="profile-latest-videos">
                                             <div className="row mb-2">
                                                 <div className="col-md-9">
@@ -372,7 +389,7 @@ function DoctorDetailPage(){
                                                 </div>
                                             </div>
                                             <div className="row">
-                                                {Array.isArray(followsLimit.videos) && followsLimit.videos.map((data, index) =>
+                                                {Array.isArray(followsLimit.videos) && followsLimit.videos.filter(data => data.name.includes(searchKey)).map((data, index) =>
                                                     <div className="col-md-4">
                                                         <div className="theme-block-style">
 
@@ -477,6 +494,28 @@ function DoctorDetailPage(){
                                             </div>
                                         </div>
 
+                                        <div className="medical-block" >
+                                            <div className="row mb-2">
+                                                <div className="col-md-9">
+                                                    <h2 className="heading-style2"><span>Suggested Doctors</span></h2>
+                                                </div>
+                                                
+                                            </div>
+                                            <div className="row mb-5">
+                                                {Array.isArray(suggestedDoctors) && suggestedDoctors.map((doctor, index) =>
+                                                    <div className="col-md-4">
+                                                    <a href={`/doctor-details/${doctor.id}`} >	
+                                                    
+                                                        <img src={`${baseurl}/storage/${doctor.path}`} className="img-fluid" alt="doctor" />
+                                                        <h5>{doctor.name}</h5> 
+                                                        {doctor.speciality}	
+                                                    </a>
+                                                    <p>{doctor.description}</p>
+                                                </div>
+                                                )}
+
+                                            </div>
+                                        </div>
 
                                         <div className="medical-block">
                                             <div className="row mb-2">
@@ -488,7 +527,7 @@ function DoctorDetailPage(){
                                                 </div>
                                             </div>
                                             <div className="row mb-5">
-                                                {Array.isArray(followsLimit.images) && followsLimit.images.map((data, index) =>
+                                                {Array.isArray(followsLimit.images) && followsLimit.images.filter(data => data.name.includes(searchKey)).map((data, index) =>
                                                     <div className="col-md-4">
                                                         <div className="medical-list theme-block-style">
                                                             <NavLink to="#" data-toggle="modal"
@@ -535,7 +574,7 @@ function DoctorDetailPage(){
                                                 </div>
                                             </div>
                                             <div className="row mb-5">
-                                                {Array.isArray(team) && team.map((data, index) =>
+                                                {Array.isArray(team) && team.filter(data => data[0]?.team_name.includes(searchKey)).map((data, index) =>
                                                      data[0] ?
                                                     <div className="col-md-4">
                                                     <NavLink to={`/team-details/${data[0]?.team_id}`} onClick={() => scrollTo(0,0)}>	
@@ -560,7 +599,7 @@ function DoctorDetailPage(){
                                                 </div>
                                             </div>
                                             <div className="row mb-5">
-                                            {Array.isArray(masterclass) && masterclass.map((doctor,index) =>
+                                            {Array.isArray(masterclass) && masterclass.filter(data => data.masterclass_title.includes(searchKey)).map((doctor,index) =>
                                             <div className="col-md-4">
                                                 <div className="theme-block-style">
                                                     <NavLink to={`/masterclass-detail/${doctor.id}/0`}>
@@ -589,7 +628,7 @@ function DoctorDetailPage(){
                                                 </div>
                                             </div>
                                             <div className="row">
-                                                {Array.isArray(follows.publications) && follows.publications.map((data, index) =>
+                                                {Array.isArray(follows.publications) && follows.publications.filter(data => data.name.includes(searchKey)).map((data, index) =>
                                                     <div className="col-md-4">
                                                         <div className="theme-block-style medical-list">
                                                             <iframe src={`${baseurl}/storage/${data.path}`} width="100%"
@@ -628,7 +667,7 @@ function DoctorDetailPage(){
                                     </div>
                                     
 
-                                    <div className="tab-pane fade show" id="dr-video" role="tabpanel" aria-labelledby="dr-video-tab">
+                                    <div className="tab-pane fade" id="dr-video" role="tabpanel" aria-labelledby="dr-video-tab">
                                         <div class="profile-latest-videos">
                                             <div class="row mb-2">
                                                 <div class="col-md-9">
@@ -747,8 +786,9 @@ function DoctorDetailPage(){
                                                 
                                             </div>
                                         </div>
+                                        </div>
 
-                                        <div className="tab-pane fade show" id="dr-team" role="tabpanel" aria-labelledby="dr-team-tab">
+                                        <div className="tab-pane fade" id="dr-team" role="tabpanel" aria-labelledby="dr-team-tab">
                                         <div class="medical-block">
                                             <div class="row mb-2">
                                                 <div class="col-md-9">
@@ -787,19 +827,24 @@ function DoctorDetailPage(){
                                                 </div>
                                             </div>
                                             <div class="row mb-5">
-                                            {Array.isArray(masterclass) && masterclass.map((data, index) =>
-                                                    <div className="col-md-4">
-                                                    <NavLink to={`/team-details/${data.team_id}`} onClick={() => scrollTo(0,0)}>	
-                                                        <img src={`${baseurl}/storage/${data.path}`} className="img-fluid" alt="doctor" />
-                                                        <h5>{data.team_name}</h5> 
-                                                        {data.speciality}	
-                                                    </NavLink>
-                                                    <p>{data.name}</p>
-                                                </div>
+                                            {Array.isArray(masterclass) && masterclass.map((doctor, index) =>
+                                                <div className="col-md-4">
+                                                  <div className="theme-block-style">
+                                                      <NavLink to={`/masterclass-detail/${doctor.id}/0`}>
+                                                          {/* {localStorage.setItem('videourl'+data.id,data.video)}
+                                                          {localStorage.setItem('videoTitle'+data.id,data.name)} */}
+                                                          <video width="100%" className="videoHeight" >
+                                                              <source src={`${baseurl}/storage/${doctor?.subclasses[0]?.path}`} type="video/mp4" />
+                                                          </video>								
+                                                      </NavLink>	
+                                                      <h4>{doctor.masterclass_title}</h4>
+                                                  </div>
+                                              </div>
                                                 )}
                                                 
                                             </div>
-                                        </div>	
+                                        </div>
+
 
                                     </div>
 
@@ -844,7 +889,7 @@ function DoctorDetailPage(){
                                     </div>
                                     
                                     
-                                </div>
+                                
                             </div>
                         </div>
                     </div>

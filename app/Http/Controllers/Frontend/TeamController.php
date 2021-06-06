@@ -35,6 +35,8 @@ class TeamController
        
         return response()->json(Team::when($request, function($query)use($request){
             $query->join('doctors', 'doctors.id','=','teams.TeamLead_id');
+        })->when($request->page, function($query){
+            return $query->inRandomOrder()->limit(2);
         })->get());
     }
 

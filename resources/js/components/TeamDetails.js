@@ -26,6 +26,8 @@ import EmailOverlay from './EmailOverlay';
 import InviteEmailForm from './InviteEmailForm';
 
 function TeamDetails(){
+    var duration;
+
     let formData = new FormData();
     let { id } = useParams();
     const [name, setName] = useState("");
@@ -34,6 +36,9 @@ function TeamDetails(){
     const [trigger, setTrigger] = useState(false);
     const [follows, setFollows] = useState([]);
     const [followsLimit, setFollowsLimit] = useState([]);
+    const [suggestedVideos, getSuggestedVideos] = useState([]);
+    const [suggestedMasterclasses, getSuggestedMasterclasses] = useState([]);
+    const [metadata, setMetadata] = useState([]);
 
     const pStyle = {
         margin: "10px"
@@ -54,11 +59,29 @@ function TeamDetails(){
            axios.get(`/api/teams/${teamId}`,).then(response=> {
 
                 setFollows(response.data)
+                axios.get(`/api/doctors/${response.data[0].id}?limit=true`,{
+                    headers: {
+                        'Accept' : 'application/json',
+                        'Authorization': `Bearer ${userTocken}`,
+                    }}).then(response=> {
+                        getSuggestedVideos(response.data.doctor.videos);
+                    var count=0;
+                        response.data.doctor.curators.map((data, index) =>{
+                            if(count<3){
+                            axios.get(`/api/masterclasses/${data.masterclass_id}?limit=true`)
+                              .then(response=> { 
+                            console.log(response);
+                            getSuggestedMasterclasses(Array => [...Array, response.data])
+                        
+                            
+                        }
+                          );}count++;})
+                    });
                 response.data.map(doc => {
             
                     axios.get(`/api/doctors/${doc.doctor_id}?limit=true`,).then(response=> {
                             console.log(response.data);  
-                        setFollowsLimit(Array => [...Array, response.data])});
+                        setFollowsLimit(Array => [...Array, response.data.doctor])});
                    }); 
             
             });
@@ -70,12 +93,25 @@ function TeamDetails(){
             axios.get(`/api/teams/${teamId}`)
             .then(response=> {
                
-                setFollows(response.data)
+                setFollows(response.data);
+
+                axios.get(`/api/doctors/${response.data[0].id}?limit=true`).then(response=> {
+                        getSuggestedVideos(response.data.doctor.videos);
+                    var count=0;
+                        response.data.doctor.curators.map((data, index) =>{
+                            if(count<3){
+                            axios.get(`/api/masterclasses/${data.masterclass_id}?limit=true`)
+                              .then(response=> { 
+                            console.log(response);
+                            getSuggestedMasterclasses(Array => [...Array, response.data])            
+                        }
+                          );}count++;})
+                    });
                 response.data.map(doc => {
                   
                     axios.get(`/api/doctors/${doc.doctor_id}?limit=true`,).then(response=> {
                           console.log(response.data);  
-                        setFollowsLimit(Array => [...Array, response.data])});
+                        setFollowsLimit(Array => [...Array, response.data.doctor])});
                    });
             });
                 console.log(follows);
@@ -194,14 +230,154 @@ function TeamDetails(){
                                         </ul>
                                     </div>
                                 </div>
-                                <hr
+                                {/* <hr
                                     style={{
                                         color: "#E8E8E8",
                                         backgroundColor: "#E8E8E8",
                                         height: 5
                                     }}
-                                />
+                                /> */}
                                 <div className="profile-latest-videos">
+                                <div className="medical-block" style={{paddingLeft:"5%", backgroundColor: "#E8E8E8"}} >
+                                            <div className="row mb-2">
+                                                <div className="col-md-9">
+                                                    <h2 className="heading-style2">Recent Videos from {follows[0]?.name}</h2>
+                                                </div>
+                        
+                                            </div>
+                                            <div className="row mb-5">
+                                            {Array.isArray(suggestedVideos) && suggestedVideos.map((data, index) =>
+                                                    <div className="col-md-3">
+                                                        <div className="theme-block-style">
+
+
+                                                            {(() => {
+                                                                
+                                                                if (payment && data.type == 'paid') {
+                                                                    return (
+                                                                        <NavLink to={`/video-detail/${data.id}`}>
+                                                                            <video width="100%" className="videoHeight"
+                                                                            onLoadedMetadata={e => {
+                                                                                
+                                                                                duration=e.target.duration;
+    
+                                                                                setMetadata(
+                                                                    
+                                                                                  Array => [...Array, duration]
+                                                                                  
+                                                                                );
+                                                                              }} 
+                                                                               poster={`${baseurl}/storage/${data.video.jpg}`}>
+                                                                                <source
+                                                                                    src={`${baseurl}/storage/${data.video}`}
+                                                                                    type="video/mp4"
+                                                                                    />
+                                                                            </video>
+                                                                        </NavLink>
+                                                                    )
+                                                                } else if (!payment && data.type == 'paid') {
+                                                                    return (
+                                                                        <img
+                                                                            src={`${baseurl}/storage/${data.video}.jpg`}
+                                                                            style={{width: "100%"}}/>
+                                                                    )
+                                                                } else {
+                                                                    return (
+                                                                        <NavLink to={`/video-detail/${data.id}`}>
+                                                                            {localStorage.setItem('videourl' + data.id, data.video)}
+                                                                            {localStorage.setItem('videoTitle' + data.id, data.name)}
+                                                                            <video width="100%" className="videoHeight"
+                                                                                   poster={`${baseurl}/storage/${data.video}.jpg`}
+                                                                                   onLoadedMetadata={e => {
+                                                                                    
+                                                                                    const el1 = document.querySelector("#index"+index)
+                                                                                    duration=e.target.duration; 
+                                                                                    setMetadata(
+                                                                                    
+                                                                                         Array => [...Array, duration]
+                                                                                    );
+
+                                                                                   
+
+
+                                                                                  }}
+                                                                            >
+                                                                                <source
+                                                                                    src={`${baseurl}/storage/${data.video}`}
+                                                                                    type="video/mp4"/>
+                                                                            </video>
+                                    
+                                                                        </NavLink>
+                                                                    )
+                                                                }
+                                                            })()}
+                                                           
+                                                            
+                                                            
+                                                            <h4>{data.name}</h4>
+                                                            <p style={pStyle}> {data.description.length > 50 ? data.description.substring(0, 50) : data.description} {data.description.length > 50 ? "..." : ""}</p>
+                                                            {metadata.length===suggestedVideos.length? (
+                                                            
+                                                            
+                                                                <p style={pStyle}>
+                                                                    <b>Duration:</b> {(parseInt(metadata[index]/60)) +" min"} 
+                                                                </p>
+                                                            
+                                                            ):""}
+                                                            <p style={pStyle}> <b>Published date:</b> {data.created_at.split("T")[0]}</p>
+                                                            <p className="doctor-subscribe">{!payment && data.type == 'paid' ? 'Subscribe to watch video' : ''}</p>
+                                                            <ul className="block-style">
+                                                                <li onClick={() => VideoFun(data.id, "like")}>
+                                                                    {localStorage.getItem('likeint' + data.id) < 2 ?
+                                                                        <img src={likeIcon} className="img-fluid"
+                                                                             alt="icon"/> :
+                                                                        <img src={likeFIllIcon} className="img-fluid"
+                                                                             alt="icon"/>
+                                                                    }
+                                                                    <h6>{data.likes}</h6>
+                                                                </li>
+                                                                <li onClick={() => VideoFun(data.id, "share")}>
+                                                                    <img src={shareIcon} className="img-fluid"
+                                                                         alt="icon"/>
+                                                                    <h6>{data.shares}</h6>
+                                                                    <input id={`urlCOyLInk${data.id}`} readOnly
+                                                                           type="text" className="hideinput"
+                                                                           value={baseurl + '/storage/' + data.video}/>
+                                                                </li>
+                                                            </ul>
+                                                        </div>
+                                                    </div>
+                                                )}
+
+                                            </div>
+                                        </div>
+                                    
+                                
+                                <div className="medical-block" style={{paddingLeft:"5%", backgroundColor: "#E8E8E8"}}>
+                                            <div className="row mb-2">
+                                                <div className="col-md-9">
+                                                    <h2 className="heading-style2">Master Classes from {follows[0]?.name}</h2>
+                                                </div>
+                                                
+                                            </div>
+                                            <div className="row mb-5">
+                                            {Array.isArray(suggestedMasterclasses) && suggestedMasterclasses.map((doctor,index) =>
+                                            <div className="col-md-3" >
+                                                <div className="theme-block-style">
+                                                    <NavLink to={`/masterclass-detail/${doctor.id}/0`}>
+                                                        {/* {localStorage.setItem('videourl'+data.id,data.video)}
+                                                        {localStorage.setItem('videoTitle'+data.id,data.name)} */}
+                                                        <video width="100%" className="videoHeight" >
+                                                            <source src={`${baseurl}/storage/${doctor?.subclasses[0]?.path}`} type="video/mp4" />
+                                                        </video>								
+                                                    </NavLink>	
+                                                    <h4>{doctor.masterclass_title}</h4>
+                                                </div>
+                                            </div>
+                                            )}
+
+                                            </div>
+                                        </div>
                                 
                                     <div className="row mb-2">
                                         
