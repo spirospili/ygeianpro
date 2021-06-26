@@ -66,6 +66,8 @@ Route::group([
         Route::resource('doctor', 'DoctorController', ['as' => 'admin']);
         Route::resource('team', 'TeamController', ['as' => 'admin']);
         Route::resource('masterclass', 'MasterclassController', ['as' => 'admin']);
+        Route::resource('society', 'SocietyController', ['as' => 'admin']);
+        Route::resource('hospital', 'HospitalController', ['as' => 'admin']);
         Route::resource('subclass', 'SubclassController', ['as' => 'admin']);
         Route::resource('news', 'NewsController', ['as' => 'admin']);
         Route::resource('event', 'EventController', ['as' => 'admin']);

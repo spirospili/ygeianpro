@@ -210,6 +210,32 @@
                     </ul>
                     </div>
                 </li>
+                <li class="nav-item {{ request()->segment(2) == 'hospital' ? 'active' : null }}">
+                    <a class="nav-link" data-toggle="collapse" href="#hospital" aria-expanded="false" aria-controls="hospital">
+                    <i class="fa fa-file-pdf-o menu-icon"></i>
+                    <span class="menu-title">Hospital</span>
+                    <i class="menu-arrow"></i>
+                    </a>
+                    <div class="collapse {{ request()->segment(2) == 'hospital' ? 'show' : null }}" id="hospital">
+                    <ul class="nav flex-column sub-menu">
+                        <li class="nav-item"> <a class="nav-link" href="{{ route('admin.hospital.create') }}">Add New</a></li>
+                        <li class="nav-item"> <a class="nav-link" href="{{ route('admin.hospital.index') }}">List</a></li>
+                    </ul>
+                    </div>
+                </li>
+                <li class="nav-item {{ request()->segment(2) == 'society' ? 'active' : null }}">
+                    <a class="nav-link" data-toggle="collapse" href="#society" aria-expanded="false" aria-controls="society">
+                    <i class="fa fa-file-pdf-o menu-icon"></i>
+                    <span class="menu-title">Society</span>
+                    <i class="menu-arrow"></i>
+                    </a>
+                    <div class="collapse {{ request()->segment(2) == 'society' ? 'show' : null }}" id="society">
+                    <ul class="nav flex-column sub-menu">
+                        <li class="nav-item"> <a class="nav-link" href="{{ route('admin.society.create') }}">Add New</a></li>
+                        <li class="nav-item"> <a class="nav-link" href="{{ route('admin.society.index') }}">List</a></li>
+                    </ul>
+                    </div>
+                </li>
                 <li class="nav-item {{ request()->segment(2) == 'image' ? 'active' : null }}">
                     <a class="nav-link" data-toggle="collapse" href="#images" aria-expanded="false" aria-controls="images">
                     <i class="fa fa-medkit menu-icon"></i>
