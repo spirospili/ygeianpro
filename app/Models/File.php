@@ -12,7 +12,7 @@ class File extends Model
      * @var array
      */
     protected $fillable = [
-        'name', 'path', 'tags', 'doctor_id'
+        'name', 'path', 'tags', 'doctor_id', 'hospital_id'
     ];
 
     public function likes()

@@ -42,7 +42,9 @@ class MasterclassController
     {
         return view('admin.masterclass.create',[
             'specialities' => DB::table('speciality')->get(),
-            'doctors' => DB::table('doctors')->get()
+            'doctors' => DB::table('doctors')->get(),
+            'hospitals' => DB::table('hospitals')->get()
+
         ]);
     }
 
@@ -58,6 +60,7 @@ class MasterclassController
         $masterclass = Masterclass::create([
             'masterclass_title' => $request->name,
             'speciality' => $request->speciality,
+            'hospital_id' => $request->hospital
         ]);
         
         foreach($request->curators as $curator)
@@ -91,7 +94,8 @@ class MasterclassController
         
         return view('admin.masterclass.edit', [
             'masterclass' => $masterclass,
-            'doctors' => DB::table('doctors')->get()
+            'doctors' => DB::table('doctors')->get(),
+            'hospitals' => DB::table('hospitals')->get()
         ], [
             'specialities' => DB::table('speciality')->get()
         ]);
@@ -107,7 +111,7 @@ class MasterclassController
             'name' => 'required|min:3|max:100', 
         ]);
 
-        $masterclass = Masterclass::findOrFail($id)->update(['masterclass_title' => $request->name, 'speciality' => $request->speciality]);
+        $masterclass = Masterclass::findOrFail($id)->update(['masterclass_title' => $request->name, 'speciality' => $request->speciality, 'hospital_id' => $request->hospital]);
        
         Curator::where('masterclass_id', $id)->delete();
             foreach($request->curators as $curator)

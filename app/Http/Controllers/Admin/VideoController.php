@@ -45,19 +45,20 @@ class VideoController
     {
         $request->validate([
             'title' => 'required|min:3|max:100',
-            'doctor' => 'required|numeric|exists:doctors,id',
+            'doctor' => 'required',
             'video' => 'required',
             'description' => 'nullable|max:1000'
         ]);
-
+        $doctor=explode(" ", $request->doctor);
         $video = Video::create([
             'name' => $request->title,
-            'doctor_id' => $request->doctor ?? null,
+            'doctor_id' => $doctor[0] ?? null,
             'tags' => $request->tags ?? null,
             'description' => $request->description,
             'video' => $request->file('video')->store('videos', 'public'),
             'type' => $request->type,
-        ]);
+            'hospital_id' => $doctor[1] ?? null 
+            ]);
 
 	$video_path = "http://www.ygeianpro.com/storage/".$video->video;
         //$path = "storage/".explode('.', $video->video)[0].".jpg";

@@ -54,7 +54,8 @@ class HospitalController
         ]);
         $hospital = Hospital::create([
             'hospital_name' => $request->name,
-            'path' => $request->file('logo') ? $request->file('logo')->store('hospitals', 'public'): null
+            'path' => $request->file('logo') ? $request->file('logo')->store('hospitals', 'public'): null,
+            'description' => $request->description
         ]);
         
         
@@ -76,13 +77,10 @@ class HospitalController
     /** Edit the resource */
     public function edit($id)
     {
-        $masterclass = Masterclass::with(['subclasses', 'curators'])->findOrFail($id);
+        $hospital = Hospital::findOrFail($id);
         
-        return view('admin.masterclass.edit', [
-            'masterclass' => $masterclass,
-            'doctors' => DB::table('doctors')->get()
-        ], [
-            'specialities' => DB::table('speciality')->get()
+        return view('admin.hospital.edit', [
+            'hospital' => $hospital
         ]);
     }
 
@@ -96,17 +94,9 @@ class HospitalController
             'name' => 'required|min:3|max:100', 
         ]);
 
-        $masterclass = Masterclass::findOrFail($id)->update(['masterclass_title' => $request->name, 'speciality' => $request->speciality]);
+        $hospital = Hospital::findOrFail($id)->update(['hospital_name' => $request->name, 'description' => $request->description, $request->file('logo') ? $request->file('logo')->store('hospitals', 'public'): null ]);
        
-        Curator::where('masterclass_id', $id)->delete();
-            foreach($request->curators as $curator)
-            {
-                Curator::create([
-                    'masterclass_id' => $id,
-                    'doctor_id' => $curator
-                    ]);            
-            }
-        
+               
     
         return redirect()->route('admin.masterclass.index');
     }

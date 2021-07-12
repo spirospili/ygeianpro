@@ -41,7 +41,7 @@
                                 <select name="doctor" class="form-control" required>
                                     <option value="">Select Doctor</option>
                                     @foreach($doctors as $doctor)
-                                        <option value="{{ $doctor->id }}" {{ old('doctor') == $doctor->id ? 'selected' : '' }}>{{ $doctor->name }}</option>
+                                        <option value="{{$doctor->id}} {{$doctor->hospital_id}}" {{ old('doctor') == $doctor->id ? 'selected' : '' }}>{{ $doctor->name }}</option>
                                     @endforeach
                                 </select>
                                 @if ($errors->has('doctor') )

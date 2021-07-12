@@ -45,15 +45,17 @@ class PublicationController
     {
         $request->validate([
             'title' => 'required|min:3|max:100',
-            'doctor' => 'required|integer',
+            'doctor' => 'required',
             'publication' => 'required|mimes:pdf',
         ]);
+        $doctor=explode(" ", $request->doctor);
 
         $publication = Publication::create([
             'name' => $request->title,
-            'doctor_id' => $request->doctor ?? null,
+            'doctor_id' => $doctor[0] ?? null,
             'tags' => $request->tags ?? null,
-            'path' => $request->file('publication')->store('publications', 'public')
+            'path' => $request->file('publication')->store('publications', 'public'),
+            'hospital_id' => $doctor[1] ?? null
         ]);
 
         $details = [
@@ -63,10 +65,11 @@ class PublicationController
         ];
         
         $followers = Follower::where('doctor_id', $request->doctor)->get();
+       if ($followers!=null){
         foreach($followers as $follower){
             User::find($follower->user_id)->notify(new PushNotification($details));
         }
-
+    }
         return redirect()->route('admin.publication.index');
     }
 

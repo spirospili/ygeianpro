@@ -8,6 +8,8 @@ use App\Models\Video;
 use App\Models\File;
 use App\Models\Event;
 use App\Models\Masterclass;
+use App\Models\Hospital;
+
 use Illuminate\Http\Request;
 
 class SearchController
@@ -42,7 +44,9 @@ class SearchController
             ->orWhere('speciality', 'LIKE', '%'.$request->search.'%')
             ->orWhere('name', 'LIKE', '%'.$request->search.'%');
         })->get();
-        
+        $hospitals= Hospital::when($request->search, function($query)use($request){
+            $query->where('hospital_name', 'LIKE', '%' . $request->search .'%');
+        })->get();     
 
         $masterclasses=Masterclass::with(['subclasses'])->where('masterclass_title', 'LIKE', '%' . $request->search .'%')->limit(3)->get();
 
@@ -53,6 +57,7 @@ class SearchController
             'doctors' => $doctors,
             'teams' => $teams,
             'masterclasses' => $masterclasses,
+            'hospitals' => $hospitals
         ]);
     }
 

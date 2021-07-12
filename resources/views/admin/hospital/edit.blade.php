@@ -22,6 +22,18 @@
 
                         </div> 
                     </div>
+                    <div class="form-group row">
+                        <div class="col-lg-3">Hospital Description</div>
+                        <div class="col-lg-8">
+                            <textarea name="description" class="form-control">{{old('description') ?? $hospital->description}}</textarea>
+                            @if ($errors->has('description') )
+                            <span style="color:red">
+                                {{ $errors->first('description') }}
+                            </span>
+                            @endif
+                            <p><small>Total 1000 words</small></p>
+                        </div> 
+                    </div>
 
                     <div class="form-group row">
                         <div class="col-lg-3">Upload Logo</div>

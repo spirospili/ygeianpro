@@ -34,7 +34,8 @@ class DoctorController
     public function create()
     {
         return view('admin.doctor.create',[
-            'specialities' => DB::table('speciality')->get()
+            'specialities' => DB::table('speciality')->get(),
+            'hospitals' => DB::table('hospitals')->get()
         ]);
     }
 
@@ -63,7 +64,8 @@ class DoctorController
             'tags' => $request->tags ?? null,
             'subspeciality' => $request->subspeciality,
             'speciality' => $request->speciality ?? null,
-            'logo' => $request->file('logo') ? $request->file('logo')->store('doctors', 'public'): null
+            'logo' => $request->file('logo') ? $request->file('logo')->store('doctors', 'public'): null,
+            'hospital_id' => $request->hospital ?? null 
         ]);
 
         $details = [
@@ -86,7 +88,8 @@ class DoctorController
         $doctor = Doctor::findOrFail($id);
         
         return view('admin.doctor.edit', [
-            'doctor' => $doctor
+            'doctor' => $doctor,
+            'hospitals' => DB::table('hospitals')->get()
         ], [
             'specialities' => DB::table('speciality')->get()
         ]);
@@ -110,6 +113,8 @@ class DoctorController
         $doctor->description = $request->description;
         $doctor->tags = $request->tags ?? null;
         $doctor->speciality = $request->speciality ?? null;
+        $doctor->hospital_id = $request->hospital ?? null;
+
         if($request->file('logo'))
             $doctor->logo = $request->file('logo')->store('doctors', 'public');
         $doctor->save();

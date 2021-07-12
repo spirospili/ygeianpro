@@ -15,7 +15,7 @@ class Curator extends Model
      */
     protected $fillable = 
     [
-        'masterclass_id', 'doctors_id'
+        'masterclass_id', 'doctor_id'
     ];
 
     

@@ -36,6 +36,7 @@ import MostViewed from './MostViewed';
 import NotFound from './NotFound'
 import Invoice from './Invoice'
 import MasterclassDetails from './MasterclassDetails';
+import HospitalDetailsPage from './HospitalDetailsPage';
 
 // import Slick from './Custom';
 import { Switch, Route, Redirect } from 'react-router-dom';
@@ -65,6 +66,7 @@ const App = () => {
 				<Route exact path="/setting" component={Setting} />
 				<Route exact path="/doctor-details/:id" component={DoctorDetails} />
 				<Route exact path="/team-details/:id" component={TeamDetails} />
+				<Route exact path="/hospital-details/:id" component={HospitalDetailsPage} />
 				<Route exact path="/doctor-videos" component={DoctorVideos} />
 				<Route exact path="/doctor-images" component={DoctorImages} />
 				<Route exact path="/doctor-documents" component={DoctorDocuments} />

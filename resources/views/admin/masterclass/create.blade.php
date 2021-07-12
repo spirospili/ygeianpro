@@ -20,7 +20,24 @@
 
                         </div> 
                     </div>
+                    <div class="form-group row">
+                        <div class="col-lg-3">Hospital</div>
+                        <div class="col-lg-8">
+                        
+                        <select class="form-control form-select" name="hospital"  aria-label="">
+                        @foreach($hospitals as $hospital)
 
+                            <option  value="{{$hospital->id}}">{{$hospital->hospital_name}}</option>
+                    
+                        @endforeach
+
+                        </select>                            @if ($errors->has('speciality') )
+                            <span style="color:red">
+                                {{ $errors->first('speciality') }}
+                            </span>
+                            @endif
+                        </div> 
+                    </div>
                     <div class="form-group row">
                         <div class="col-lg-3">Speciality</div>
                         <div class="col-lg-8">

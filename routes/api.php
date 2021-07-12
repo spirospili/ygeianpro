@@ -27,6 +27,7 @@ Route::resource('videos', 'Frontend\VideoController');
 Route::resource('publications', 'Frontend\PublicationController');
 Route::resource('news', 'Frontend\NewsController');
 Route::resource('teams', 'Frontend\TeamController');
+Route::resource('hospitals', 'Frontend\HospitalController');
 Route::resource('events', 'Frontend\EventController');
 Route::resource('masterclasses', 'Frontend\MasterclassController');
 Route::post('contact', 'Frontend\AuthController@contact');

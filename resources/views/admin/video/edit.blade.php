@@ -27,7 +27,7 @@
                             <select name="doctor" class="form-control">
                                 <option value="">Select Doctor</option>
                                 @foreach($doctors as $doctor)
-                                <option {{ $video->doctor_id == $doctor->id ? "selected" :"" }} value="{{ $doctor->id }}">{{ $doctor->name }}</option>
+                                <option {{ $video->doctor_id == $doctor->id ? "selected" :"" }} value="{{$doctor->id}} {{$doctor->hospital_id}}">{{ $doctor->name }}</option>
                                 @endforeach
                             </select>
                             @if ($errors->has('doctor') )
