@@ -71,7 +71,7 @@ class HospitalController
             $user->notify(new PushNotification($details));
         }
         
-        return redirect()->route('admin.masterclass.index');
+        return redirect()->route('admin.hospital.index');
     }
 
     /** Edit the resource */
@@ -98,7 +98,7 @@ class HospitalController
        
                
     
-        return redirect()->route('admin.masterclass.index');
+        return redirect()->route('admin.hospital.index');
     }
 
     /**
@@ -106,9 +106,8 @@ class HospitalController
      */
     public function destroy($id)
     {
-        Masterclass::find($id)->delete();
-        Curator::where('masterclass_id', $id)->delete();
-        Subclass::where('masterclass_id', $id)->delete();
+        Hospital::find($id)->delete();
+        
         return redirect()->back();
     }
 }

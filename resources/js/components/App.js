@@ -13,6 +13,8 @@ import ViewAllDoctors from './ViewAllDoctors';
 import ViewAllPublications from './ViewAllPublications';
 import ViewAllTeams from './ViewAllTeams';
 import ViewAllMasterclasses from './ViewAllMasterclasses';
+import ViewAllHospitals from './ViewAllHospitals';
+import ViewAllSocieties from './ViewAllSocieties';
 import SignIn from './SignIn';
 import SignUp from './SignUp';
 import Forgot from './Forgot';
@@ -37,6 +39,7 @@ import NotFound from './NotFound'
 import Invoice from './Invoice'
 import MasterclassDetails from './MasterclassDetails';
 import HospitalDetailsPage from './HospitalDetailsPage';
+import SocietyDetailsPage from './SocietyDetailsPage';
 
 // import Slick from './Custom';
 import { Switch, Route, Redirect } from 'react-router-dom';
@@ -52,6 +55,8 @@ const App = () => {
 				<Route exact path="/viewalldoctors" component={ViewAllDoctors} />
 				<Route exact path="/viewallteams" component={ViewAllTeams} />
 				<Route exact path="/viewallmasterclasses" component={ViewAllMasterclasses} />
+				<Route exact path="/viewallhospitals" component={ViewAllHospitals} />
+			    <Route exact path="/viewallsocieties" component={ViewAllSocieties} />	
 				<Route exact path="/viewallpublications" component={ViewAllPublications} />
 				<Route exact path="/signin" component={SignIn} />
 				<Route exact path="/signup" component={SignUp} />
@@ -67,6 +72,7 @@ const App = () => {
 				<Route exact path="/doctor-details/:id" component={DoctorDetails} />
 				<Route exact path="/team-details/:id" component={TeamDetails} />
 				<Route exact path="/hospital-details/:id" component={HospitalDetailsPage} />
+				<Route exact path="/society-details/:id" component={SocietyDetailsPage} />
 				<Route exact path="/doctor-videos" component={DoctorVideos} />
 				<Route exact path="/doctor-images" component={DoctorImages} />
 				<Route exact path="/doctor-documents" component={DoctorDocuments} />

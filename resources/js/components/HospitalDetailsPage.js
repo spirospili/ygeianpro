@@ -230,7 +230,7 @@ function HospitalDetailsPage() {
                                     </div>
                                     <div className="col">
                                         <NavLink
-                                            to="/view-all-doctors"
+                                            to="/ViewAllDoctors"
                                             className="hvr-icon-wobble-horizontal view-all-btn"
                                         >
                                             View all{" "}
@@ -283,7 +283,7 @@ function HospitalDetailsPage() {
                                         </div>
                                         <div className="col">
                                             <NavLink
-                                                to="/view-all-doctors"
+                                                to="/ViewAllVideos"
                                                 className="hvr-icon-wobble-horizontal view-all-btn"
                                             >
                                                 View all{" "}

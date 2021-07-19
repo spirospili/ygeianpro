@@ -17,7 +17,7 @@
 </div>
 <div class="row">
     <div class="col-md-12 text-right mb-4">
-        <a href="{{ route('admin.masterclass.create') }}" class="btn btn-primary">Add Hospital</a>
+        <a href="{{ route('admin.hospital.create') }}" class="btn btn-primary">Add Hospital</a>
     </div>
     <div class="col-md-12">
         <div class="card">

@@ -215,7 +215,7 @@ function SearchData(){
                                                 <h2 class="heading-style2">Hospitals</h2>
                                             </div>
                                             <div className="col-md-3">
-                                            {<NavLink to="/viewallmasterclasses" onClick={() => scrollTo(0,0)} className="hvr-icon-wobble-horizontal view-all-btn">View all <img src={nextBlueIcon} className="img-fluid hvr-icon" alt="arrow" /></NavLink>}
+                                            {<NavLink to="/viewallhospitals" onClick={() => scrollTo(0,0)} className="hvr-icon-wobble-horizontal view-all-btn">View all <img src={nextBlueIcon} className="img-fluid hvr-icon" alt="arrow" /></NavLink>}
                                             </div>
                                         </div>
                                         <div class="row">
@@ -235,8 +235,35 @@ function SearchData(){
                                             )}
                                         </div>
                                     </div> 
+                                    <div class="medical-block">
+                                        <div class="row mb-2">
+                                            <div class="col-md-9">
+                                                <h2 class="heading-style2">Societies</h2>
+                                            </div>
+                                            <div className="col-md-3">
+                                            {<NavLink to="/viewallsocieties" onClick={() => scrollTo(0,0)} className="hvr-icon-wobble-horizontal view-all-btn">View all <img src={nextBlueIcon} className="img-fluid hvr-icon" alt="arrow" /></NavLink>}
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                        {Array.isArray(newsDetail.societies) && newsDetail.societies.map((doctor,index) =>
+                                            <div className="col-md-4">
+                                                <div className="theme-block-style">
+                                                <div className="col-md-4">
+                                                    <NavLink to={`/society-details/${doctor.id}`} onClick={() => scrollTo(0,0)}>	
+                                                        <img src={`${baseurl}/storage/${doctor.path}`} className="img-fluid" alt="doctor" />
+                                                        <h5>{doctor.society_name}</h5> 
+                                    
+                                                    </NavLink>
+                                                    </div>	
+                                                    <h4>{doctor.description}</h4>
+                                                </div>
+                                            </div>
+                                            )}
+                                        </div>
+                                    </div> 
 
                                 </div>
+                                
                             </div>
                         </div>
                     </div>

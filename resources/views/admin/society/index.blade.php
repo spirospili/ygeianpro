@@ -17,42 +17,40 @@
 </div>
 <div class="row">
     <div class="col-md-12 text-right mb-4">
-        <a href="{{ route('admin.masterclass.create') }}" class="btn btn-primary">Add Masterclass</a>
+        <a href="{{ route('admin.society.create') }}" class="btn btn-primary">Add Society</a>
     </div>
     <div class="col-md-12">
         <div class="card">
             <div class="card-body">
             <div class="table-responsive">
-                @if($masterclasses->isNotEmpty())
+                @if($societies->isNotEmpty())
                 <table class="ui celled table" id="masterclasstable">
                     <thead>
                         <tr>
                             <th></th>
                             <th>ID</th>
-                            <th>Masterclass Title</th>
-                            <th>Speciality</th>
-                            <th>Action</th>
+                            <th>Society Name</th>
+
                         </tr>
                     </thead>
                     <tbody>
-                        @foreach($masterclasses as $masterclass)
+                        @foreach($societies as $society)
                         <tr>
                             <td class="details-control"></td>
-                            <td>{{$masterclass->id}}</td>
-                            <td>{{ $masterclass->masterclass_title }}</td>
-                            <td>{{ $masterclass->speciality }}</td>
+                            <td>{{$society->id}}</td>
+                            <td>{{ $society->society_name}}</td>
                             <td>
-                                <a href="{{ route('admin.masterclass.edit', $masterclass->id) }}">
+                                <a href="{{ route('admin.society.edit', $society->id) }}">
                                     Edit
                                 </a>
                                 |
-                                <a href="{{ route('admin.masterclass.destroy', $masterclass->id) }}"
+                                <a href="{{ route('admin.society.destroy', $society->id) }}"
                                     onclick="event.preventDefault();
-                                        document.getElementById('destroy-form{{$masterclass->id}}').submit();">
+                                        document.getElementById('destroy-form{{$society->id}}').submit();">
                                     Delete
                                 </a>
 
-                                <form id="destroy-form{{$masterclass->id}}" action="{{ route('admin.masterclass.destroy', $masterclass->id) }}" method="POST" style="display: none;">
+                                <form id="destroy-form{{$society->id}}" action="{{ route('admin.society.destroy', $society->id) }}" method="POST" style="display: none;">
                                     {{ csrf_field() }}
                                     <input type="hidden" name="_method" value="DELETE" /> 
                                 </form>
@@ -62,7 +60,7 @@
                       </tbody>
                     </table>
                     @else
-                    <p class="text-center">No Masterclasses</p>
+                    <p class="text-center">No Societies</p>
                     @endif
                   </div>
             </div>

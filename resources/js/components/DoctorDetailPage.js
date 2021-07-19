@@ -38,7 +38,8 @@ function DoctorDetailPage(){
     const [followsLimit, setFollowsLimit] = useState({})
     const [masterclass, setmasterclass] = useState([])
     const [suggestedDoctors, setsuggestedDoctors] = useState([])
-    const [relatedMasterclasses, setrelatedMasterclasses] = useState([])
+    const [hospital, setHospital] = useState([])
+    const [society, setSociety] = useState([])
 
     const [team, setteams] = useState([])
     const [metadata, setMetadata] = useState([]);
@@ -70,7 +71,14 @@ function DoctorDetailPage(){
                 console.log(response.data);
                 setFollows(response.data.doctor);
                 setsuggestedDoctors(response.data.suggestedDoctors);
-
+                axios.get(`/api/hospitals/${response.data.doctor.hospital_id}`)
+                .then(response=> {
+                   setHospital(response.data);
+                });
+                axios.get(`/api/society/${response.data.doctor.society_id}`)
+                .then(response=> {
+                   setSociety(response.data);
+                });
             })
             setTrigger(false)
             axios.get(`/api/doctors/${docId}?limit=true`,{
@@ -110,6 +118,14 @@ function DoctorDetailPage(){
                 console.log(response.data);
                 setFollows(response.data.doctor)
                 setsuggestedDoctors(response.data.suggestedDoctors);
+                axios.get(`/api/hospitals/${response.data.doctor.hospital_id}`)
+                .then(response=> {
+                   setHospital(response.data);
+                });
+                axios.get(`/api/society/${response.data.doctor.society_id}`)
+                .then(response=> {
+                   setSociety(response.data);
+                });
             })
 
             axios.get(`/api/doctors/${docId}?limit=true`)
@@ -377,6 +393,46 @@ function DoctorDetailPage(){
                                    
 
                                     <div className="tab-pane fade show active" id="dr-feed" role="tabpanel">
+                                    <div className="medical-block">
+                                            <div className="row mb-2">
+                                                <div className="col">
+                                                    <h2 className="heading-style2">Hospital</h2>
+                                                </div>
+                                                <div className="col">
+                                                <h2 className="heading-style2">Society</h2> 
+                                                </div>
+                                            </div>
+                                            <div className="row mb-2">
+                                                {Array.isArray(hospital) && hospital.map((doctor, index) =>
+                                                    <div className="col">
+                                                      <div className="theme-block-style">
+                                                      <div className="col-md-4">
+                                                        <NavLink to={`/society-details/${doctor.id}`} onClick={() => scrollTo(0,0)}>	
+                                                            <img src={`${baseurl}/storage/${doctor.path}`} className="img-fluid" alt="doctor" />
+                                                            <h5>{doctor.hospital_name}</h5> 
+                                        
+                                                        </NavLink>
+                                                        </div>	
+                                                        <h4>{doctor.description}</h4>
+                                                    </div>
+                                                </div>
+                                                )}
+                                               {Array.isArray(society) && society.map((doctor, index) =>
+                                                    <div className="col">
+                                                      <div className="theme-block-style">
+                                                      <div className="col-md-4">
+                                                        <NavLink to={`/society-details/${doctor.id}`} onClick={() => scrollTo(0,0)}>	
+                                                            <img src={`${baseurl}/storage/${doctor.path}`} className="img-fluid" alt="doctor" />
+                                                            <h5>{doctor.society_name}</h5> 
+                                        
+                                                        </NavLink>
+                                                        </div>	
+                                                        <h4>{doctor.description}</h4>
+                                                    </div>
+                                                </div>
+                                                )}
+                                            </div>
+                                        </div>
                                         <div className="profile-latest-videos">
                                             <div className="row mb-2">
                                                 <div className="col-md-9">

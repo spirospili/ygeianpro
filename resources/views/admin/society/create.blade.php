@@ -5,11 +5,11 @@
     <div class="col-md-12">
         <div class="card">
             <div class="card-body">
-                <form method="post" action="{{ route('admin.masterclass.store') }}" enctype="multipart/form-data">
+                <form method="post" action="{{ route('admin.society.store') }}" enctype="multipart/form-data">
                     {{ @csrf_field() }}
-                    <div class="card-title">Masterclass Setting</div>
+                    <div class="card-title">Society Setting</div>
                     <div class="form-group row">
-                        <div class="col-lg-3">Masterclass Name</div>
+                        <div class="col-lg-3">Society Name</div>
                         <div class="col-lg-8">
                             <input type="text" class="form-control" name="name" value="{{old('name')}}">
                             @if ($errors->has('name') )
@@ -20,54 +20,31 @@
 
                         </div> 
                     </div>
-
                     <div class="form-group row">
-                        <div class="col-lg-3">Speciality</div>
+                        <div class="col-lg-3">Society Description</div>
                         <div class="col-lg-8">
-                        
-                        <select class="form-control form-select" name="speciality"  aria-label="">
-                        @foreach($specialities as $speciality)
-
-                            <option  value="{{$speciality->speciality}}">{{$speciality->speciality}}</option>
-                    
-                        @endforeach
-
-                        </select>                            @if ($errors->has('speciality') )
+                            <textarea name="description" class="form-control">{{ old('description') }}</textarea>
+                            @if ($errors->has('description') )
                             <span style="color:red">
-                                {{ $errors->first('speciality') }}
+                                {{ $errors->first('description') }}
                             </span>
                             @endif
+                            <p><small>Total 1000 words</small></p>
                         </div> 
                     </div>
 
-                    
-                    
-
-                            <div class="form-group row">
-                            <div class="col-lg-3">Add Curators</div>
-                            <div class="col-lg-8">
-                                    <div data-role="dynamic-fields">
-                                        <div class="form-inline">
-                                            <div class="form-group">
-                                            <select class="form-group form-select team" name="curators[]"  aria-label="">
-                                                    @foreach($doctors as $doctor)
-                                                         
-                                                            <option  value="{{$doctor->id}}">{{$doctor->name}}</option>
-                                                        
-                                                    @endforeach
-
-                                            </select>  
-                                            </div>
-                                            <button class="btn btn-danger" data-role="remove">
-                                                <span class="glyphicon glyphicon-remove"></span>
-                                            </button>
-                                            <button class="btn btn-primary" data-role="add">
-                                                <span class="glyphicon glyphicon-plus"></span>
-                                            </button>
-                                        </div>  <!-- /div.form-inline -->
-                                    </div>  <!-- /div[data-role="dynamic-fields"] -->
-                                </div>  <!-- /div.col-md-12 -->
-                            </div>  <!-- /div.row -->
+                    <div class="form-group row">
+                        <div class="col-lg-3">Upload Logo</div>
+                        <div class="col-lg-8">
+                            <input type="file" name="logo" />
+                            @if ($errors->has('logo') )
+                            <span style="color:red">
+                                {{ $errors->first('logo') }}
+                            </span>
+                            @endif
+                            <p><small>Supported format: JPG, JPEG, PNG</small></p>
+                        </div> 
+                    </div>
                     <input class="btn btn-primary" type="submit" value="Upload">
                     
                 </form>

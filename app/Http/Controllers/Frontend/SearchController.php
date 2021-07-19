@@ -9,6 +9,7 @@ use App\Models\File;
 use App\Models\Event;
 use App\Models\Masterclass;
 use App\Models\Hospital;
+use App\Models\Society;
 
 use Illuminate\Http\Request;
 
@@ -50,6 +51,10 @@ class SearchController
 
         $masterclasses=Masterclass::with(['subclasses'])->where('masterclass_title', 'LIKE', '%' . $request->search .'%')->limit(3)->get();
 
+        $societies= Society::when($request->search, function($query)use($request){
+            $query->where('society_name', 'LIKE', '%' . $request->search .'%');
+        })->get();        
+
         return response()->json([
             'events' => $events, 
             'videos' => $videos, 
@@ -57,7 +62,8 @@ class SearchController
             'doctors' => $doctors,
             'teams' => $teams,
             'masterclasses' => $masterclasses,
-            'hospitals' => $hospitals
+            'hospitals' => $hospitals,
+            'societies' => $societies
         ]);
     }
 
