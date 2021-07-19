@@ -54,7 +54,7 @@ class SocietyController
         ]);
         $society = Society::create([
             'society_name' => $request->name,
-            'path' => $request->file('logo') ? $request->file('logo')->store('hospitals', 'public'): null,
+            'path' => $request->file('logo') ? $request->file('logo')->store('society', 'public'): null,
             'description' => $request->description
         ]);
         
@@ -94,7 +94,7 @@ class SocietyController
             'name' => 'required|min:3|max:100', 
         ]);
 
-        $society = Society::findOrFail($id)->update(['society_name' => $request->name, 'description' => $request->description, $request->file('logo') ? $request->file('logo')->store('hospitals', 'public'): null ]);
+        $society = Society::findOrFail($id)->update(['society_name' => $request->name, 'description' => $request->description, $request->file('logo') ? $request->file('logo')->store('society', 'public'): null ]);
        
                
     
