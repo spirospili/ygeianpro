@@ -407,7 +407,7 @@ function DoctorDetailPage(){
                                                     <div className="col">
                                                       <div className="theme-block-style">
                                                       <div className="col-md-4">
-                                                        <NavLink to={`/society-details/${doctor.id}`} onClick={() => scrollTo(0,0)}>	
+                                                        <NavLink to={`/hospital-details/${doctor.id}`} onClick={() => scrollTo(0,0)}>	
                                                             <img src={`${baseurl}/storage/${doctor.path}`} className="img-fluid" alt="doctor" />
                                                             <h5>{doctor.hospital_name}</h5> 
                                         
