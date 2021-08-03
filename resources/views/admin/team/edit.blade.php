@@ -74,14 +74,16 @@
                                         <div class="form-inline">
                                             <div class="form-group">
                                             <select class="form-group form-select team" name="team_member[]"  aria-label="">
-                                                    @foreach($doctors as $doctor)
-                                                         @if($doctor->tags=="Regular")
+                                            <option  value="null"></option>
+   
+                                                 @foreach($doctors as $doctor)
+                                                         
                                                            @if($team_member->doctor_id == $doctor->id)  
                                                             <option  value="{{$doctor->id}}" selected>{{$doctor->name}}</option>
                                                            @else
                                                            <option  value="{{$doctor->id}}" >{{$doctor->name}}</option>
                                                            @endif
-                                                         @endif
+                                                         
                                                     @endforeach
 
                                             </select>  

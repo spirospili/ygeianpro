@@ -79,11 +79,12 @@ class TeamController
             'team_speciality' => $request->speciality ?? null,
             'logo_path' => $request->file('logo') ? $request->file('logo')->store('teams', 'public'): null
         ]);
+
         $added_team=Team::where('team_name', $request->name)
         ->Where('TeamLead_id', $request->lead_doctor_name)
         ->Where('team_speciality', $request->speciality ?? null)
         ->get();
-
+         
         Team_Doctors::create
         ([
                    'team_id' => $added_team[0]->team_id,
@@ -93,12 +94,14 @@ class TeamController
 
         foreach($request->team_member as $team_member)
         {
+            if($team_member!="null"){
                Team_Doctors::create
                ([
                    'team_id' => $added_team[0]->team_id,
                    'doctor_id' => $team_member,
                    'type' => "member"
                 ]);
+            }
         }
         $details = [
             'title' => 'Team Created',
@@ -155,12 +158,15 @@ class TeamController
 
         foreach($request->team_member as $team_member)
         {
+            if($team_member!="null"){
+
                Team_Doctors::create
                ([
                    'team_id' => $id,
                    'doctor_id' => $team_member,
                    'type' => "member"
                 ]);
+            }
         }
         
         return redirect()->route('admin.team.index');

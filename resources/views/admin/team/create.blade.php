@@ -64,10 +64,12 @@
                                         <div class="form-inline">
                                             <div class="form-group">
                                             <select class="form-group form-select team" name="team_member[]"  aria-label="">
-                                                    @foreach($doctors as $doctor)
-                                                         @if($doctor->tags=="Regular")
+                                            <option  value="null"></option>
+    
+                                            @foreach($doctors as $doctor)
+                                                         
                                                             <option  value="{{$doctor->id}}">{{$doctor->name}}</option>
-                                                        @endif
+                                                        
                                                     @endforeach
 
                                             </select>  
