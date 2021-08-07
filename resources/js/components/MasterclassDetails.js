@@ -29,8 +29,8 @@ function MasterclassDetails() {
               response.data.curators.map((data, index) =>{
                 axios.get(`/api/doctors/${data.doctor_id}`)
                   .then(response=> { 
-                console.log(response.data);
-                setDoctorDetail(Array => [...Array, response.data])}
+                console.log(response.data.doctor);
+                setDoctorDetail(Array => [...Array, response.data.doctor])}
               );})
             });
 },[])
