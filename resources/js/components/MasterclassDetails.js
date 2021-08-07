@@ -23,13 +23,13 @@ function MasterclassDetails() {
             'Accept' : 'application/json',
             //'Authorization': `Bearer ${userTocken}`,
         }}).then(response=> {
-        console.log("doctor follow",response);
+        console.log("doctor follow",response.data);
         setVideoDetail(response.data)
         
               response.data.curators.map((data, index) =>{
                 axios.get(`/api/doctors/${data.doctor_id}`)
                   .then(response=> { 
-                console.log(response);
+                console.log(response.data);
                 setDoctorDetail(Array => [...Array, response.data])}
               );})
             });
@@ -82,14 +82,16 @@ const displayCancelHandler=()=>{
         <div className="row">
       {Array.isArray(doctorDetail) && doctorDetail.map((data, index) =>
          index<4?
+         <a href={`/doctor-details/${data?.id}`} >	
           <div className="col-md-3">
               <div className="lead-img masterclass-detail">
                   <span>
-                      <img src={`${baseurl}/storage/${data?.path}`} className="img-fluid" alt="doctor" />
+                      <img src={`${baseurl}/storage/${data.path}`} className="img-fluid" alt="doctor" />
                   </span>
               </div>
               <h5 className="" style={{textAlign:"center"}}>{data.name}</h5>
           </div>
+          </a>
           : index==4?<div className="col-md-3">
              <div className="" onClick={()=>displayHandler()}>
                   <span><b>View All</b></span>
@@ -106,7 +108,7 @@ const displayCancelHandler=()=>{
              <h1 className="col"><b>Next Classes</b></h1>
         </div>
         <div className="row">
-        {Array.isArray(videoDetail.subclasses) && videoDetail.subclasses.map((data, index) =>
+        {Array.isArray(videoDetail?.subclasses) && videoDetail?.subclasses?.map((data, index) =>
                     videoID!=index?
                     <div className="col-md-3">
                       
