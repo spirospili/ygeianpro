@@ -52,6 +52,7 @@ function DoctorDetailPage(){
     };
     useEffect(() => {
         const userObj=JSON.parse(localStorage.getItem('appState'));
+        console.log(userObj);
         if(userObj !=null){
         setPayment(userObj.user.payment_info)
         }

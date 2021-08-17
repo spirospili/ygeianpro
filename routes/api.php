@@ -24,6 +24,7 @@ Route::resource('doctors', 'Frontend\DoctorController');
 Route::get('live/session', 'Frontend\LiveSessionController@index');
 Route::get('search', 'Frontend\SearchController@index');
 Route::resource('videos', 'Frontend\VideoController');
+Route::resource('speciality', 'Frontend\SpecialityController');
 Route::resource('publications', 'Frontend\PublicationController');
 Route::resource('news', 'Frontend\NewsController');
 Route::resource('teams', 'Frontend\TeamController');
