@@ -39,7 +39,8 @@ class AuthController
             'name' => $request->name,
             'email' => $request->email,
             'password' => bcrypt($request->password),
-            'profession' => $request->type ?? 'student'
+            'profession' => $request->type ?? 'student',
+            'speciality' => $request->speciality,
         ]);
 
         $user->save();

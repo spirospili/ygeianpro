@@ -40,7 +40,7 @@ function DoctorDetailPage(){
     const [suggestedDoctors, setsuggestedDoctors] = useState([])
     const [hospital, setHospital] = useState([])
     const [society, setSociety] = useState([])
-
+    const [speciality, setSpeciality] = useState('')
     const [team, setteams] = useState([])
     const [metadata, setMetadata] = useState([]);
     const [searchKey, setSearchKey] = useState('')
@@ -52,6 +52,7 @@ function DoctorDetailPage(){
     };
     useEffect(() => {
         const userObj=JSON.parse(localStorage.getItem('appState'));
+        console.log(userObj);
         if(userObj !=null){
         setPayment(userObj.user.payment_info)
         }
@@ -61,8 +62,15 @@ function DoctorDetailPage(){
         const docId =localStorage.getItem('doctorid')
         if(userObj !=null){
             setName(userObj.user.name)
-            const userTocken= userObj.user.access_token
+            const userTocken= userObj.user.access_token;
 
+            axios.get("/api/auth/profile",{
+            headers: {      
+                'Accept' : 'application/json',
+                'Authorization': `Bearer ${userTocken}`,
+            }})
+            .then(response => response)
+            .then(response => {setSpeciality(response.data.speciality); console.log(response.data.speciality)});
            axios.get(`/api/doctors/${docId}`,{
             headers: {      
                 'Accept' : 'application/json',

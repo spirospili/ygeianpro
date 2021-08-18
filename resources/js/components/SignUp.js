@@ -1,4 +1,4 @@
-import React, {Component} from 'react';
+import React, {Component, useEffect,useState} from 'react';
 import ReactDom from 'react-dom';
 import greylogo from "../../../public/images/grey-logo.png";
 import emailIcon from "../../../public/images/email-btn.png";
@@ -9,7 +9,7 @@ import googlePlus from "../../../public/images/google-plus.png";
 import fbIcon from "../../../public/images/facebook-btn.png";
 import { NavLink } from 'react-router-dom';
 import FlashMessage from 'react-flash-message';
-
+import axios from './api';
 class SignUp extends Component {
 
     constructor(props) {
@@ -24,7 +24,9 @@ class SignUp extends Component {
             email: '',
             password: '',
             type: '',
+            speciality:''
         },
+        specialities:[],
         redirect: props.redirect,
     };
     this.handleSubmit = this.handleSubmit.bind(this);
@@ -32,6 +34,9 @@ class SignUp extends Component {
     this.handleEmail = this.handleEmail.bind(this);
     this.handlePassword = this.handlePassword.bind(this);
     this.handleType = this.handleType.bind(this);
+    this.handleSpeciality=this.handleSpeciality.bind(this);
+    axios.get(`/api/speciality`).then(response=> {this.setState({specialities: response.data.speciality})});
+
     }
     // 2.2
     // componentWillMount, componentDidMount etc etc that have //componentStuffStuff are known as React Lifecycles which of course //you already know 
@@ -52,6 +57,10 @@ class SignUp extends Component {
         return this.props.history.push(prevLocation);
       }
     }
+    
+
+
+
     // 2.4
     handleSubmit(e) {
       e.preventDefault();
@@ -114,6 +123,14 @@ class SignUp extends Component {
       this.setState(prevState => ({
         user: {
           ...prevState.user, name: value
+        }
+      }));
+    }
+    handleSpeciality(e) {
+      let value = e.target.value;
+      this.setState(prevState => ({
+        user: {
+          ...prevState.user, speciality: value
         }
       }));
     }
@@ -203,7 +220,12 @@ class SignUp extends Component {
                                                 </span>
                                             </div>
                                         </div>
-                                        
+                                        <div className="form-group input-group">
+                                            <label>Specialities</label>
+                                            <select className="form-control" name="speciality" onChange={this.handleSpeciality} required>
+                                                {this.state.specialities.map((data, index)=> <option value={data.speciality}>{data.speciality}</option>)}
+                                            </select>
+                                        </div> 
                                         <div className="form-group input-group">
                                             <label>Profession</label>
                                             <select className="form-control" name="type" onChange={this.handleType} required>
