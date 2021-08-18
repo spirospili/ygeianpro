@@ -70,7 +70,7 @@ function DoctorDetailPage(){
                 'Authorization': `Bearer ${userTocken}`,
             }})
             .then(response => response)
-            .then(response => {setSpeciality(response.data.speciality); console.log(response.data.speciality)});
+            .then(response => {setSpeciality(response.data.speciality); console.log(response.data)});
            axios.get(`/api/doctors/${docId}`,{
             headers: {      
                 'Accept' : 'application/json',
