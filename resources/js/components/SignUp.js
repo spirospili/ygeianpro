@@ -67,17 +67,20 @@ class SignUp extends Component {
       this.setState({formSubmitting: true});
       //ReactDOM.findDOMNode(this).scrollIntoView();
       let userData = this.state.user;
+      console.log(userData);
       axios.post("/api/auth/signup", userData)
         .then(response => {
           return response;
-      }).then(json => {
+      }).then(json => { 
           if (json.data.success) {
             let userData = {
               id: json.data.id,
               name: json.data.name,
               email: json.data.email,
               activation_token: json.data.activation_token,
+              speciality: json.data.speciality,
             };
+            console.log(json.data);
             let appState = {
               isRegistered: true,
               user: userData
@@ -87,6 +90,7 @@ class SignUp extends Component {
               isRegistered: appState.isRegistered,
               user: appState.user
             });
+
             alert(`Registration completed!`);
             location.href = '/';
           } else {
@@ -127,6 +131,7 @@ class SignUp extends Component {
       }));
     }
     handleSpeciality(e) {
+      
       let value = e.target.value;
       this.setState(prevState => ({
         user: {

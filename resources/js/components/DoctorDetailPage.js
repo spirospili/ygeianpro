@@ -40,7 +40,7 @@ function DoctorDetailPage(){
     const [suggestedDoctors, setsuggestedDoctors] = useState([])
     const [hospital, setHospital] = useState([])
     const [society, setSociety] = useState([])
-    const [speciality, setSpeciality] = useState('')
+    const [speciality, setSpeciality] = useState('Diagnostic Radiology')
     const [team, setteams] = useState([])
     const [metadata, setMetadata] = useState([]);
     const [searchKey, setSearchKey] = useState('')
@@ -396,11 +396,19 @@ function DoctorDetailPage(){
                                     </span>
                                 </div>
                             </form>
-
+                            
+                            <ul className="nav nav-pills mb-3" id="pills-tab"  role="tablist">
+                                <li className="nav-item col" role="presentation">
+                                    <button className="col nav-link active" id="pills-General-tab" data-bs-toggle="pill" data-bs-target="#pills-General" type="button" role="tab" aria-controls="pills-General" aria-selected="true">General</button>
+                                </li>
+                                <li className="nav-item col" role="presentation">
+                                    <button className=" col nav-link" id="pills-Speciality-tab" data-bs-toggle="pill" data-bs-target="#pills-Speciality" type="button" role="tab" aria-controls="pills-Speciality" aria-selected="false">Speciality</button>
+                                </li>
+                            </ul>
                                 <div className="tab-content" id="nav-tabContent">
-                                   
-
-                                    <div className="tab-pane fade show active" id="dr-feed" role="tabpanel">
+                                
+                                   <div className="tab-pane fade show active" id="pills-General" aria-labelledby="pills-General-tab" role="tabpanel">
+                                <div className="tab-pane fade show active" id="dr-feed" role="tabpanel">
                                     <div className="medical-block">
                                             <div className="row mb-2">
                                                 <div className="col">
@@ -950,10 +958,563 @@ function DoctorDetailPage(){
                                                 )}
                                             </div>
                                         </div>		
+                                     </div>
+                                    </div>
+                                    <div className="tab-pane fade" id="pills-Speciality" aria-labelledby="pills-Speciality-tab" role="tabpanel">
+                                    <div className="tab-pane fade show active" id="dr-feed" role="tabpanel">
+                                    <div className="medical-block">
+                                            <div className="row mb-2">
+                                                <div className="col">
+                                                    <h2 className="heading-style2">Hospital</h2>
+                                                </div>
+                                                <div className="col">
+                                                <h2 className="heading-style2">Society</h2> 
+                                                </div>
+                                            </div>
+                                            <div className="row mb-2">
+                                                {Array.isArray(hospital) && hospital.map((doctor, index) =>
+                                                    <div className="col">
+                                                      <div className="theme-block-style">
+                                                      <div className="col-md-4">
+                                                        <NavLink to={`/hospital-details/${doctor.id}`} onClick={() => scrollTo(0,0)}>	
+                                                            <img src={`${baseurl}/storage/${doctor.path}`} className="img-fluid" alt="doctor" />
+                                                            <h5>{doctor.hospital_name}</h5> 
+                                        
+                                                        </NavLink>
+                                                        </div>	
+                                                        <h4>{doctor.description}</h4>
+                                                    </div>
+                                                </div>
+                                                )}
+                                               {Array.isArray(society) && society.map((doctor, index) =>
+                                                    <div className="col">
+                                                      <div className="theme-block-style">
+                                                      <div className="col-md-4">
+                                                        <NavLink to={`/society-details/${doctor.id}`} onClick={() => scrollTo(0,0)}>	
+                                                            <img src={`${baseurl}/storage/${doctor.path}`} className="img-fluid" alt="doctor" />
+                                                            <h5>{doctor.society_name}</h5> 
+                                        
+                                                        </NavLink>
+                                                        </div>	
+                                                        <h4>{doctor.description}</h4>
+                                                    </div>
+                                                </div>
+                                                )}
+                                            </div>
+                                        </div>
+                                        <div className="profile-latest-videos">
+                                            <div className="row mb-2">
+                                                <div className="col-md-9">
+                                                    <h2 className="heading-style2">Latest <span>Videos</span></h2>
+                                                </div>
+                                                <div className="col-md-3">
+                                                  <a id="dr-video-tab" onClick={tabActive} data-toggle="tab" href="#dr-video" role="tab" aria-controls="dr-video" aria-selected="true" className="hvr-icon-wobble-horizontal view-all-btn nav-item nav-link">
+                                                    View all <img src={nextBlueIcon} className="img-fluid hvr-icon" alt="arrow" />
+                                                </a>
+                                                </div>
+                                            </div>
+                                            <div className="row">
+                                                {Array.isArray(followsLimit.videos) && followsLimit.videos.filter(data => data.name.includes(searchKey)).map((data, index) =>
+                                                    <div className="col-md-4">
+                                                        <div className="theme-block-style">
+
+
+                                                            {(() => {
+                                                                
+                                                                if (payment && data.type == 'paid') {
+                                                                    return (
+                                                                        <NavLink to={`/video-detail/${data.id}`}>
+                                                                            <video width="100%" className="videoHeight"
+                                                                            onLoadedMetadata={e => {
+                                                                                
+                                                                                duration=e.target.duration;
+    
+                                                                                setMetadata(
+                                                                    
+                                                                                  Array => [...Array, duration]
+                                                                                  
+                                                                                );
+                                                                              }} 
+                                                                               poster={`${baseurl}/storage/${data.video.jpg}`}>
+                                                                                <source
+                                                                                    src={`${baseurl}/storage/${data.video}`}
+                                                                                    type="video/mp4"
+                                                                                    />
+                                                                            </video>
+                                                                        </NavLink>
+                                                                    )
+                                                                } else if (!payment && data.type == 'paid') {
+                                                                    return (
+                                                                        <img
+                                                                            src={`${baseurl}/storage/${data.video}.jpg`}
+                                                                            style={{width: "100%"}}/>
+                                                                    )
+                                                                } else {
+                                                                    return (
+                                                                        <NavLink to={`/video-detail/${data.id}`}>
+                                                                            {localStorage.setItem('videourl' + data.id, data.video)}
+                                                                            {localStorage.setItem('videoTitle' + data.id, data.name)}
+                                                                            <video width="100%" className="videoHeight"
+                                                                                   poster={`${baseurl}/storage/${data.video}.jpg`}
+                                                                                   onLoadedMetadata={e => {
+                                                                                    
+                                                                                    const el1 = document.querySelector("#index"+index)
+                                                                                    duration=e.target.duration; 
+                                                                                    setMetadata(
+                                                                                    
+                                                                                         Array => [...Array, duration]
+                                                                                    );
+
+                                                                                   
+
+
+                                                                                  }}
+                                                                            >
+                                                                                <source
+                                                                                    src={`${baseurl}/storage/${data.video}`}
+                                                                                    type="video/mp4"/>
+                                                                            </video>
+                                    
+                                                                        </NavLink>
+                                                                    )
+                                                                }
+                                                            })()}
+                                                           
+                                                            
+                                                            
+                                                            <h4>{data.name}</h4>
+                                                            <p style={pStyle}> {data.description.length > 50 ? data.description.substring(0, 50) : data.description} {data.description.length > 50 ? "..." : ""}</p>
+                                                            {metadata.length===followsLimit.videos.length? (
+                                                            
+                                                            
+                                                                <p style={pStyle}>
+                                                                    <b>Duration:</b> {(parseInt(metadata[index]/60)) +" min"} 
+                                                                </p>
+                                                            
+                                                            ):""}
+                                                            <p style={pStyle}> <b>Published date:</b> {data.created_at.split("T")[0]}</p>
+                                                            <p className="doctor-subscribe">{!payment && data.type == 'paid' ? 'Subscribe to watch video' : ''}</p>
+                                                            <ul className="block-style">
+                                                                <li onClick={() => VideoFun(data.id, "like")}>
+                                                                    {localStorage.getItem('likeint' + data.id) < 2 ?
+                                                                        <img src={likeIcon} className="img-fluid"
+                                                                             alt="icon"/> :
+                                                                        <img src={likeFIllIcon} className="img-fluid"
+                                                                             alt="icon"/>
+                                                                    }
+                                                                    <h6>{data.likes}</h6>
+                                                                </li>
+                                                                <li onClick={() => VideoFun(data.id, "share")}>
+                                                                    <img src={shareIcon} className="img-fluid"
+                                                                         alt="icon"/>
+                                                                    <h6>{data.shares}</h6>
+                                                                    <input id={`urlCOyLInk${data.id}`} readOnly
+                                                                           type="text" className="hideinput"
+                                                                           value={baseurl + '/storage/' + data.video}/>
+                                                                </li>
+                                                            </ul>
+                                                        </div>
+                                                    </div>
+                                                )}
+                                            </div>
+                                        </div>
+                                        {suggestedDoctors.length>0?
+                                        <div className="medical-block" >
+                                            <div className="row mb-2">
+                                                <div className="col-md-9">
+                                                    <h2 className="heading-style2"><span>Suggested Doctors</span></h2>
+                                                </div>
+                                                
+                                            </div>
+                                            <div className="row mb-5">
+                                                {Array.isArray(suggestedDoctors) && suggestedDoctors.map((doctor, index) =>
+                                                    <div className="col-md-4">
+                                                    <a href={`/doctor-details/${doctor.id}`} >	
+                                                    
+                                                        <img src={`${baseurl}/storage/${doctor.path}`} className="img-fluid" alt="doctor" />
+                                                        <h5>{doctor.name}</h5> 
+                                                        {doctor.speciality}	
+                                                    </a>
+                                                    <p>{doctor.description}</p>
+                                                </div>
+                                                )}
+
+                                            </div>
+                                        </div>:""}
+
+                                        <div className="medical-block">
+                                            <div className="row mb-2">
+                                                <div className="col-md-9">
+                                                    <h2 className="heading-style2">Doctor <span>Images</span></h2>
+                                                </div>
+                                                <div className="col-md-3">
+                                                   <a  id="dr-img-tab" onClick={tabActive} data-toggle="tab" href="#dr-img" role="tab" aria-controls="dr-img" aria-selected="true" className="hvr-icon-wobble-horizontal view-all-btn nav-item nav-link">View all <img src={nextBlueIcon} className="img-fluid hvr-icon" alt="arrow" /></a>
+                                                </div>
+                                            </div>
+                                            <div className="row mb-5">
+                                                {Array.isArray(followsLimit.images) && followsLimit.images.filter(data => data.name.includes(searchKey)).map((data, index) =>
+                                                    <div className="col-md-4">
+                                                        <div className="medical-list theme-block-style">
+                                                            <NavLink to="#" data-toggle="modal"
+                                                                     data-target={'#imageModal-' + data.id}>
+                                                                <img src={`${baseurl}/storage/${data.image}`}
+                                                                     className="img-fluid" alt="doctor"/>
+                                                            </NavLink>
+                                                            <h4>{data.name}</h4>
+                                                            <p style={pStyle}> {data.description.length > 50 ? data.description.substring(0, 50) : data.description} {data.description.length > 50 ? "..." : ""}</p>
+                                                            <ul className="block-style">
+                                                                <li onClick={() => ImageFun(data.id, "like")}>
+                                                                    {localStorage.getItem('likeinti' + data.id) < 2 ?
+                                                                        <img src={likeIcon} className="img-fluid"
+                                                                             alt="icon"/> :
+                                                                        <img src={likeFIllIcon} className="img-fluid"
+                                                                             alt="icon"/>
+                                                                    }
+                                                                    <h6>{data.likes}</h6>
+                                                                </li>
+                                                                <li onClick={() => ImageFun(data.id, "share")}>
+                                                                    <img src={shareIcon} className="img-fluid" alt="icon"/>
+                                                                    <h6>{data.shares}</h6>
+                                                                    <input id={`urlImageLink${data.id}`} readOnly
+                                                                           type="text" className="hideinput"
+                                                                           value={baseurl + '/storage/' + data.image}/>
+                                                                </li>
+
+
+                                                            </ul>
+                                                        </div>
+                                                    </div>
+                                                )}
+
+                                            </div>
+                                        </div>
+
+                                        <div className="medical-block">
+                                            <div className="row mb-2">
+                                                <div className="col-md-9">
+                                                    <h2 className="heading-style2">Teams</h2>
+                                                </div>
+                                                <div className="col-md-3">
+                                                   <a  id="dr-team-tab" onClick={tabActive} data-toggle="tab" href="#dr-team" role="tab" aria-controls="dr-team" aria-selected="true" className="hvr-icon-wobble-horizontal view-all-btn nav-item nav-link">View all <img src={nextBlueIcon} className="img-fluid hvr-icon" alt="arrow" /></a>
+                                                </div>
+                                            </div>
+                                            <div className="row mb-5">
+                                                {Array.isArray(team) && team.filter(data => data[0]?.team_name.includes(searchKey) && data[0]?.speciality===speciality).map((data, index) =>
+                                                     data[0] ?
+                                                    <div className="col-md-4">
+                                                    <NavLink to={`/team-details/${data[0]?.team_id}`} onClick={() => scrollTo(0,0)}>	
+                                                        <img src={`${baseurl}/storage/${data[0]?.path}`} className="img-fluid" alt="doctor" />
+                                                        <h5>{data[0]?.team_name}</h5> 
+                                                        {data[0]?.speciality}	
+                                                    </NavLink>
+                                                    <p>{data[0]?.name}</p>
+                                                </div>:""
+                                                )}
+
+                                            </div>
+                                        </div>
+
+                                        <div className="medical-block">
+                                            <div className="row mb-2">
+                                                <div className="col-md-9">
+                                                    <h2 className="heading-style2">Master<span>class</span></h2>
+                                                </div>
+                                                <div className="col-md-3">
+                                                   <a  id="dr-masterclass-tab" onClick={tabActive} data-toggle="tab" href="#dr-masterclass" role="tab" aria-controls="dr-masterclass" aria-selected="true" className="hvr-icon-wobble-horizontal view-all-btn nav-item nav-link">View all <img src={nextBlueIcon} className="img-fluid hvr-icon" alt="arrow" /></a>
+                                                </div>
+                                            </div>
+                                            <div className="row mb-5">
+                                            {Array.isArray(masterclass) && masterclass.filter(data => data.masterclass_title.includes(searchKey) && data.speciality===speciality).map((doctor,index) =>
+                                            <div className="col-md-4">
+                                                <div className="theme-block-style">
+                                                    <NavLink to={`/masterclass-detail/${doctor.id}/0`}>
+                                                        {/* {localStorage.setItem('videourl'+data.id,data.video)}
+                                                        {localStorage.setItem('videoTitle'+data.id,data.name)} */}
+                                                        <video width="100%" className="videoHeight" >
+                                                            <source src={`${baseurl}/storage/${doctor?.subclasses[0]?.path}`} type="video/mp4" />
+                                                        </video>								
+                                                    </NavLink>	
+                                                    <h4>{doctor.masterclass_title}</h4>
+                                                </div>
+                                            </div>
+                                            )}
+
+                                            </div>
+                                        </div>
+
+                                        <div className="medical-block">
+                                            <div className="row mb-2">
+                                                <div className="col-md-9">
+                                                    <h2 className="heading-style2">Medical <span>Publications</span>
+                                                    </h2>
+                                                </div>
+                                                <div className="col-md-3">
+                                                    <a  id="dr-document-tab" onClick={tabActive} data-toggle="tab" href="#dr-document" role="tab" aria-controls="dr-document" aria-selected="true" className="hvr-icon-wobble-horizontal view-all-btn nav-item nav-link">View all <img src={nextBlueIcon} className="img-fluid hvr-icon" alt="arrow" /></a>
+                                                </div>
+                                            </div>
+                                            <div className="row">
+                                                {Array.isArray(follows.publications) && follows.publications.filter(data => data.name.includes(searchKey)).map((data, index) =>
+                                                    <div className="col-md-4">
+                                                        <div className="theme-block-style medical-list">
+                                                            <iframe src={`${baseurl}/storage/${data.path}`} width="100%"
+                                                                    height="280" frameBorder="0"
+                                                                    allowFullScreen></iframe>
+                                                            <NavLink to="#" data-toggle="modal"
+                                                                     data-target={'#publicationModal-' + data.id}>
+                                                                <h4>{data.name}</h4>
+                                                            </NavLink>
+                                                            <ul className="block-style">
+                                                                <li onClick={() => publicationFunc(data.id, "like")}>
+                                                                    {localStorage.getItem('likeintp' + data.id) < 2 ?
+                                                                        <img src={likeIcon} className="img-fluid"
+                                                                             alt="icon"/> :
+                                                                        <img src={likeFIllIcon} className="img-fluid"
+                                                                             alt="icon"/>
+                                                                    }
+                                                                    <h6>{data.likes}</h6>
+                                                                </li>
+                                                                <li onClick={() => publicationFunc(data.id, "share")}>
+                                                                    <img src={shareIcon} className="img-fluid"
+                                                                         alt="icon"/>
+                                                                    <h6>{data.shares}</h6>
+                                                                    <input id={`urlImgLInk${data.id}`} readOnly
+                                                                           type="text"
+                                                                           value={baseurl + '/storage/' + data.path}
+                                                                           className="hideinput"/>
+                                                                </li>
+                                                            </ul>
+
+                                                        </div>
+                                                    </div>
+                                                )}
+                                            </div>
+                                        </div>
+                                    </div>
+                                    
+
+                                    <div className="tab-pane fade" id="dr-video" role="tabpanel" aria-labelledby="dr-video-tab">
+                                        <div class="profile-latest-videos">
+                                            <div class="row mb-2">
+                                                <div class="col-md-9">
+                                                    <h2 class="heading-style2">Latest <span>Videos</span></h2>
+                                                </div>
+                                                <div className="col-md-3">
+                                                {/*<NavLink to="/ViewAllVideos" onClick={() => scrollTo(0,0)} className="hvr-icon-wobble-horizontal view-all-btn">
+                                                    View all <img src={nextBlueIcon} className="img-fluid hvr-icon" alt="arrow" />
+                                                </NavLink>*/}
+                                                </div>
+                                            </div>
+                                            <div className="row">
+                                            {Array.isArray(follows.videos) && follows.videos.map((data,index) =>
+
+                                                <div className="col-md-4">
+                                                    <div className="theme-block-style">
+
+                                                        {(() => {
+                                                            if (payment && data.type == 'paid') {
+                                                                    return (
+                                                                        <NavLink to={`/video-detail/${data.id}`}>
+                                                                        <video width="100%" className="videoHeight"  preload="metadata"
+                                                                               poster={`${baseurl}/storage/${data.video}.jpg`}
+                                                                        >
+                                                                            
+                                                                            <source
+                                                                                src={`${baseurl}/storage/${data.video}`}
+
+                                                                                type="video/mp4" />
+                                                                        </video>
+                                                                        </NavLink>
+                                                                    )
+                                                                } else if (!payment && data.type == 'paid') {
+                                                                    return (
+                                                                        <img src={`${baseurl}/storage/${data.video}.jpg`} style={{width: "100%"}} />
+                                                                    )
+                                                                } else {
+                                                                    return (
+                                                                        <NavLink to={`/video-detail/${data.id}`}>
+                                                                            {localStorage.setItem('videourl'+data.id,data.video)}
+                                                                            {localStorage.setItem('videoTitle'+data.id,data.name)}
+                                                                            <video width="100%" className="videoHeight"
+                                                                                   poster={`${baseurl}/storage/${data.video}.jpg`}
+                                                                                   
+                                                                            >
+                                                                                <source
+                                                                                    src={`${baseurl}/storage/${data.video}`}
+                                                                                    type="video/mp4" />
+                                                                            </video>                                                            
+                                                                        </NavLink>
+                                                                    )
+                                                                }
+                                                            })()}
+
+                                                        <h4>{data.name}</h4>
+                                                        <p  style={pStyle}> {data.description.length > 50 ? data.description.substring(0,50) :  data.description} {data.description.length > 50 ? "..." : ""}</p>
+							<p className="doctor-subscribe">{!payment && data.type == 'paid' ? 'Subscribe to watch video' : ''}</p>
+							<ul className="block-style">
+                                                            <li onClick={()=>VideoFun(data.id,"like")}>
+                                                                { localStorage.getItem('likeint'+data.id)<2?
+                                                                <img src={likeIcon} className="img-fluid" alt="icon" />:
+                                                                <img src={likeFIllIcon} className="img-fluid" alt="icon" />
+                                                                }
+                                                                <h6>{data.likes}</h6>
+                                                            </li>
+                                                            <li onClick={()=>VideoFun(data.id,"share")} >
+                                                                <img src={shareIcon} className="img-fluid" alt="icon" />
+                                                                <h6>{data.shares}</h6>
+                                                                <input id={`urlCOyLInk${data.id}`} readOnly type="text" className="hideinput" value={baseurl+'/storage/'+data.video}/>
+                                                            </li>
+                                                        </ul>
+                                                    </div>
+                                                </div>
+                                            )}
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div className="tab-pane fade" id="dr-images" role="tabpanel" aria-labelledby="dr-img-tab">
+                                        <div class="medical-block">
+                                            <div class="row mb-2">
+                                                <div class="col-md-9">
+                                                    <h2 class="heading-style2">Doctor <span>Images</span></h2>
+                                                </div>
+                                                <div className="col-md-3">
+                                                    {/*<NavLink to="#" className="hvr-icon-wobble-horizontal view-all-btn">View all <img src={nextBlueIcon} className="img-fluid hvr-icon" alt="arrow" /></NavLink>*/}
+                                                </div>
+                                            </div>
+                                            <div class="row mb-5">
+                                                {Array.isArray(followsLimit.images) && followsLimit.images.map((data,index) =>
+                                                <div className="col-md-4">
+                                                    <div className="medical-list theme-block-style">
+                                                        <NavLink to="#" data-toggle="modal"  data-target={'#imageModal-'+data.id}>
+                                                            <img src={`${baseurl}/storage/${data.image}`} className="img-fluid" alt="doctor" />										
+                                                        </NavLink>
+                                                        <h4>{data.name}</h4>
+                                                        <p  style={pStyle}> {data.description.length > 50 ? data.description.substring(0,50) :  data.description} {data.description.length > 50 ? "..." : ""}</p>
+                                                        <ul className="block-style">
+                                                            <li onClick={()=>ImageFun(data.id,"like")}>
+                                                                { localStorage.getItem('likeinti'+data.id)<2?
+                                                                <img src={likeIcon} className="img-fluid" alt="icon" />:
+                                                                <img src={likeFIllIcon} className="img-fluid" alt="icon" />
+                                                                }
+                                                                <h6>{data.likes}</h6>
+                                                            </li>
+                                                            <li onClick={()=>ImageFun(data.id,"share")} >
+                                                                <img src={shareIcon} className="img-fluid" alt="icon" />
+                                                                <h6>{data.shares}</h6>
+                                                                <input id={`urlImageLink${data.id}`} readOnly type="text" className="hideinput" value={baseurl+'/storage/'+data.image}/>
+                                                            </li>
+
+
+                                                        </ul>
+                                                    </div>
+                                                </div>
+                                                )}
+                                                
+                                            </div>
+                                        </div>
+                                        </div>
+
+                                        <div className="tab-pane fade" id="dr-team" role="tabpanel" aria-labelledby="dr-team-tab">
+                                        <div class="medical-block">
+                                            <div class="row mb-2">
+                                                <div class="col-md-9">
+                                                    <h2 class="heading-style2">Teams</h2>
+                                                </div>
+                                                <div className="col-md-3">
+                                                    {/*<NavLink to="#" className="hvr-icon-wobble-horizontal view-all-btn">View all <img src={nextBlueIcon} className="img-fluid hvr-icon" alt="arrow" /></NavLink>*/}
+                                                </div>
+                                            </div>
+                                            <div class="row mb-5">
+                                            {Array.isArray(team) && team.map((data, index) =>
+                                            data[0] ?
+                                                    <div className="col-md-4">
+                                                    <NavLink to={`/team-details/${data[0]?.team_id}`} onClick={() => scrollTo(0,0)}>	
+                                                        <img src={`${baseurl}/storage/${data[0]?.path}`} className="img-fluid" alt="doctor" />
+                                                        <h5>{data[0]?.team_name}</h5> 
+                                                        {data[0]?.speciality}	
+                                                    </NavLink>
+                                                    <p>{data[0]?.name}</p>
+                                                </div>:""
+                                                )}
+                                                
+                                            </div>
+                                        </div>	
+
+                                    </div>
+
+                                    <div className="tab-pane fade" id="dr-masterclass" role="tabpanel" aria-labelledby="dr-masterclass-tab">
+                                        <div class="medical-block">
+                                            <div class="row mb-2">
+                                                <div class="col-md-9">
+                                                    <h2 class="heading-style2">Master<span>classes</span></h2>
+                                                </div>
+                                                <div className="col-md-3">
+                                                    {/*<NavLink to="#" className="hvr-icon-wobble-horizontal view-all-btn">View all <img src={nextBlueIcon} className="img-fluid hvr-icon" alt="arrow" /></NavLink>*/}
+                                                </div>
+                                            </div>
+                                            <div class="row mb-5">
+                                            {Array.isArray(masterclass) && masterclass.map((doctor, index) =>
+                                                <div className="col-md-4">
+                                                  <div className="theme-block-style">
+                                                      <NavLink to={`/masterclass-detail/${doctor.id}/0`}>
+                                                          {/* {localStorage.setItem('videourl'+data.id,data.video)}
+                                                          {localStorage.setItem('videoTitle'+data.id,data.name)} */}
+                                                          <video width="100%" className="videoHeight" >
+                                                              <source src={`${baseurl}/storage/${doctor?.subclasses[0]?.path}`} type="video/mp4" />
+                                                          </video>								
+                                                      </NavLink>	
+                                                      <h4>{doctor.masterclass_title}</h4>
+                                                  </div>
+                                              </div>
+                                                )}
+                                                
+                                            </div>
+                                        </div>
+
+
+                                    </div>
+
+                                    <div className="tab-pane fade" id="dr-document" role="tabpanel" aria-labelledby="dr-document-tab">
+                                        <div class="medical-block">
+                                            <div class="row mb-2">
+                                                <div class="col-md-9">
+                                                    <h2 class="heading-style2">Medical <span>Publications</span></h2>
+                                                </div>
+                                                <div className="col-md-3">
+                                                {/*<NavLink to="/ViewAllPublications" onClick={() => scrollTo(0,0)} className="hvr-icon-wobble-horizontal view-all-btn">View all <img src={nextBlueIcon} className="img-fluid hvr-icon" alt="arrow" /></NavLink>*/}
+                                                </div>
+                                            </div>
+                                            <div class="row">
+                                                {Array.isArray(follows.publications) && follows.publications.map((data,index) =>
+                                                <div className="col-md-4">
+                                                    <div className="theme-block-style medical-list">
+                                                    <iframe src={`${baseurl}/storage/${data.path}`} width="100%" height="280" frameborder="0" allowfullscreen></iframe>
+                                                        <NavLink to="#" data-toggle="modal"  data-target={'#publicationModal-'+data.id}>
+                                                            <h4>{data.name}</h4>
+                                                        </NavLink>
+                                                        <ul className="block-style">
+                                                            <li onClick={()=>publicationFunc(data.id,"like")}>
+                                                                { localStorage.getItem('likeintp'+data.id)<2?
+                                                                    <img src={likeIcon} className="img-fluid" alt="icon" />:
+                                                                    <img src={likeFIllIcon} className="img-fluid" alt="icon" />
+                                                                    }
+                                                                <h6>{data.likes}</h6>
+                                                            </li>
+                                                            <li onClick={()=>publicationFunc(data.id,"share")}>
+                                                                <img src={shareIcon} className="img-fluid" alt="icon" />
+                                                                <h6>{data.shares}</h6>
+                                                                <input id={`urlImgLInk${data.id}`} readOnly type="text" value={baseurl+'/storage/'+data.path} className="hideinput"/>
+                                                            </li>
+                                                        </ul>
+                                                        
+                                                    </div>
+                                                </div>
+                                                )}
+                                            </div>
+                                        </div>		
                                     </div>
                                     
                                     
-                                
+                                </div>
                             </div>
                         </div>
                     </div>

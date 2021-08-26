@@ -32,9 +32,10 @@ class AuthController
         $request->validate([
             'name' => 'required|string',
             'email' => 'required|string|email|unique:users',
-            'password' => 'required|string'
+            'password' => 'required|string',
+            'speciality' => 'required|string',
         ]);
-
+        
         $user = new User([
             'name' => $request->name,
             'email' => $request->email,
@@ -56,6 +57,7 @@ class AuthController
             'id' => $user->id,
             'name' => $user->name,
             'email' => $user->email,
+            'speciality' => $user->speciality,
         ], 201);
     }
 
