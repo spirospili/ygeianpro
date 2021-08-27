@@ -40,7 +40,7 @@ function DoctorDetailPage(){
     const [suggestedDoctors, setsuggestedDoctors] = useState([])
     const [hospital, setHospital] = useState([])
     const [society, setSociety] = useState([])
-    const [speciality, setSpeciality] = useState('Diagnostic Radiology')
+    const [speciality, setSpeciality] = useState('No Speciality')
     const [team, setteams] = useState([])
     const [metadata, setMetadata] = useState([]);
     const [searchKey, setSearchKey] = useState('')
@@ -231,6 +231,8 @@ function DoctorDetailPage(){
         document.getElementById("dr-team-tab").classList.remove("active");
         document.getElementById("dr-masterclass-tab").classList.remove("active");
         document.getElementById("dr-document-tab").classList.remove("active");
+        document.getElementById("pills-General-tab").classList.remove("active");
+        document.getElementById("pills-Speciality-tab").classList.remove("active");
        
 
         document.getElementById(e.target.id).classList.add("active");
@@ -399,10 +401,10 @@ function DoctorDetailPage(){
                             
                             <ul className="nav nav-pills mb-3" id="pills-tab"  role="tablist">
                                 <li className="nav-item col" role="presentation">
-                                    <button className="col nav-link active" id="pills-General-tab" data-bs-toggle="pill" data-bs-target="#pills-General" type="button" role="tab" aria-controls="pills-General" aria-selected="true">General</button>
+                                    <button className="col nav-link active" id="pills-General-tab" onClick={tabActive} data-bs-toggle="pill" data-bs-target="#pills-General" type="button" role="tab" aria-controls="pills-General" aria-selected="true">General</button>
                                 </li>
                                 <li className="nav-item col" role="presentation">
-                                    <button className=" col nav-link" id="pills-Speciality-tab" data-bs-toggle="pill" data-bs-target="#pills-Speciality" type="button" role="tab" aria-controls="pills-Speciality" aria-selected="false">Speciality</button>
+                                    <button className=" col nav-link" id="pills-Speciality-tab" onClick={tabActive} data-bs-toggle="pill" data-bs-target="#pills-Speciality" type="button" role="tab" aria-controls="pills-Speciality" aria-selected="false">{speciality}</button>
                                 </li>
                             </ul>
                                 <div className="tab-content" id="nav-tabContent">
