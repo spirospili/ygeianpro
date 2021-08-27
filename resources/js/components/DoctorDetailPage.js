@@ -401,10 +401,10 @@ function DoctorDetailPage(){
                             
                             <ul className="nav nav-pills mb-3" id="pills-tab"  role="tablist">
                                 <li className="nav-item col" role="presentation">
-                                    <button className="col nav-link active" id="pills-General-tab" onClick={tabActive} data-bs-toggle="pill" data-bs-target="#pills-General" type="button" role="tab" aria-controls="pills-General" aria-selected="true">General</button>
+                                    <button className="col nav-link active" id="pills-General-tab" onClick={tabActive} data-toggle="tab" href="#pills-General" type="button" role="tab" aria-controls="pills-General" aria-selected="true">General</button>
                                 </li>
                                 <li className="nav-item col" role="presentation">
-                                    <button className=" col nav-link" id="pills-Speciality-tab" onClick={tabActive} data-bs-toggle="pill" data-bs-target="#pills-Speciality" type="button" role="tab" aria-controls="pills-Speciality" aria-selected="false">{speciality}</button>
+                                    <button className=" col nav-link" id="pills-Speciality-tab" onClick={tabActive} data-toggle="tab" href="#pills-Speciality" type="button" role="tab" aria-controls="pills-Speciality" aria-selected="true">{speciality}</button>
                                 </li>
                             </ul>
                                 <div className="tab-content" id="nav-tabContent">
