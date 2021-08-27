@@ -1016,7 +1016,7 @@ function DoctorDetailPage(){
                                                 </div>
                                             </div>
                                             <div className="row">
-                                                {Array.isArray(followsLimit.videos) && followsLimit.videos.filter(data => data.name.includes(searchKey) || follows.speciality===speciality).map((data, index) =>
+                                                {Array.isArray(followsLimit.videos) && followsLimit.videos.filter(data => data.name.includes(searchKey) && follows.speciality===speciality).map((data, index) =>
                                                     <div className="col-md-4">
                                                         <div className="theme-block-style">
 
@@ -1154,7 +1154,7 @@ function DoctorDetailPage(){
                                                 </div>
                                             </div>
                                             <div className="row mb-5">
-                                                {Array.isArray(followsLimit.images) && followsLimit.images.filter(data => data.name.includes(searchKey)|| follows.speciality===speciality).map((data, index) =>
+                                                {Array.isArray(followsLimit.images) && followsLimit.images.filter(data => data.name.includes(searchKey)&& follows.speciality===speciality).map((data, index) =>
                                                     <div className="col-md-4">
                                                         <div className="medical-list theme-block-style">
                                                             <NavLink to="#" data-toggle="modal"
@@ -1255,7 +1255,7 @@ function DoctorDetailPage(){
                                                 </div>
                                             </div>
                                             <div className="row">
-                                                {Array.isArray(follows.publications) && follows.publications.filter(data => data.name.includes(searchKey)|| follows.speciality===speciality).map((data, index) =>
+                                                {Array.isArray(follows.publications) && follows.publications.filter(data => data.name.includes(searchKey)&& follows.speciality===speciality).map((data, index) =>
                                                     <div className="col-md-4">
                                                         <div className="theme-block-style medical-list">
                                                             <iframe src={`${baseurl}/storage/${data.path}`} width="100%"
