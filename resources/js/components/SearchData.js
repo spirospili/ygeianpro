@@ -36,6 +36,7 @@ function SearchData(){
                             <div className="col-md-9">
                                 <div className="right-content-area">
                                     <TopSearchAndFilter  />
+                                    
                                     <div class="profile-latest-videos">
                                         <div class="row mb-2">
                                             <div class="col-md-9">

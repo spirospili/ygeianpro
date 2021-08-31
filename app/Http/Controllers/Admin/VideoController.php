@@ -50,6 +50,8 @@ class VideoController
             'description' => 'nullable|max:1000'
         ]);
         $doctor=explode(" ", $request->doctor);
+        $add = Doctor::findOrFail($doctor[0]);
+
         $video = Video::create([
             'name' => $request->title,
             'doctor_id' => $doctor[0] ?? null,
@@ -57,7 +59,8 @@ class VideoController
             'description' => $request->description,
             'video' => $request->file('video')->store('videos', 'public'),
             'type' => $request->type,
-            'hospital_id' => $doctor[1] ?? null 
+            'hospital_id' => $doctor[1] ?? null,
+            'speciality' => $add->speciality
             ]);
 
 	$video_path = "http://www.ygeianpro.com/storage/".$video->video;

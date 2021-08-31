@@ -49,13 +49,15 @@ class PublicationController
             'publication' => 'required|mimes:pdf',
         ]);
         $doctor=explode(" ", $request->doctor);
+        $add = Doctor::findOrFail($doctor[0]);
 
         $publication = Publication::create([
             'name' => $request->title,
             'doctor_id' => $doctor[0] ?? null,
             'tags' => $request->tags ?? null,
             'path' => $request->file('publication')->store('publications', 'public'),
-            'hospital_id' => $doctor[1] ?? null
+            'hospital_id' => $doctor[1] ?? null,
+            'speciality' => $add->speciality
         ]);
 
         $details = [
@@ -93,7 +95,7 @@ class PublicationController
             'title' => 'required|min:3|max:100',
             'publication' => 'mimes:pdf|max:5048',
         ]);
-
+        
         $publication = Publication::findOrFail($id);
         $publication->name = $request->title;
         $publication->tags = $request->tags;
