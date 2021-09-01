@@ -36,7 +36,7 @@ class Feed extends React.Component {
                 'Authorization': `Bearer ${userTocken}`,
             }})
         .then(response => response)
-        .then(response => this.setState({ profile : response.data, speciality:response.data.speciality }));
+        .then(response => {this.setState({ profile : response.data, speciality:response.data.speciality }); console.log(response.data)});
         
     }
 
