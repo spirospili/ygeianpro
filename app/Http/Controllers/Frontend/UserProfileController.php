@@ -36,7 +36,7 @@ class UserProfileController
             },
             'notifications' => function($q){
             $q->whereNull('read_at');
-        },'doctors.speciality'])->find(auth()->user()->id);
+        },'doctors'])->find(auth()->user()->id);
     }
 
     /**
