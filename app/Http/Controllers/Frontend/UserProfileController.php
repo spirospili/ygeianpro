@@ -22,7 +22,7 @@ class UserProfileController
             return $user->unreadNotifications->markAsRead();
         }
         if($request->likes)
-        return User::with(['videos', 'publications'])->find(auth()->user()->id);
+        return User::with(['videos', 'publications', 'speciality'])->find(auth()->user()->id);
         else
         return  User::with([
             'doctors.videos' => function($q){
@@ -36,7 +36,7 @@ class UserProfileController
             },
             'notifications' => function($q){
             $q->whereNull('read_at');
-        }])->find(auth()->user()->id);
+        },'speciality'])->find(auth()->user()->id);
     }
 
     /**
