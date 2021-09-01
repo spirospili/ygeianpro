@@ -176,10 +176,9 @@ class Feed extends React.Component {
         
         document.getElementById("pills-General-tab").classList.remove("active");
         document.getElementById("pills-Speciality-tab").classList.remove("active");
-        document.getElementById("pills-General-tab").style.display = "none";       
-        document.getElementById("pills-General-tab").style.display = "none";
+        
         document.getElementById(e.target.id).classList.add("active");
-        document.getElementById(e.target.id).style.display = "block";
+        
         scrollTo(0,0)
     }
 
@@ -206,6 +205,7 @@ class Feed extends React.Component {
                                             <button className=" col nav-link" id="pills-Speciality-tab" onClick={this.tabActive} data-toggle="tab" href="#pills-Speciality" type="button" role="tab" aria-controls="pills-Speciality" aria-selected="true">{speciality}</button>
                                         </li>
                                     </ul> 
+                                <div className="tab-content">
                                     {profile.doctors && profile.doctors.length?
                                         <>
                                  <div className="tab-pane fade show active" id="pills-General" aria-labelledby="pills-General-tab" role="tabpanel">
@@ -545,6 +545,7 @@ class Feed extends React.Component {
                                 </div>
                             </div>
                         </div>
+                    </div>
                     </div>
                 </section>
 
