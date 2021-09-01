@@ -199,10 +199,10 @@ class Feed extends React.Component {
                                     <TopSearchAndFilter  />
                                     <ul className="nav nav-pills mb-3" id="pills-tab"  role="tablist">
                                         <li className="nav-item col" role="presentation">
-                                            <button className="col nav-link active" id="pills-General-tab" onClick={tabActive} data-toggle="tab" href="#pills-General" type="button" role="tab" aria-controls="pills-General" aria-selected="true">General</button>
+                                            <button className="col nav-link active" id="pills-General-tab" onClick={this.tabActive} data-toggle="tab" href="#pills-General" type="button" role="tab" aria-controls="pills-General" aria-selected="true">General</button>
                                         </li>
                                         <li className="nav-item col" role="presentation">
-                                            <button className=" col nav-link" id="pills-Speciality-tab" onClick={tabActive} data-toggle="tab" href="#pills-Speciality" type="button" role="tab" aria-controls="pills-Speciality" aria-selected="true">{speciality}</button>
+                                            <button className=" col nav-link" id="pills-Speciality-tab" onClick={this.tabActive} data-toggle="tab" href="#pills-Speciality" type="button" role="tab" aria-controls="pills-Speciality" aria-selected="true">{speciality}</button>
                                         </li>
                                     </ul> 
                                     {profile.doctors && profile.doctors.length?
