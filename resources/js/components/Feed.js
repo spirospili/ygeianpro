@@ -176,9 +176,10 @@ class Feed extends React.Component {
         
         document.getElementById("pills-General-tab").classList.remove("active");
         document.getElementById("pills-Speciality-tab").classList.remove("active");
-       
-
+        document.getElementById("pills-General-tab").style.display = "none";       
+        document.getElementById("pills-General-tab").style.display = "none";
         document.getElementById(e.target.id).classList.add("active");
+        document.getElementById(e.target.id).style.display = "block";
         scrollTo(0,0)
     }
 
@@ -459,9 +460,9 @@ class Feed extends React.Component {
                                         <h5>Doctor’s you have followed haven’t share medical publications.</h5>
                                         }
                                         </>
-                                        {Array.isArray(profile.doctors) && profile.doctors.map((doctor,index) =>
+                                        {Array.isArray(profile.doctors) && profile.doctors.filter(data => data.speciality===speciality).map((doctor,index) =>
                                         <>
-                                        {Array.isArray(doctor.publications) && doctor.publications.filter(data => data.speciality===speciality).map((data,index) =>
+                                        {Array.isArray(doctor.publications) && doctor.publications.map((data,index) =>
                                             <div className="col-md-4">
                                                 <div className="theme-block-style medical-list">
                                                     <iframe src={`${baseurl}/storage/${data.path}`} width="100%" height="280" frameborder="0" allowfullscreen></iframe>
