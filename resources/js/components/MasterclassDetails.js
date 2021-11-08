@@ -2,7 +2,7 @@ import React,{useEffect,useState} from 'react'
 import InnerPageHeader from './InnerPageHeader';
 import { NavLink,useParams } from 'react-router-dom';
 import EmailOverlay from './EmailOverlay';
-
+import ReactPlayer from "react-player";
 function MasterclassDetails() {
   let { id, videoID } = useParams();
   const [videoDetail, setVideoDetail] = useState({});
@@ -61,12 +61,13 @@ const displayCancelHandler=()=>{
       <section className="content-section" style={{margin:"auto", width:"85%"}}>
       <div className="col">
       <h2 className="heading-style1 text-center">{videoDetail.masterclass_title} <span></span></h2>
-
-        {videoDetail.subclasses?
-      <video width="100%" autoPlay controls>
-        <source src={`${baseurl}/storage/${videoDetail.subclasses[videoID].path}`} type="video/mp4" />
-      </video> 
+      {videoDetail.subclasses?
+        <ReactPlayer
+        width="100%"
+        url={"https://www.youtube.com/watch?v="+videoDetail.subclasses[videoID].path}
+      />
       :""}
+    
       <div className="row border-box">
       {Array.isArray(videoDetail.subclasses) && videoDetail.subclasses.map((data, index) =>
       videoID==index?
@@ -121,7 +122,8 @@ const displayCancelHandler=()=>{
                                         <NavLink to={`/masterclass-detail/${id}/${index}`}>
                                             {/* {localStorage.setItem('videourl' + data.id, data.path)}
                                             {localStorage.setItem('videoTitle' + data.id, data.video_title)} */}
-                                             <video width="100%" className="videoHeight"
+                                            
+                                             {/* <video width="100%" className="videoHeight"
                                                onLoadedMetadata={e => {
                                                                                     
                                                 const el1 = document.querySelector("#index"+index)
@@ -133,13 +135,14 @@ const displayCancelHandler=()=>{
                                               }}
                                              >
                                                   <source src={`${baseurl}/storage/${data?.path}`} type="video/mp4"/>
-                                             </video>	
+                                             </video>	 */}
+                                  <img width="100%" className="videoHeight" src={"https://img.youtube.com/vi/"+data?.path+"/sddefault.jpg"}/>
                                         </NavLink>
                                     )
                             })()}
 
                             <h4 style={{textAlign:"center"}}>{data.video_title}</h4>
-                            {metadata.length===videoDetail.subclasses.length-1? (
+                            {/* {metadata.length===videoDetail.subclasses.length-1? (
                                                             
                                                             
                                                             <p style={pStyle}>
@@ -148,7 +151,7 @@ const displayCancelHandler=()=>{
                                                         
                                                         ):""}
                                                         <p style={pStyle}> <b>Published date:</b> {data.created_at.split("T")[0]}</p>
-                            {/* <p style={pStyle}> {data.description.length > 50 ? data.description.substring(0, 50) : data.description} {data.description.length > 50 ? "..." : ""}</p> */}
+                            <p style={pStyle}> {data.description.length > 50 ? data.description.substring(0, 50) : data.description} {data.description.length > 50 ? "..." : ""}</p> */}
                   
                         </div>
                     </div>:""

@@ -57,19 +57,19 @@ class VideoController
             'doctor_id' => $doctor[0] ?? null,
             'tags' => $request->tags ?? null,
             'description' => $request->description,
-            'video' => $request->file('video')->store('videos', 'public'),
+            'video' => $request->video,
             'type' => $request->type,
             'hospital_id' => $doctor[1] ?? null,
             'speciality' => $add->speciality
             ]);
 
-	$video_path = "http://www.ygeianpro.com/storage/".$video->video;
-        //$path = "storage/".explode('.', $video->video)[0].".jpg";
-	$path = "storage/".$video->video.".jpg";
-        //$shell = shell_exec("ffmpeg -i http://www.ygeianpro.com/storage/".$video->video." -ss 00:00:01.000 -vframes 1 http://ygeianpro.com/storage/". explode('.', $video->video)[0].".jpg");
-        $exec = exec("ffmpeg -i $video_path -ss 00:00:01.000 -vframes 1 $path 2>&1");
-        //$new = shell_exec("ffmpeg -i $video_path -ss 00:00:01 -vframes 1 $path 2>&1");
-//dd($exec);
+// 	$video_path = "http://www.ygeianpro.com/storage/".$video->video;
+//         //$path = "storage/".explode('.', $video->video)[0].".jpg";
+// 	$path = "storage/".$video->video.".jpg";
+//         //$shell = shell_exec("ffmpeg -i http://www.ygeianpro.com/storage/".$video->video." -ss 00:00:01.000 -vframes 1 http://ygeianpro.com/storage/". explode('.', $video->video)[0].".jpg");
+//         $exec = exec("ffmpeg -i $video_path -ss 00:00:01.000 -vframes 1 $path 2>&1");
+//         //$new = shell_exec("ffmpeg -i $video_path -ss 00:00:01 -vframes 1 $path 2>&1");
+// //dd($exec);
 
 	$details = [
             'title' => 'Video Uploaded',
@@ -108,8 +108,8 @@ class VideoController
         $video->name = $request->title;
         $video->tags = $request->tags;
         $video->description = $request->description;
-        if($request->file('video'))
-            $video->video = $request->file('video')->store('videos', 'public'); 
+        if($request->video)
+            $video->video = $request->video; 
         $video->save();
 
         return redirect()->route('admin.video.index');

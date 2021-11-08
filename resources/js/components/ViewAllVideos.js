@@ -145,30 +145,21 @@ class ViewAllVideos extends Component {
                                         if (this.state.isLoggedIn && this.state.user.payment_info && video.type == 'paid') {
                                             return (
                                                 <NavLink to={`/video-detail/${video.id}`}>
-                                                    <video width="100%" className="videoHeight"    poster={`${baseurl}/storage/${video.video}.jpg`}>
-                                                        <source
-                                                            src={`${baseurl}/storage/${video.video}`}
-                                                            type="video/mp4"/>
-                                                    </video>
+                                                    <img width="100%" className="videoHeight" src={"https://img.youtube.com/vi/"+video.video+"/sddefault.jpg"}/>
                                                 </NavLink>
                                             )
                                         } else if (!(this.state.isLoggedIn && this.state.user.payment_info) && video.type == 'paid') {
                                             return (
-                                                <img
-                                                    src={`${baseurl}/storage/${video.video}.jpg`}
-                                                    style={{width: "100%"}}/>
+                                                <img width="100%" className="videoHeight" src={"https://img.youtube.com/vi/"+video.video+"/sddefault.jpg"}/>
+
                                             )
                                         } else {
                                             return (
                                                 <NavLink to={`/video-detail/${video.id}`}>
                                                     {localStorage.setItem('videourl' + video.id, video.video)}
                                                     {localStorage.setItem('videoTitle' + video.id, video.name)}
-                                                    <video width="100%" className="videoHeight"  poster={`${baseurl}/storage/${video.video}.jpg`}>
-                                                        <source
-                                                            src={`${baseurl}/storage/${video.video}`}
+                                                    <img width="100%" className="videoHeight" src={"https://img.youtube.com/vi/"+video.video+"/sddefault.jpg"}/>
 
-                                                            type="video/mp4"/>
-                                                    </video>
                                                 </NavLink>
                                             )
                                         }

@@ -473,7 +473,7 @@ function DoctorDetailPage(){
                                                                 if (payment && data.type == 'paid') {
                                                                     return (
                                                                         <NavLink to={`/video-detail/${data.id}`}>
-                                                                            <video width="100%" className="videoHeight"
+                                                                            {/* <video width="100%" className="videoHeight"
                                                                             onLoadedMetadata={e => {
                                                                                 
                                                                                 duration=e.target.duration;
@@ -489,21 +489,22 @@ function DoctorDetailPage(){
                                                                                     src={`${baseurl}/storage/${data.video}`}
                                                                                     type="video/mp4"
                                                                                     />
-                                                                            </video>
+                                                                            </video> */}
+                                                                        <img width="100%" className="videoHeight" src={"https://img.youtube.com/vi/"+data.video+"/sddefault.jpg"}/>
+
                                                                         </NavLink>
                                                                     )
                                                                 } else if (!payment && data.type == 'paid') {
                                                                     return (
-                                                                        <img
-                                                                            src={`${baseurl}/storage/${data.video}.jpg`}
-                                                                            style={{width: "100%"}}/>
+                                                                        <img width="100%" className="videoHeight" src={"https://img.youtube.com/vi/"+data.video+"/sddefault.jpg"}/>
+
                                                                     )
                                                                 } else {
                                                                     return (
                                                                         <NavLink to={`/video-detail/${data.id}`}>
                                                                             {localStorage.setItem('videourl' + data.id, data.video)}
                                                                             {localStorage.setItem('videoTitle' + data.id, data.name)}
-                                                                            <video width="100%" className="videoHeight"
+                                                                            {/* <video width="100%" className="videoHeight"
                                                                                    poster={`${baseurl}/storage/${data.video}.jpg`}
                                                                                    onLoadedMetadata={e => {
                                                                                     
@@ -522,8 +523,9 @@ function DoctorDetailPage(){
                                                                                 <source
                                                                                     src={`${baseurl}/storage/${data.video}`}
                                                                                     type="video/mp4"/>
-                                                                            </video>
-                                    
+                                                                            </video> */}
+                                                <img width="100%" className="videoHeight" src={"https://img.youtube.com/vi/"+data.video+"/sddefault.jpg"}/>
+
                                                                         </NavLink>
                                                                     )
                                                                 }
@@ -533,14 +535,14 @@ function DoctorDetailPage(){
                                                             
                                                             <h4>{data.name}</h4>
                                                             <p style={pStyle}> {data.description.length > 50 ? data.description.substring(0, 50) : data.description} {data.description.length > 50 ? "..." : ""}</p>
-                                                            {metadata.length===followsLimit.videos.length? (
+                                                            {/* {metadata.length===followsLimit.videos.length? (
                                                             
                                                             
                                                                 <p style={pStyle}>
                                                                     <b>Duration:</b> {(parseInt(metadata[index]/60)) +" min"} 
                                                                 </p>
                                                             
-                                                            ):""}
+                                                            ):""} */}
                                                             <p style={pStyle}> <b>Published date:</b> {data.created_at.split("T")[0]}</p>
                                                             <p className="doctor-subscribe">{!payment && data.type == 'paid' ? 'Subscribe to watch video' : ''}</p>
                                                             <ul className="block-style">
@@ -679,9 +681,11 @@ function DoctorDetailPage(){
                                                     <NavLink to={`/masterclass-detail/${doctor.id}/0`}>
                                                         {/* {localStorage.setItem('videourl'+data.id,data.video)}
                                                         {localStorage.setItem('videoTitle'+data.id,data.name)} */}
-                                                        <video width="100%" className="videoHeight" >
+                                                        <img width="100%" className="videoHeight" src={"https://img.youtube.com/vi/"+doctor?.subclasses[0]?.path+"/sddefault.jpg"}/>
+
+                                                        {/* <video width="100%" className="videoHeight" >
                                                             <source src={`${baseurl}/storage/${doctor?.subclasses[0]?.path}`} type="video/mp4" />
-                                                        </video>								
+                                                        </video>								 */}
                                                     </NavLink>	
                                                     <h4>{doctor.masterclass_title}</h4>
                                                 </div>
@@ -763,7 +767,7 @@ function DoctorDetailPage(){
                                                             if (payment && data.type == 'paid') {
                                                                     return (
                                                                         <NavLink to={`/video-detail/${data.id}`}>
-                                                                        <video width="100%" className="videoHeight"  preload="metadata"
+                                                                        {/* <video width="100%" className="videoHeight"  preload="metadata"
                                                                                poster={`${baseurl}/storage/${data.video}.jpg`}
                                                                         >
                                                                             
@@ -771,26 +775,32 @@ function DoctorDetailPage(){
                                                                                 src={`${baseurl}/storage/${data.video}`}
 
                                                                                 type="video/mp4" />
-                                                                        </video>
+                                                                        </video> */}
+                                                                    <img width="100%" className="videoHeight" src={"https://img.youtube.com/vi/"+data.video+"/sddefault.jpg"}/>
+
                                                                         </NavLink>
                                                                     )
                                                                 } else if (!payment && data.type == 'paid') {
                                                                     return (
-                                                                        <img src={`${baseurl}/storage/${data.video}.jpg`} style={{width: "100%"}} />
+                                                                        <img width="100%" className="videoHeight" src={"https://img.youtube.com/vi/"+data.video+"/sddefault.jpg"}/>
+
+                                                                        // <img src={`${baseurl}/storage/${data.video}.jpg`} style={{width: "100%"}} />
                                                                     )
                                                                 } else {
                                                                     return (
                                                                         <NavLink to={`/video-detail/${data.id}`}>
                                                                             {localStorage.setItem('videourl'+data.id,data.video)}
                                                                             {localStorage.setItem('videoTitle'+data.id,data.name)}
-                                                                            <video width="100%" className="videoHeight"
+                                                                            {/* <video width="100%" className="videoHeight"
                                                                                    poster={`${baseurl}/storage/${data.video}.jpg`}
                                                                                    
                                                                             >
                                                                                 <source
                                                                                     src={`${baseurl}/storage/${data.video}`}
                                                                                     type="video/mp4" />
-                                                                            </video>                                                            
+                                                                            </video>                                                             */}
+                                                                        <img width="100%" className="videoHeight" src={"https://img.youtube.com/vi/"+data.video+"/sddefault.jpg"}/>
+
                                                                         </NavLink>
                                                                     )
                                                                 }
@@ -907,9 +917,11 @@ function DoctorDetailPage(){
                                                       <NavLink to={`/masterclass-detail/${doctor.id}/0`}>
                                                           {/* {localStorage.setItem('videourl'+data.id,data.video)}
                                                           {localStorage.setItem('videoTitle'+data.id,data.name)} */}
-                                                          <video width="100%" className="videoHeight" >
+                                                          {/* <video width="100%" className="videoHeight" >
                                                               <source src={`${baseurl}/storage/${doctor?.subclasses[0]?.path}`} type="video/mp4" />
-                                                          </video>								
+                                                          </video>								 */}
+                                                                                                              <img width="100%" className="videoHeight" src={"https://img.youtube.com/vi/"+doctor?.subclasses[0]?.path+"/sddefault.jpg"}/>
+
                                                       </NavLink>	
                                                       <h4>{doctor.masterclass_title}</h4>
                                                   </div>
@@ -1026,7 +1038,7 @@ function DoctorDetailPage(){
                                                                 if (payment && data.type == 'paid') {
                                                                     return (
                                                                         <NavLink to={`/video-detail/${data.id}`}>
-                                                                            <video width="100%" className="videoHeight"
+                                                                            {/* <video width="100%" className="videoHeight"
                                                                             onLoadedMetadata={e => {
                                                                                 
                                                                                 duration=e.target.duration;
@@ -1042,21 +1054,25 @@ function DoctorDetailPage(){
                                                                                     src={`${baseurl}/storage/${data.video}`}
                                                                                     type="video/mp4"
                                                                                     />
-                                                                            </video>
+                                                                            </video> */}
+                                                                        <img width="100%" className="videoHeight" src={"https://img.youtube.com/vi/"+data.video+"/sddefault.jpg"}/>
+
                                                                         </NavLink>
                                                                     )
                                                                 } else if (!payment && data.type == 'paid') {
                                                                     return (
-                                                                        <img
-                                                                            src={`${baseurl}/storage/${data.video}.jpg`}
-                                                                            style={{width: "100%"}}/>
+                                                                        // <img
+                                                                        //     src={`${baseurl}/storage/${data.video}.jpg`}
+                                                                        //     style={{width: "100%"}}/>
+                                                                        <img width="100%" className="videoHeight" src={"https://img.youtube.com/vi/"+data.video+"/sddefault.jpg"}/>
+
                                                                     )
                                                                 } else {
                                                                     return (
                                                                         <NavLink to={`/video-detail/${data.id}`}>
                                                                             {localStorage.setItem('videourl' + data.id, data.video)}
                                                                             {localStorage.setItem('videoTitle' + data.id, data.name)}
-                                                                            <video width="100%" className="videoHeight"
+                                                                            {/* <video width="100%" className="videoHeight"
                                                                                    poster={`${baseurl}/storage/${data.video}.jpg`}
                                                                                    onLoadedMetadata={e => {
                                                                                     
@@ -1076,7 +1092,9 @@ function DoctorDetailPage(){
                                                                                     src={`${baseurl}/storage/${data.video}`}
                                                                                     type="video/mp4"/>
                                                                             </video>
-                                    
+                                     */}
+                                    <img width="100%" className="videoHeight" src={"https://img.youtube.com/vi/"+data.video+"/sddefault.jpg"}/>
+
                                                                         </NavLink>
                                                                     )
                                                                 }
@@ -1086,14 +1104,14 @@ function DoctorDetailPage(){
                                                             
                                                             <h4>{data.name}</h4>
                                                             <p style={pStyle}> {data.description.length > 50 ? data.description.substring(0, 50) : data.description} {data.description.length > 50 ? "..." : ""}</p>
-                                                            {metadata.length===followsLimit.videos.length? (
+                                                            {/* {metadata.length===followsLimit.videos.length? (
                                                             
                                                             
                                                                 <p style={pStyle}>
                                                                     <b>Duration:</b> {(parseInt(metadata[index]/60)) +" min"} 
                                                                 </p>
                                                             
-                                                            ):""}
+                                                            ):""} */}
                                                             <p style={pStyle}> <b>Published date:</b> {data.created_at.split("T")[0]}</p>
                                                             <p className="doctor-subscribe">{!payment && data.type == 'paid' ? 'Subscribe to watch video' : ''}</p>
                                                             <ul className="block-style">
@@ -1232,9 +1250,11 @@ function DoctorDetailPage(){
                                                     <NavLink to={`/masterclass-detail/${doctor.id}/0`}>
                                                         {/* {localStorage.setItem('videourl'+data.id,data.video)}
                                                         {localStorage.setItem('videoTitle'+data.id,data.name)} */}
-                                                        <video width="100%" className="videoHeight" >
+                                                        {/* <video width="100%" className="videoHeight" >
                                                             <source src={`${baseurl}/storage/${doctor?.subclasses[0]?.path}`} type="video/mp4" />
-                                                        </video>								
+                                                        </video>								 */}
+                                                    <img width="100%" className="videoHeight" src={"https://img.youtube.com/vi/"+doctor?.subclasses[0]?.path+"/sddefault.jpg"}/>
+
                                                     </NavLink>	
                                                     <h4>{doctor.masterclass_title}</h4>
                                                 </div>
@@ -1316,7 +1336,7 @@ function DoctorDetailPage(){
                                                             if (payment && data.type == 'paid') {
                                                                     return (
                                                                         <NavLink to={`/video-detail/${data.id}`}>
-                                                                        <video width="100%" className="videoHeight"  preload="metadata"
+                                                                        {/* <video width="100%" className="videoHeight"  preload="metadata"
                                                                                poster={`${baseurl}/storage/${data.video}.jpg`}
                                                                         >
                                                                             
@@ -1324,26 +1344,32 @@ function DoctorDetailPage(){
                                                                                 src={`${baseurl}/storage/${data.video}`}
 
                                                                                 type="video/mp4" />
-                                                                        </video>
+                                                                        </video> */}
+                                                                <img width="100%" className="videoHeight" src={"https://img.youtube.com/vi/"+data.video+"/sddefault.jpg"}/>
+
                                                                         </NavLink>
                                                                     )
                                                                 } else if (!payment && data.type == 'paid') {
                                                                     return (
-                                                                        <img src={`${baseurl}/storage/${data.video}.jpg`} style={{width: "100%"}} />
-                                                                    )
+                                                                        // <img src={`${baseurl}/storage/${data.video}.jpg`} style={{width: "100%"}} />
+                                                                        <img width="100%" className="videoHeight" src={"https://img.youtube.com/vi/"+data.video+"/sddefault.jpg"}/>
+
+                                                                        )
                                                                 } else {
                                                                     return (
                                                                         <NavLink to={`/video-detail/${data.id}`}>
                                                                             {localStorage.setItem('videourl'+data.id,data.video)}
                                                                             {localStorage.setItem('videoTitle'+data.id,data.name)}
-                                                                            <video width="100%" className="videoHeight"
+                                                                            {/* <video width="100%" className="videoHeight"
                                                                                    poster={`${baseurl}/storage/${data.video}.jpg`}
                                                                                    
                                                                             >
                                                                                 <source
                                                                                     src={`${baseurl}/storage/${data.video}`}
                                                                                     type="video/mp4" />
-                                                                            </video>                                                            
+                                                                            </video>                                                             */}
+                                                                        <img width="100%" className="videoHeight" src={"https://img.youtube.com/vi/"+data.video+"/sddefault.jpg"}/>
+
                                                                         </NavLink>
                                                                     )
                                                                 }
@@ -1460,9 +1486,11 @@ function DoctorDetailPage(){
                                                       <NavLink to={`/masterclass-detail/${doctor.id}/0`}>
                                                           {/* {localStorage.setItem('videourl'+data.id,data.video)}
                                                           {localStorage.setItem('videoTitle'+data.id,data.name)} */}
-                                                          <video width="100%" className="videoHeight" >
+                                                          {/* <video width="100%" className="videoHeight" >
                                                               <source src={`${baseurl}/storage/${doctor?.subclasses[0]?.path}`} type="video/mp4" />
-                                                          </video>								
+                                                          </video>								 */}
+                                                    <img width="100%" className="videoHeight" src={"https://img.youtube.com/vi/"+doctor?.subclasses[0]?.path+"/sddefault.jpg"}/>
+
                                                       </NavLink>	
                                                       <h4>{doctor.masterclass_title}</h4>
                                                   </div>

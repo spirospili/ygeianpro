@@ -52,16 +52,16 @@
                     </div>
 
                     <div class="form-group row">
-                        <div class="col-lg-3">Upload Video</div>
-                        <div class="col-lg-8">
-                            <input type="file" name="video" />
-                            @if ($errors->has('video') )
-                            <span style="color:red">
-                                {{ $errors->first('video') }}
+                            <div class="col-lg-3">Video Link:</div>
+                            <div class="col-lg-8">
+                                <input type="text" class="form-control" name="video" value="{{old('video')}}" required>
+                                @if ($errors->has('title') )
+                                    <span style="color:red">
+                                {{ $errors->first('title') }}
                             </span>
-                            @endif
-                        </div> 
-                    </div>
+                                @endif
+                            </div>
+                        </div>
                     
                     <input class="btn btn-primary" type="submit" value="Update Video">
                     

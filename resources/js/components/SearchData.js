@@ -56,7 +56,7 @@ function SearchData(){
                                                     <NavLink to={`/video-detail/${data.id}`}>
                                                         {localStorage.setItem('videourl'+data.id,data.video)}
                                                         {localStorage.setItem('videoTitle'+data.id,data.name)}
-                                                        <video width="100%" className="videoHeight"                    
+                                                        {/* <video width="100%" className="videoHeight"                    
                                                                         onLoadedMetadata={e => {        
                                                                                 duration=e.target.duration;
     
@@ -67,17 +67,18 @@ function SearchData(){
                                                                                 );
                                                                               }} >
                                                             <source src={`${baseurl}/storage/${data.video}`} type="video/mp4" />
-                                                        </video>								
+                                                        </video>								 */}
+                                            <img width="100%" className="videoHeight" src={"https://img.youtube.com/vi/"+data.video+"/sddefault.jpg"}/>
                                                     </NavLink>	
                                                     <h4>{data.name}</h4>
-                                                    {metadata.length===newsDetail.videos.length? (
+                                                    {/* {metadata.length===newsDetail.videos.length? (
                                                             
                                                             
                                                             <p >
                                                                 <b>Duration:</b> {(parseInt(metadata[index]/60)) +" min"} 
                                                             </p>
                                                         
-                                                        ):""}
+                                                        ):""} */}
                                                     <p > <b>Published date:</b> {data.created_at.split("T")[0]}</p>
 
                                                     <ul className="block-style">
@@ -200,9 +201,10 @@ function SearchData(){
                                                     <NavLink to={`/masterclass-detail/${doctor.id}/0`}>
                                                         {/* {localStorage.setItem('videourl'+data.id,data.video)}
                                                         {localStorage.setItem('videoTitle'+data.id,data.name)} */}
-                                                        <video width="100%" className="videoHeight" >
+                                                        {/* <video width="100%" className="videoHeight" >
                                                             <source src={`${baseurl}/storage/${doctor?.subclasses[0]?.path}`} type="video/mp4" />
-                                                        </video>								
+                                                        </video>								 */}
+                                        <img width="100%" className="videoHeight" src={"https://img.youtube.com/vi/"+doctor?.subclasses[0]?.path+"/sddefault.jpg"}/>
                                                     </NavLink>	
                                                     <h4>{doctor.masterclass_title}</h4>
                                                 </div>

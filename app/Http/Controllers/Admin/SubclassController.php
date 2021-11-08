@@ -54,16 +54,10 @@ class SubclassController
         $subclass=Subclass::create([
             'masterclass_id' => $request->masterclass,
             'video_title' => $request->title,
-            'path' => $request->file('video')->store('masterclaseses', 'public'),
+            'path' => $request->video,
             'description' =>$request->description,
          ]);
-         $video_path = "http://localhost:8000/storage/".$subclass->path;
-                 //$path = "storage/".explode('.', $video->video)[0].".jpg";
-             $path = "storage/".$subclass->path.".jpg";
-                 //$shell = shell_exec("ffmpeg -i http://www.ygeianpro.com/storage/".$video->video." -ss 00:00:01.000 -vframes 1 http://ygeianpro.com/storage/". explode('.', $video->video)[0].".jpg");
-                 $exec = exec("ffmpeg -i $video_path -ss 00:00:01.000 -vframes 1 $path 2>&1");
-                 //$new = shell_exec("ffmpeg -i $video_path -ss 00:00:01 -vframes 1 $path 2>&1");
-         //dd($exec);
+         
 
 
 	$details = [
@@ -97,8 +91,8 @@ class SubclassController
         $video = Subclass::findOrFail($id);
         $video->video_title = $request->title;
         $video->description = $request->description;
-        if($request->file('video'))
-            $video->path = $request->file('video')->store('masterclasses', 'public'); 
+        $video->path = $request->video; 
+        
         $video->save();
 
         return redirect()->route('admin.subclass.index');

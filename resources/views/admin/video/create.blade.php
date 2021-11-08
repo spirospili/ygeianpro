@@ -78,21 +78,14 @@
                         </div>
 
                         <div class="form-group row">
-                            <div class="col-lg-3">Upload Video</div>
+                            <div class="col-lg-3">Video Link:</div>
                             <div class="col-lg-8">
-                                <input type="file" name="video" required />
-                                <br>
-                                <br>
-                                <div class="progress d-none">
-                                    <div class="bar"></div >
-                                    <div class="percent">0%</div >
-                                </div>
-                                @if ($errors->has('video') )
+                                <input type="text" class="form-control" name="video" value="{{old('video')}}" required>
+                                @if ($errors->has('title') )
                                     <span style="color:red">
-                                {{ $errors->first('video') }}
+                                {{ $errors->first('title') }}
                             </span>
                                 @endif
-                                <p><small>Supported format: MP4</small></p>
                             </div>
                         </div>
 

@@ -236,21 +236,27 @@ class Feed extends React.Component {
                                                             {localStorage.setItem('videourl'+data.id,data.video)}
                                                             {localStorage.setItem('videoTitle'+data.id,data.name)}
                                                             {this.state.user.payment_info && data.type == 'paid'?
-                                                            <video width="100%" className="videoHeight" >
-                                                                <source
-																	src={`${baseurl}/storage/${data.video}`}
-																	poster={`${baseurl}/storage/${data.video}.jpg`}
-																	type="video/mp4" />
-                                                            </video> : 
+                                                            // <video width="100%" className="videoHeight" >
+                                                            //     <source
+															// 		src={`${baseurl}/storage/${data.video}`}
+															// 		poster={`${baseurl}/storage/${data.video}.jpg`}
+															// 		type="video/mp4" />
+                                                            // </video>
+                                                            <img width="100%" className="videoHeight" src={"https://img.youtube.com/vi/"+data?.video+"/sddefault.jpg"}/>
+ 
+                                                            : 
                                                             null								
                                                             }
                                                             {data.type == 'free'?
-                                                            <video width="100%" className="videoHeight" >
-                                                                <source
-																	src={`${baseurl}/storage/${data.video}`}
-																	poster={`${baseurl}/storage/${data.video}.jpg`}
-																		type="video/mp4" />
-                                                            </video>: 
+                                                            // <video width="100%" className="videoHeight" >
+                                                            //     <source
+															// 		src={`${baseurl}/storage/${data.video}`}
+															// 		poster={`${baseurl}/storage/${data.video}.jpg`}
+															// 			type="video/mp4" />
+                                                            // </video>
+                                                            <img width="100%" className="videoHeight" src={"https://img.youtube.com/vi/"+data?.video+"/sddefault.jpg"}/>
+
+                                                            : 
                                                             null								
                                                             }	
 
@@ -401,21 +407,27 @@ class Feed extends React.Component {
                                                             {localStorage.setItem('videourl'+data.id,data.video)}
                                                             {localStorage.setItem('videoTitle'+data.id,data.name)}
                                                             {this.state.user.payment_info && data.type == 'paid'?
-                                                            <video width="100%" className="videoHeight" >
-                                                                <source
-																	src={`${baseurl}/storage/${data.video}`}
-																	poster={`${baseurl}/storage/${data.video}.jpg`}
-																	type="video/mp4" />
-                                                            </video> : 
+                                                            // <video width="100%" className="videoHeight" >
+                                                            //     <source
+															// 		src={`${baseurl}/storage/${data.video}`}
+															// 		poster={`${baseurl}/storage/${data.video}.jpg`}
+															// 		type="video/mp4" />
+                                                            // </video> 
+                                                            <img width="100%" className="videoHeight" src={"https://img.youtube.com/vi/"+data?.video+"/sddefault.jpg"}/>
+
+                                                            : 
                                                             null								
                                                             }
                                                             {data.type == 'free'?
-                                                            <video width="100%" className="videoHeight" >
-                                                                <source
-																	src={`${baseurl}/storage/${data.video}`}
-																	poster={`${baseurl}/storage/${data.video}.jpg`}
-																		type="video/mp4" />
-                                                            </video>: 
+                                                            // <video width="100%" className="videoHeight" >
+                                                            //     <source
+															// 		src={`${baseurl}/storage/${data.video}`}
+															// 		poster={`${baseurl}/storage/${data.video}.jpg`}
+															// 			type="video/mp4" />
+                                                            // </video>
+                                                            <img width="100%" className="videoHeight" src={"https://img.youtube.com/vi/"+data?.video+"/sddefault.jpg"}/>
+
+                                                            : 
                                                             null								
                                                             }	
 

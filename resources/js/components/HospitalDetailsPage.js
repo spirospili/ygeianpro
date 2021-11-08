@@ -315,7 +315,7 @@ function HospitalDetailsPage() {
                                                                         <NavLink
                                                                             to={`/video-detail/${follows[0]?.id}`}
                                                                         >
-                                                                            <video
+                                                                            {/* <video
                                                                                 width="100%"
                                                                                 className="videoHeight"
                                                                                 poster={`${baseurl}/storage/${videodata.video.jpg}`}
@@ -324,7 +324,9 @@ function HospitalDetailsPage() {
                                                                                     src={`${baseurl}/storage/${videodata.video}`}
                                                                                     type="video/mp4"
                                                                                 />
-                                                                            </video>
+                                                                            </video> */}
+                                                                            <img width="100%" className="videoHeight" src={"https://img.youtube.com/vi/"+videodata.video+"/sddefault.jpg"}/>
+
                                                                         </NavLink>
                                                                     );
                                                                 } else if (
@@ -333,13 +335,15 @@ function HospitalDetailsPage() {
                                                                         "paid"
                                                                 ) {
                                                                     return (
-                                                                        <img
-                                                                            src={`${baseurl}/storage/${videodata.video}.jpg`}
-                                                                            style={{
-                                                                                width:
-                                                                                    "100%"
-                                                                            }}
-                                                                        />
+                                                                        // <img
+                                                                        //     src={`${baseurl}/storage/${videodata.video}.jpg`}
+                                                                        //     style={{
+                                                                        //         width:
+                                                                        //             "100%"
+                                                                        //     }}
+                                                                        // />
+                                                                        <img width="100%" className="videoHeight" src={"https://img.youtube.com/vi/"+videodata.video+"/sddefault.jpg"}/>
+
                                                                     );
                                                                 } else {
                                                                     return (
@@ -358,7 +362,7 @@ function HospitalDetailsPage() {
                                                                                 follows[0]
                                                                                     ?.name
                                                                             )}
-                                                                            <video
+                                                                            {/* <video
                                                                                 width="100%"
                                                                                 className="videoHeight"
                                                                                 poster={`${baseurl}/storage/${videodata.video}.jpg`}
@@ -367,7 +371,9 @@ function HospitalDetailsPage() {
                                                                                     src={`${baseurl}/storage/${videodata.video}`}
                                                                                     type="video/mp4"
                                                                                 />
-                                                                            </video>
+                                                                            </video> */}
+                                                                    <img width="100%" className="videoHeight" src={"https://img.youtube.com/vi/"+videodata.video+"/sddefault.jpg"}/>
+
                                                                         </NavLink>
                                                                     );
                                                                 }
@@ -640,7 +646,7 @@ function HospitalDetailsPage() {
                                                             >
                                                                 {/* {localStorage.setItem('videourl'+data.id,data.video)}
                                                         {localStorage.setItem('videoTitle'+data.id,data.name)} */}
-                                                                <video
+                                                                {/* <video
                                                                     width="100%"
                                                                     className="videoHeight"
                                                                 >
@@ -648,7 +654,9 @@ function HospitalDetailsPage() {
                                                                         src={`${baseurl}/storage/${doctor?.subclasses[0]?.path}`}
                                                                         type="video/mp4"
                                                                     />
-                                                                </video>
+                                                                </video> */}
+                                                            <img width="100%" className="videoHeight" src={"https://img.youtube.com/vi/"+doctor?.subclasses[0]?.path+"/sddefault.jpg"}/>
+
                                                             </NavLink>
                                                             <h4>
                                                                 {
