@@ -457,7 +457,7 @@ class Home extends Component {
                                                 <div className="col-md-6">
                                                     <NavLink to={`/doctor-details/${doctor.id}`}
                                                              onClick={() => scrollTo(0, 0)}>
-                                                        <img src={'storage/' + doctor.path} style={{width: '100%'}}
+                                                        <img src={'storage/' + doctor.path} style={{width: '100%', height: '100%'}}
                                                              alt="doctor"/>
                                                         <h5>{doctor.name}</h5>
                                                     </NavLink>
