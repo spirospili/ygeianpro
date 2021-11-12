@@ -412,7 +412,7 @@ class Home extends Component {
 										</NavLink>*/}
 
                                                     <h4>{video.name} </h4>
-                                                    <p className="doctor-subscribe" style={{height: "20px"}}>{!this.state.user.payment_info && video.type == 'paid' ? 'Subscribe to watch video' : ''}</p>
+                                                    <p className="doctor-subscribe" >{!this.state.user.payment_info && video.type == 'paid' ? 'Subscribe to watch video' : 'Click to Watch'}</p>
                                                     <ul className="block-style">
                                                         <li onClick={() => this.VideoFun(video.id, "like")}>
                                                             {localStorage.getItem('likeint' + video.id) < 2 ?
