@@ -412,7 +412,7 @@ class Home extends Component {
 										</NavLink>*/}
 
                                                     <h4>{video.name} </h4>
-                                                    <p className="doctor-subscribe">{!this.state.user.payment_info && video.type == 'paid' ? 'Subscribe to watch video' : ''}</p>
+                                                    <p className="doctor-subscribe" style={{height: "20px"}}>{!this.state.user.payment_info && video.type == 'paid' ? 'Subscribe to watch video' : ''}</p>
                                                     <ul className="block-style">
                                                         <li onClick={() => this.VideoFun(video.id, "like")}>
                                                             {localStorage.getItem('likeint' + video.id) < 2 ?
@@ -457,7 +457,7 @@ class Home extends Component {
                                                 <div className="col-md-6">
                                                     <NavLink to={`/doctor-details/${doctor.id}`}
                                                              onClick={() => scrollTo(0, 0)}>
-                                                        <img src={'storage/' + doctor.path} className="img-fluid"
+                                                        <img src={'storage/' + doctor.path} style={{width: '100%'}}
                                                              alt="doctor"/>
                                                         <h5>{doctor.name}</h5>
                                                     </NavLink>
