@@ -26,6 +26,7 @@ function VideoDetailPage() {
         <ReactPlayer
         width="100%"
         url={"https://www.youtube.com/watch?v="+videoDetail.video}
+        controls={true}
       />
       :""}
       <h2 className="heading-style1 text-center">{videoDetail.name} <span></span></h2>

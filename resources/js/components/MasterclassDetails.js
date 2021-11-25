@@ -65,6 +65,7 @@ const displayCancelHandler=()=>{
         <ReactPlayer
         width="100%"
         url={"https://www.youtube.com/watch?v="+videoDetail.subclasses[videoID].path}
+        controls={true}
       />
       :""}
     
