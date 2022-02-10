@@ -8,12 +8,16 @@ import axios from './api'
 import moment from 'moment';
 
 function ViewAllMasterclasses(){
-    const [videos, setVideos] = useState({})
+    const [videos, setVideos] = useState([])
     useEffect(() => {
     axios.get(`/api/masterclasses`)
-    .then((response) => setVideos(response.data))
+    .then((response) => {
+        setVideos(response.data)
+    })
     .then((data) => console.log('This is your data', data));
     }, [])
+
+    videos.reverse()
 
 	return (
 		<>
