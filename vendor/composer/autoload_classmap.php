@@ -95,6 +95,7 @@ return array(
     'App\\Models\\Video' => $baseDir . '/app/Models/Video.php',
     'App\\Models\\VideoLike' => $baseDir . '/app/Models/VideoLike.php',
     'App\\Notifications\\PushNotification' => $baseDir . '/app/Notifications/PushNotification.php',
+    'App\\Product' => $baseDir . '/app/Product.php',
     'App\\Providers\\AppServiceProvider' => $baseDir . '/app/Providers/AppServiceProvider.php',
     'App\\Providers\\AuthServiceProvider' => $baseDir . '/app/Providers/AuthServiceProvider.php',
     'App\\Providers\\BroadcastServiceProvider' => $baseDir . '/app/Providers/BroadcastServiceProvider.php',

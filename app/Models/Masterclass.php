@@ -14,7 +14,7 @@ class Masterclass extends Model
      * @var array
      */
     protected $fillable = [
-        'masterclass_title', 'speciality', 'hospital_id'
+        'masterclass_title', 'speciality', 'hospital_id', 'm_thumbnail'
     ];
 
     public function subclasses()

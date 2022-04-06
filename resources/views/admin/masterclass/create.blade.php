@@ -85,6 +85,20 @@
                                     </div>  <!-- /div[data-role="dynamic-fields"] -->
                                 </div>  <!-- /div.col-md-12 -->
                             </div>  <!-- /div.row -->
+
+                            <div class="form-group row">
+                            <div class="col-lg-3">Upload Masterclass Thumbnail</div>
+                            <div class="col-lg-8">
+                                <input type="file" name="m_thumbnail" />
+                                @if ($errors->has('m_thumbnail') )
+                                <span style="color:red">
+                                    {{ $errors->first('m_thumbnail') }}
+                                </span>
+                                @endif
+                            <p><small>Supported format: JPG, JPEG, PNG</small></p>
+                            </div> 
+                        </div> 
+                        
                     <input class="btn btn-primary" type="submit" value="Upload">
                     
                 </form>

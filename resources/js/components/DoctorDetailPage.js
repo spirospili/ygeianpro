@@ -40,7 +40,7 @@ function DoctorDetailPage(){
     const [suggestedDoctors, setsuggestedDoctors] = useState([])
     const [hospital, setHospital] = useState([])
     const [society, setSociety] = useState([])
-    const [speciality, setSpeciality] = useState('No Speciality')
+    const [speciality, setSpeciality] = useState('')
     const [team, setteams] = useState([])
     const [metadata, setMetadata] = useState([]);
     const [searchKey, setSearchKey] = useState('')
@@ -52,7 +52,7 @@ function DoctorDetailPage(){
     };
     useEffect(() => {
         const userObj=JSON.parse(localStorage.getItem('appState'));
-        console.log(userObj);
+        console.log('UserObject', userObj);
         if(userObj !=null){
         setPayment(userObj.user.payment_info)
         }
@@ -70,7 +70,7 @@ function DoctorDetailPage(){
                 'Authorization': `Bearer ${userTocken}`,
             }})
             .then(response => response)
-            .then(response => {setSpeciality(response.data.speciality); console.log(response.data)});
+            .then(response => {setSpeciality(response.data.speciality); console.log("Spec", speciality)});
            axios.get(`/api/doctors/${docId}`,{
             headers: {      
                 'Accept' : 'application/json',
@@ -326,6 +326,9 @@ function DoctorDetailPage(){
 	
 	}
 
+
+    console.log("follows", follows);
+    console.log("follow", follow)
     
     return (
         <>
@@ -404,7 +407,7 @@ function DoctorDetailPage(){
                                     <button className="col nav-link active" id="pills-General-tab" onClick={tabActive} data-toggle="tab" href="#pills-General" type="button" role="tab" aria-controls="pills-General" aria-selected="true">General</button>
                                 </li>
                                 <li className="nav-item col" role="presentation">
-                                    <button className=" col nav-link" id="pills-Speciality-tab" onClick={tabActive} data-toggle="tab" href="#pills-Speciality" type="button" role="tab" aria-controls="pills-Speciality" aria-selected="true">{speciality}</button>
+                                    <button className=" col nav-link" id="pills-Speciality-tab" onClick={tabActive} data-toggle="tab" href="#pills-Speciality" type="button" role="tab" aria-controls="pills-Speciality" aria-selected="true">{speciality != null ? `Search more on ${speciality}` : 'No Speciality'}</button>
                                 </li>
                             </ul>
                                 <div className="tab-content" id="nav-tabContent">
@@ -451,6 +454,54 @@ function DoctorDetailPage(){
                                                 )}
                                             </div>
                                         </div>
+
+                                        {/* New Features are added - Academic Skills, Professional Skills, Milestones */}
+
+                                        <div className="medical-block">
+                                            <div className="row mb-2">
+                                                <div className="col-md-9">
+                                                    <h2 className="heading-style2">Academic <span>Skills</span></h2>
+                                                </div>
+                                            </div>
+                                            
+                                            <div className="row mb-5" style={{padding: "0rem 1rem"}}>
+                                                <p>{follows.academicskills}</p>
+                                            </div>
+                                        </div>
+
+                                        <div className="medical-block">
+                                            <div className="row mb-2">
+                                                <div className="col-md-9">
+                                                    <h2 className="heading-style2">Professional <span>Skills</span></h2>
+                                                </div>
+                                            </div>
+                                            
+                                            <div className="row mb-5" style={{padding: "0rem 1rem"}}>
+                                                <p>{follows.professionalskills}</p>
+                                            </div>
+                                        </div>
+
+                                        <div className="medical-block">
+                                            <div className="row mb-2">
+                                                <div className="col-md-9">
+                                                    <h2 className="heading-style2">Milestones</h2>
+                                                </div>
+                                            </div>
+                                            
+                                            <div className="row mb-5" style={{padding: "0rem 1rem"}}>
+                                                <p>{follows.milestones}</p>
+                                            </div>
+                                        </div>
+
+
+
+
+
+
+
+
+
+
                                         <div className="profile-latest-videos">
                                             <div className="row mb-2">
                                                 <div className="col-md-9">

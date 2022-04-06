@@ -116,6 +116,47 @@
                         </div> 
                     </div>
 
+                    <!-- Three fields are added as a new feature for Doctor Details Page -->
+
+                    <div class="form-group row">
+                        <div class="col-lg-3">Academic Skills</div>
+                        <div class="col-lg-8">
+                            <textarea name="academicskills" class="form-control">{{ old('academicskills') }}</textarea>
+                            @if ($errors->has('academicskills') )
+                            <span style="color:red">
+                                {{ $errors->first('academicskills') }}
+                            </span>
+                            @endif
+                            <p><small>Total 1000 words</small></p>
+                        </div> 
+                    </div>
+
+                    <div class="form-group row">
+                        <div class="col-lg-3">Professional Skills</div>
+                        <div class="col-lg-8">
+                            <textarea name="professionalskills" class="form-control">{{ old('professionalskills') }}</textarea>
+                            @if ($errors->has('professionalskills') )
+                            <span style="color:red">
+                                {{ $errors->first('professionalskills') }}
+                            </span>
+                            @endif
+                            <p><small>Total 1000 words</small></p>
+                        </div> 
+                    </div>
+
+                    <div class="form-group row">
+                        <div class="col-lg-3">Milestones</div>
+                        <div class="col-lg-8">
+                            <textarea name="milestones" class="form-control">{{ old('milestones') }}</textarea>
+                            @if ($errors->has('milestones') )
+                            <span style="color:red">
+                                {{ $errors->first('milestones') }}
+                            </span>
+                            @endif
+                            <p><small>Total 1000 words</small></p>
+                        </div> 
+                    </div>
+
                     <div class="form-group row">
                         <div class="col-lg-3">Upload File</div>
                         <div class="col-lg-8">

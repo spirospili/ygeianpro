@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState, useContext} from 'react';
 // import "bootstrap/dist/css/bootstrap.min.css";
 // import "jquery/dist/jquery.min.js";
 // import "bootstrap/dist/js/bootstrap.bundle.min.js";
@@ -41,49 +41,87 @@ import MasterclassDetails from './MasterclassDetails';
 import HospitalDetailsPage from './HospitalDetailsPage';
 import SocietyDetailsPage from './SocietyDetailsPage';
 
+import AuthContext from '../store/AuthContext2';
+
 // import Slick from './Custom';
 import { Switch, Route, Redirect } from 'react-router-dom';
 
 const App = () => {
+		const authCtx = useContext(AuthContext);
+		const {isAuthenticated} = authCtx;
+
+		console.log("From App", isAuthenticated);
+
 	return (
 		<>
 			<Switch>
 				<Route exact path="/" component={Home} />
 				<Route exact path="/about" component={About} />
 				<Route exact path="/pricing" component={Pricing} />
-				<Route exact path="/viewallvideos" component={ViewAllVideos} />
-				<Route exact path="/viewalldoctors" component={ViewAllDoctors} />
-				<Route exact path="/viewallteams" component={ViewAllTeams} />
-				<Route exact path="/viewallmasterclasses" component={ViewAllMasterclasses} />
-				<Route exact path="/viewallhospitals" component={ViewAllHospitals} />
-			    <Route exact path="/viewallsocieties" component={ViewAllSocieties} />	
-				<Route exact path="/viewallpublications" component={ViewAllPublications} />
-				<Route exact path="/signin" component={SignIn} />
-				<Route exact path="/signup" component={SignUp} />
-				<Route exact path="/forgot" component={Forgot} />
 				<Route exact path="/contact" component={Contact} />
-				<Route exact path="/news" component={News} />
-				<Route exact path="/feed" component={Feed} />
-				<Route exact path="/newsdetail/:id" component={NewsDetail} />
-				<Route exact path="/search/:id" component={SearchData} />
-				<Route exact path="/calendar" component={Calendar} />
-				<Route exact path="/eventdetail/:id" component={EventDetail} />
-				<Route exact path="/setting" component={Setting} />
-				<Route exact path="/doctor-details/:id" component={DoctorDetails} />
-				<Route exact path="/team-details/:id" component={TeamDetails} />
-				<Route exact path="/hospital-details/:id" component={HospitalDetailsPage} />
-				<Route exact path="/society-details/:id" component={SocietyDetailsPage} />
-				<Route exact path="/doctor-videos" component={DoctorVideos} />
-				<Route exact path="/doctor-images" component={DoctorImages} />
-				<Route exact path="/doctor-documents" component={DoctorDocuments} />
-				<Route exact path="/video-detail/:id" component={VideoDetailPage} />
-				<Route exact path="/masterclass-detail/:id/:videoID" component={MasterclassDetails} />
- 				<Route exact path="/liked" component={LikedItems} />
-				<Route exact path="/most-viewed" component={MostViewed} />
-				<Route exact path="/publication" component={Publication} />
+				<Route exact path="/forgot" component={Forgot} />
 				<Route exact path="/not-found" component={NotFound} />
-				<Route exact path="/invoice" component={Invoice} />
-				<Redirect to="/" />
+				{!isAuthenticated && <Route path="/signin" exact component={SignIn} />}
+				{isAuthenticated && <Route path="/signin"><Redirect to="/feed" /></Route>}
+				{!isAuthenticated && <Route path="/signup" exact component={SignUp} />}
+				{isAuthenticated && <Route path="/signup"><Redirect to="/feed" /></Route>}
+				{!isAuthenticated && <Route path="/viewallvideos"><Redirect to="/signin" /></Route>}
+				{isAuthenticated && <Route path="/viewallvideos" exact component={ViewAllVideos} />}
+				{!isAuthenticated && <Route path="/viewalldoctors"><Redirect to="/signin" /></Route>}
+				{isAuthenticated && <Route path="/viewalldoctors" exact component={ViewAllDoctors}></Route>}
+				{!isAuthenticated && <Route path="/viewallteams"><Redirect to="/signin" /></Route>}
+				{isAuthenticated && <Route path="/viewallteams" exact component={ViewAllTeams}></Route>}
+				{!isAuthenticated && <Route path="/viewallmasterclasses"><Redirect to="/signin" /></Route>}
+				{isAuthenticated && <Route path="/viewallmasterclasses" exact component={ViewAllMasterclasses} />}
+				{!isAuthenticated && <Route path="/viewallhospitals"><Redirect to="/signin" /></Route>}
+				{isAuthenticated && <Route path="/viewallhospitals" exact component={ViewAllHospitals} />}
+				{!isAuthenticated && <Route path="/viewallsocieties"><Redirect to="/signin" /></Route>}
+				{isAuthenticated && <Route path="/viewallsocieties" exact component={ViewAllSocieties} />}
+				{!isAuthenticated && <Route path="/viewallpublications"><Redirect to="/signin" /></Route>}
+				{isAuthenticated && <Route path="/viewallpublications" exact component={ViewAllPublications} />}
+				{!isAuthenticated && <Route path="/news"><Redirect to="/signin" /></Route>}
+				{isAuthenticated && <Route path="/news" exact component={News} />}
+				{!isAuthenticated && <Route path="/feed"><Redirect to="/signin" /></Route>}
+				{isAuthenticated && <Route path="/feed" exact component={Feed} />}
+				{!isAuthenticated && <Route path="/newsdetail/:id"><Redirect to="/signin" /></Route>}
+				{isAuthenticated && <Route path="/newsdetail/:id" exact component={NewsDetail} />}
+				{!isAuthenticated && <Route path="/search/:id"><Redirect to="/signin" /></Route>}
+				{isAuthenticated && <Route path="/search/:id" exact component={SearchData} />}
+				{!isAuthenticated && <Route path="/calendar"><Redirect to="/signin" /></Route>}
+				{isAuthenticated && <Route path="/calendar" exact component={Calendar} />}
+				{!isAuthenticated && <Route path="/eventdetail/:id"><Redirect to="/signin" /></Route>}
+				{isAuthenticated && <Route path="/eventdetail/:id" exact component={EventDetail} />}
+				{!isAuthenticated && <Route path="/setting"><Redirect to="/signin" /></Route>}
+				{isAuthenticated && <Route path="/setting" exact component={Setting} />}
+				{!isAuthenticated && <Route path="/doctor-details/:id"><Redirect to="/signin" /></Route>}
+				{isAuthenticated && <Route path="/doctor-details/:id" exact component={DoctorDetails} />}
+				{!isAuthenticated && <Route path="/team-details/:id"><Redirect to="/signin" /></Route>}
+				{isAuthenticated && <Route path="/team-details/:id" exact component={TeamDetails} />}
+				{!isAuthenticated && <Route path="/hospital-details/:id"><Redirect to="/signin" /></Route>}
+				{isAuthenticated && <Route path="/hospital-details/:id" exact component={HospitalDetailsPage} />}
+				{!isAuthenticated && <Route path="/society-details/:id"><Redirect to="/signin" /></Route>}
+				{isAuthenticated && <Route path="/society-details/:id" exact component={SocietyDetailsPage} />}
+				{!isAuthenticated && <Route path="/doctor-videos"><Redirect to="/signin" /></Route>}
+				{isAuthenticated && <Route path="/doctor-videos" exact component={DoctorVideos} />}
+				{!isAuthenticated && <Route path="/doctor-images"><Redirect to="/signin" /></Route>}
+				{isAuthenticated && <Route path="/doctor-images" exact component={DoctorImages} />}
+				{!isAuthenticated && <Route path="/doctor-documents"><Redirect to="/signin" /></Route>}
+				{isAuthenticated && <Route path="/doctor-documents" exact component={DoctorDocuments} />}
+				{!isAuthenticated && <Route path="/video-detail/:id"><Redirect to="/signin" /></Route>}
+				{isAuthenticated && <Route path="/video-detail/:id" exact component={VideoDetailPage} />}
+				{!isAuthenticated && <Route path="/masterclass-detail/:id/:videoID"><Redirect to="/signin" /></Route>}
+				{isAuthenticated && <Route path="/masterclass-detail/:id/:videoID" exact component={MasterclassDetails} />}
+				{!isAuthenticated && <Route path="/liked"><Redirect to="/signin" /></Route>}
+				{isAuthenticated && <Route path="/liked" exact component={LikedItems} />}
+				{!isAuthenticated && <Route path="/most-viewed"><Redirect to="/signin" /></Route>}
+				{isAuthenticated && <Route path="/most-viewed" exact component={MostViewed} />}
+				{!isAuthenticated && <Route path="/publication"><Redirect to="/signin" /></Route>}
+				{isAuthenticated && <Route path="/publication" exact component={Publication} />}
+				{!isAuthenticated && <Route path="/invoice"><Redirect to="/signin" /></Route>}
+				{isAuthenticated && <Route path="/invoice" exact component={Invoice} />}
+				<Route path="*">
+					<Redirect to="/" />
+				</Route>
 			</Switch>
 			<Footer	/>	
 		</>

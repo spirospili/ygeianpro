@@ -47,7 +47,8 @@ class VideoController
             'title' => 'required|min:3|max:100',
             'doctor' => 'required',
             'video' => 'required',
-            'description' => 'nullable|max:1000'
+            'description' => 'nullable|max:1000',
+            'v_thumbnail'=> 'image|mimes:jpeg,jpg,png|required'
         ]);
         $doctor=explode(" ", $request->doctor);
         $add = Doctor::findOrFail($doctor[0]);
@@ -57,10 +58,13 @@ class VideoController
             'doctor_id' => $doctor[0] ?? null,
             'tags' => $request->tags ?? null,
             'description' => $request->description,
+            'price' => $request->price ?? null,
             'video' => $request->video,
             'type' => $request->type,
             'hospital_id' => $doctor[1] ?? null,
-            'speciality' => $add->speciality
+            'speciality' => $add->speciality,
+            'v_thumbnail' =>$request->file('v_thumbnail') ? $request->file('v_thumbnail')->store('videos', 'public'): null
+
             ]);
 
 // 	$video_path = "http://www.ygeianpro.com/storage/".$video->video;
@@ -107,7 +111,9 @@ class VideoController
         $video = Video::findOrFail($id);
         $video->name = $request->title;
         $video->tags = $request->tags;
+        $video->v_thumbnail = $request->file('v_thumbnail') ? $request->file('v_thumbnail')->store('videos', 'public'): null;
         $video->description = $request->description;
+        $video->price = $request->price;
         if($request->video)
             $video->video = $request->video; 
         $video->save();

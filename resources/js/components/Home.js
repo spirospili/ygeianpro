@@ -457,7 +457,7 @@ class Home extends Component {
                                                 <div className="col-md-6">
                                                     <NavLink to={`/doctor-details/${doctor.id}`}
                                                              onClick={() => scrollTo(0, 0)}>
-                                                        <img src={'storage/' + doctor.path} style={{width: '100%', objectFit: "scale-down"}}
+                                                        <img src={'storage/' + doctor.path} style={{width: 'auto'}}
                                                              alt="doctor"/>
                                                         <h5>{doctor.name}</h5>
                                                     </NavLink>
@@ -542,8 +542,9 @@ class Home extends Component {
                                         {this.state.live_video &&
                                         <div className="col-md-12">
                                             {this.state.live_video.map((video, index) =>
-                                                <div>
-                                                    {
+                                                <div style={{display: "flex", justifyContent: "center", alignItems: "center"}}>
+                                                    
+                                                    {/* {
                                                         video.live_video ?
                                                             <iframe width="100%" height="280" key={index}
                                                                     src={'https://player.vimeo.com/video/' + video.live_video}
@@ -552,7 +553,10 @@ class Home extends Component {
                                                                     allowFullScreen></iframe>
                                                             :
                                                             <img src={liveVideoImage} className="img-fluid" alt="icon"/>
-                                                    }
+                                                    } */}
+    
+                                                            <img src={liveVideoImage} className="img-fluid" alt="icon"/>
+                                                    
                                                 </div>
                                             )}
                                             {/*<video width="100%" className="trending-video" controls poster={liveVideoPoster}>
@@ -619,14 +623,18 @@ class Home extends Component {
                                         {this.state.masterclasses.map(
                                             doctor =>
                                             <div className="col-md-6">
+                                                {console.log(doctor)}
                                             <NavLink to={`/masterclass-detail/${doctor.id}/0`}>
+                                            
                                                               {/* {localStorage.setItem('videourl'+data.id,data.video)}
                                                               {localStorage.setItem('videoTitle'+data.id,data.name)} */}
                                                               {/* <video width="100%" className="videoHeight" >
                                                                   <source src={`${baseurl}/storage/${doctor?.subclasses[0]?.path}`} type="video/mp4" />
                                                               </video>								 */}
-                                        <img width="100%" className="videoHeight" src={"https://img.youtube.com/vi/"+doctor?.subclasses[0]?.path+"/sddefault.jpg"}/>
-
+                                        {/* <img width="100%" className="videoHeight" src={"https://img.youtube.com/vi/"+doctor?.subclasses[0]?.path+"/sddefault.jpg"}/> */}
+                                        <video width="100%" className="videoHeight" control poster={`${baseurl}/storage/${doctor.m_thumbnail}`}>
+                                    <source src={"https://img.youtube.com/vi/"+doctor?.subclasses[0]?.path+"/sddefault.jpg"} />
+                                  </video>
                                              </NavLink>	
                                           <h4>{doctor.masterclass_title}</h4>
                                           <p>{doctor.description}</p>

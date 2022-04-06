@@ -7,6 +7,7 @@ import reCapcha from "../../../public/images/recapcha.png";
 import rightBanner from "../../../public/images/authentication.jpg";
 import { NavLink, useHistory } from 'react-router-dom';
 import FlashMessage from 'react-flash-message';
+import AuthContext from '../store/AuthContext2';
 
 class SignIn extends Component {
     constructor(props) {
@@ -28,6 +29,8 @@ class SignIn extends Component {
         this.handleEmail = this.handleEmail.bind(this);
         this.handlePassword = this.handlePassword.bind(this);
     }
+
+    static contextType = AuthContext;
 
     componentWillMount() {
         let state = localStorage["appState"];
@@ -72,8 +75,10 @@ class SignIn extends Component {
                 this.setState({
                     isLoggedIn: appState.isLoggedIn,
                     user: appState.user,
-                    error: ''
+                    error: '',
                 });
+                this.context.login(this.state.user.access_token);
+                console.log('User', this.state.user.access_token);
                 return this.props.history.push('/feed');
             } else {
                 alert(`Our System Failed To Register Your Account!`);

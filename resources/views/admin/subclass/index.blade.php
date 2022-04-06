@@ -4,7 +4,7 @@
  
 <div class="row">
     <div class="col-md-12 text-right mb-4">
-        <a href="{{ route('admin.video.create') }}" class="btn btn-primary">Create Subclass</a>
+        <a href="{{ route('admin.subclass.create') }}" class="btn btn-primary">Create Subclass</a>
     </div>
     <div class="col-md-12">
         <div class="card">

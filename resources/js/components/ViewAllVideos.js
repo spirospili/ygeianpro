@@ -8,6 +8,7 @@ import likeFIllIcon from "../../../public/images/like.svg";
 import InnerPageHeader from './InnerPageHeader';
 import Swal from 'sweetalert2'
 import {NavLink} from "react-router-dom";
+import PaypalExpressBtn from 'react-paypal-express-checkout';
 
 class ViewAllVideos extends Component {
 
@@ -101,7 +102,7 @@ class ViewAllVideos extends Component {
 	}
 		// this.setState({ publications: response.json(), isLoading: false})
 		)}
-    
+
     async getVideos() {
         if (! this.state.videos) {
             try {
@@ -127,6 +128,64 @@ class ViewAllVideos extends Component {
     }
 
     render() {
+        const onSuccess = (payment, info) => {
+
+            const userObj=JSON.parse(localStorage.getItem('appState'));
+			const userObjUpdated={...userObj}
+			userObjUpdated.user.payment_id=payment.paymentID;
+			localStorage.setItem("appState", JSON.stringify(userObjUpdated));
+			
+			//Storing Payment ID to user record
+			//let history = useHistory();
+			const userId = userObjUpdated.user.id;
+			const userTocken= userObjUpdated.user.access_token;
+        	let formData = new FormData();
+
+			formData.append('payment_id', JSON.stringify(payment));
+			formData.append('package', info);
+			formData.append('_method', 'patch');
+
+			axios.post(`/api/auth/profile/${userId}`,formData,{
+				headers: {    
+					'Accept' : 'application/json',
+					'Authorization': `Bearer ${userTocken}`,
+				}
+			}).then(data=>{
+				this.updateState(data.data.payment_info);
+				return this.props.history.push('/feed');
+				//history.push("/feed");
+			})
+			// 1, 2, and ... Poof! You made it, everything's fine and dandy!
+			//console.log("Payment successful!", payment);
+			alert('Thank you. Your payment is successfull');
+
+			// You can bind the "payment" object's value to your state or props or whatever here, please see below for sample returned data
+		}
+
+		const onCancel = (data) => {
+			// The user pressed "cancel" or closed the PayPal popup
+			console.log('Payment cancelled!', data);
+			alert('Payment Failed');
+			// You can bind the "data" object's value to your state or props or whatever here, please see below for sample returned data
+		}
+
+		const onError = (err) => {
+			// The main Paypal script could not be loaded or something blocked the script from loading
+			console.log("Error!", err);
+			alert('Payment Failed');
+			// Because the Paypal's main script is loaded asynchronously from "https://www.paypalobjects.com/api/checkout.js"
+			// => sometimes it may take about 0.5 second for everything to get set, or for the button to appear
+		}
+
+		let env = 'sandbox'; // you can set this string to 'production'
+		let currency = 'USD'; // you can set this string from your props or state  
+		// Document on Paypal's currency code: https://developer.paypal.com/docs/classic/api/currency_codes/
+
+		const client = {
+			sandbox:    'AboJPsDIg40RqUr3L8LbPresq0JPA_-7S6_XFX9FZSExLyF3PS5EH1KkeMo0r5gYWeYI7SNH4adt4X7Z',
+			production: 'YOUR-PRODUCTION-APP-ID',
+		}
+
         return (
             <>
                 <InnerPageHeader />
@@ -142,23 +201,66 @@ class ViewAllVideos extends Component {
                             <div className="col-md-4">
                                 <div className="theme-block-style">
                                     {(() => {
-                                        if (this.state.isLoggedIn && this.state.user.payment_info && video.type == 'paid') {
+                                        if (this.state.isLoggedIn && video.type === 'paid') {
+                                            console.log("Video to show", video, "user Payment Info", this.state.user);
                                             return (
-                                                <NavLink to={`/video-detail/${video.id}`}>
-                                                    <img width="100%" className="videoHeight" src={"https://img.youtube.com/vi/"+video.video+"/sddefault.jpg"}/>
-                                                </NavLink>
+                                                // <NavLink to={`/video-detail/${video.id}`}>
+                                                <div style={{display: "flex", justifyContent: "center", flexDirection: "column", textAlign: "center"}}>
+                                                    <video
+                                                            width="100%"
+                                                            className="videoHeight"
+                                                            control
+                                                            poster={video.v_thumbnail != null ? `${baseurl}/storage/${video.v_thumbnail}` : ""}
+                                                        >
+                                                            <source
+                                                                src={"https://img.youtube.com/vi/"+video.video+"/sddefault.jpg"}
+                                                            />
+                                                        </video>
+                                                        <div className="theme-btn">
+                                                            <PaypalExpressBtn env={env} client={client} currency={currency} total={video.price} onError={onError} onSuccess={(payment) => onSuccess(payment, video.price)} onCancel={onCancel} />
+                                                        </div>
+
+                                                </div>
                                             )
-                                        } else if (!(this.state.isLoggedIn && this.state.user.payment_info) && video.type == 'paid') {
+                                                    {/* <img width="100%" className="videoHeight" src={"https://img.youtube.com/vi/"+video.video+"/sddefault.jpg"}/> */}
+                                                     
+                                                // </NavLink>
+                                            
+                                        } else if (!(this.state.isLoggedIn && this.state.user.payment_info) && video.type === 'paid') {
+                                            console.log("Video to show", video);
                                             return (
-                                                <img width="100%" className="videoHeight" src={"https://img.youtube.com/vi/"+video.video+"/sddefault.jpg"}/>
+                                                <NavLink to={"/signin"}>
+                                                <video
+                                                            width="100%"
+                                                            className="videoHeight"
+                                                            control
+                                                            poster={video.v_thumbnail != null ? `${baseurl}/storage/${video.v_thumbnail}` : ""}
+                                                        >
+                                                            <source
+                                                                src={"https://img.youtube.com/vi/"+video.video+"/sddefault.jpg"}
+                                                            />
+                                                        </video>
+                                                        </NavLink>
+                                                // <img width="100%" className="videoHeight" src={"https://img.youtube.com/vi/"+video.video+"/sddefault.jpg"}/>
 
                                             )
                                         } else {
+                                            console.log("Video to show", video);
                                             return (
                                                 <NavLink to={`/video-detail/${video.id}`}>
                                                     {localStorage.setItem('videourl' + video.id, video.video)}
                                                     {localStorage.setItem('videoTitle' + video.id, video.name)}
-                                                    <img width="100%" className="videoHeight" src={"https://img.youtube.com/vi/"+video.video+"/sddefault.jpg"}/>
+                                                    <video
+                                                            width="100%"
+                                                            className="videoHeight"
+                                                            control
+                                                            poster={video.v_thumbnail != null ? `${baseurl}/storage/${video.v_thumbnail}` : ""}
+                                                        >
+                                                            <source
+                                                                src={"https://img.youtube.com/vi/"+video.video+"/sddefault.jpg"}
+                                                            />
+                                                        </video>
+                                                    {/* <img width="100%" className="videoHeight" src={"https://img.youtube.com/vi/"+video.video+"/sddefault.jpg"}/> */}
 
                                                 </NavLink>
                                             )

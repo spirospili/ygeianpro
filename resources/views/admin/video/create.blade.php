@@ -24,6 +24,18 @@
                         </div>
 
                         <div class="form-group row">
+                            <div class="col-lg-3">Price</div>
+                            <div class="col-lg-8">
+                                <input Type="number" class="form-control" name="price" value="{{old('price')}}" placeholder="0">
+                                @if ($errors->has('price'))
+                                    <span style="color:red">
+                                {{ $errors->first('price')}}
+                                </span>
+                                @endif
+                            </div>
+                        </div>
+
+                        <div class="form-group row">
                             <div class="col-lg-3">Video Title</div>
                             <div class="col-lg-8">
                                 <input type="text" class="form-control" name="title" value="{{old('title')}}" required>
@@ -78,6 +90,22 @@
                         </div>
 
                         <div class="form-group row">
+                            <div class="col-lg-3">Video Category:</div>
+                            <div class="col-lg-8">
+                                <select class="form-control" name="category" value="{{old('category')}}" required>
+                                    <option value="">Please choose an option</option>
+                                    <option value="youtube">Youtube</option>
+                                    <option value="vimeo">Vimeo</option>
+                                </select>
+                                @if ($errors->has('category'))
+                                     <span style="color:red">
+                                     {{ $errors->first('category')}}
+                                        </span>
+                                        @endif
+                            </div>
+                        </div>
+
+                        <div class="form-group row">
                             <div class="col-lg-3">Video Link:</div>
                             <div class="col-lg-8">
                                 <input type="text" class="form-control" name="video" value="{{old('video')}}" required>
@@ -88,6 +116,21 @@
                                 @endif
                             </div>
                         </div>
+
+                        <div class="form-group row">
+                            <div class="col-lg-3">Upload Thumbnail</div>
+                            <div class="col-lg-8">
+                                <input type="file" name="v_thumbnail" />
+                                @if ($errors->has('v_thumbnail') )
+                                <span style="color:red">
+                                    {{ $errors->first('v_thumbnail') }}
+                                </span>
+                                @endif
+                            <p><small>Supported format: JPG, JPEG, PNG</small></p>
+                            </div> 
+                        </div>   
+
+                    
 
                         <input class="btn btn-primary" type="submit" value="Upload Video">
 

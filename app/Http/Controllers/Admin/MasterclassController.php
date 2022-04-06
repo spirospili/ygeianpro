@@ -54,13 +54,17 @@ class MasterclassController
     public function store(Request $request)
     {
         $request->validate([
-            'name' => 'required|min:3|max:100'
+            'name' => 'required|min:3|max:100',
+            'm_thumbnail'=> 'image|mimes:jpeg,jpg,png|required'
+
 
         ]);
         $masterclass = Masterclass::create([
             'masterclass_title' => $request->name,
             'speciality' => $request->speciality,
-            'hospital_id' => $request->hospital
+            'hospital_id' => $request->hospital,
+            'm_thumbnail' =>$request->file('m_thumbnail') ? $request->file('m_thumbnail')->store('masterclass', 'public'): null
+
         ]);
         
         foreach($request->curators as $curator)
@@ -111,7 +115,15 @@ class MasterclassController
             'name' => 'required|min:3|max:100', 
         ]);
 
-        $masterclass = Masterclass::findOrFail($id)->update(['masterclass_title' => $request->name, 'speciality' => $request->speciality, 'hospital_id' => $request->hospital]);
+        $masterclass = Masterclass::findOrFail($id)->update(
+            [
+                'masterclass_title' => $request->name,
+                'speciality' => $request->speciality, 
+                'hospital_id' => $request->hospital,
+                'm_thumbnail' =>$request->file('m_thumbnail') ? $request->file('m_thumbnail')->store('masterclass', 'public'): null
+
+                ]
+        );
        
         Curator::where('masterclass_id', $id)->delete();
             foreach($request->curators as $curator)

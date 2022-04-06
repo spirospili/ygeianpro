@@ -79,6 +79,10 @@ Route::group([
 
 Route::get('/home', 'HomeController@index')->name('home');
 
+Route::get('/linkstorage', function () {
+    Artisan::call('storage:link');
+});
+
 Route::get( '/{path?}', function(){
     return view( 'frontend.index' );
 } )->where('path', '.*');

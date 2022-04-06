@@ -65,6 +65,9 @@ class DoctorController
             'tags' => $request->tags ?? null,
             'subspeciality' => $request->subspeciality,
             'speciality' => $request->speciality ?? null,
+            'academicskills' => $request->academicskills,
+            'professionalskills' => $request->professionalskills,
+            'milestones' => $request->milestones,
             'logo' => $request->file('logo') ? $request->file('logo')->store('doctors', 'public'): null,
             'hospital_id' => $request->hospital ?? null,
             'society_id' => $request->society ?? null, 
@@ -116,6 +119,9 @@ class DoctorController
             $doctor->path = $request->file('doctor')->store('doctors', 'public');
 
         $doctor->description = $request->description;
+        $doctor->academicskills = $request->academicskills;
+        $doctor->professionalskills = $request->professionalskills;
+        $doctor->milestones = $request->milestones;
         $doctor->tags = $request->tags ?? null;
         $doctor->speciality = $request->speciality ?? null;
         $doctor->hospital_id = $request->hospital ?? null;

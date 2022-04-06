@@ -5,10 +5,14 @@ import App from './App';
 import { BrowserRouter } from 'react-router-dom';
 import {Helmet} from "react-helmet";
 
+import {AuthContextProvider} from "../store/AuthContext2";
+
 ReactDOM.render(
 	<>
 	  <BrowserRouter>
+	  <AuthContextProvider>
 	    <App />
+		</AuthContextProvider>
 	  </BrowserRouter>
 	</>,
   document.getElementById('root')

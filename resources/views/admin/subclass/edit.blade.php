@@ -40,7 +40,7 @@
 
 
                     <div class="form-group row">
-                        <div class="col-lg-3">Video Description</div>
+                        <div class="col-lg-3">Description</div>
                         <div class="col-lg-8">
                             <textarea name="description" class="form-control">{{ old('description') ?? $video->description }}</textarea>
                             @if ($errors->has('description') )
@@ -50,6 +50,51 @@
                             @endif
                         </div> 
                     </div>
+
+                    <div class="form-group row">
+                            <div class="col-lg-3">Format</div>
+                            <div class="col-lg-8">
+                                <select class="form-control" name="format" value="{{old('format')}}" required>
+                                    <option value="">Please choose an option</option>
+                                    <option>File</option>
+                                    <option>Video</option>
+                                </select>
+                                @if ($errors->has('format'))
+                                     <span style="color:red">
+                                     {{ $errors->first('format')}}
+                                        </span>
+                                        @endif
+                            </div>
+                        </div>
+
+                        <div class="form-group row">
+                            <div class="col-lg-3">Upload File</div>
+                            <div class="col-lg-8">
+                                <input type="file" name="file" />
+                                @if ($errors->has('file') )
+                                <span style="color:red">
+                                    {{ $errors->first('file') }}
+                                </span>
+                                @endif
+                            <p><small>Supported format: PDF, Word, ppt. etc</small></p>
+                            </div> 
+                        </div>
+
+                    <div class="form-group row">
+                            <div class="col-lg-3">Video Category:</div>
+                            <div class="col-lg-8">
+                                <select class="form-control" name="category" value="{{old('category')}}" required>
+                                    <option value="">Please choose an option</option>
+                                    <option value="youtube">Youtube</option>
+                                    <option value="vimeo">Vimeo</option>
+                                </select>
+                                @if ($errors->has('category'))
+                                     <span style="color:red">
+                                     {{ $errors->first('category')}}
+                                        </span>
+                                        @endif
+                            </div>
+                        </div>
 
                     <div class="form-group row">
                             <div class="col-lg-3">Video Link:</div>
@@ -62,6 +107,19 @@
                                 @endif
                             </div>
                         </div>
+
+                        <div class="form-group row">
+                        <div class="col-lg-3">Upload Thumbnail</div>
+                            <div class="col-lg-8">
+                                <input type="file" name="thumbnail" />
+                                @if ($errors->has('thumbnail') )
+                                <span style="color:red">
+                                    {{ $errors->first('thumbnail') }}
+                                </span>
+                                @endif
+                            <p><small>Supported format: JPG, JPEG, PNG</small></p>
+                        </div> 
+                    </div>
                     
                     <input class="btn btn-primary" type="submit" value="Update Video">
                     

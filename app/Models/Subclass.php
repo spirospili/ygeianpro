@@ -14,7 +14,7 @@ class Subclass extends Model
      * @var array
      */
     protected $fillable = [
-        'masterclass_id', 'path', 'video_title', 'description'
+        'masterclass_id', 'path', 'video_title', 'description', 'thumbnail', 'format', 'file'
     ];
 
 }

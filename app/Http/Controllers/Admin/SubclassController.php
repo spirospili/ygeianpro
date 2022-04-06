@@ -47,8 +47,11 @@ class SubclassController
         $request->validate([
             'title' => 'required|min:3|max:100',
             'masterclass' => 'required|numeric',
-            'video' => 'required',
-            'description' => 'nullable|max:1000'
+            // 'video' => 'required',
+            'description' => 'nullable|max:1000',
+            'thumbnail'=> 'image|mimes:jpeg,jpg,png|required',
+            'format'=> 'required',
+            'file'=> 'mimes:pdf,ppt.,word,docx,doc'
         ]);
 
         $subclass=Subclass::create([
@@ -56,6 +59,9 @@ class SubclassController
             'video_title' => $request->title,
             'path' => $request->video,
             'description' =>$request->description,
+            'thumbnail' =>$request->file('thumbnail') ? $request->file('thumbnail')->store('subclasses', 'public'): null,
+            'format' =>$request->format,
+            'file' =>$request->file('file') ? $request->file('file')->store('subclasses', 'public'): null
          ]);
          
 
@@ -91,7 +97,10 @@ class SubclassController
         $video = Subclass::findOrFail($id);
         $video->video_title = $request->title;
         $video->description = $request->description;
-        $video->path = $request->video; 
+        $video->thumbnail = $request->file('thumbnail') ? $request->file('thumbnail')->store('subclasses', 'public'): null;
+        $video->path = $request->video;
+        $video->format = $request->format;
+        $video->file =$request->file('file') ? $request->file('file')->store('subclasses', 'public'): null;
         
         $video->save();
 
