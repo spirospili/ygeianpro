@@ -28,7 +28,7 @@
     -->
     <title>Ygeian Pro</title>
     <script>
-    var baseurl = '{{ url('./') }}';
+    var baseurl = '{{ url('/') }}';
     </script>
 
   </head>
