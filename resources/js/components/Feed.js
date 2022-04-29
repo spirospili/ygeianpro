@@ -11,6 +11,7 @@ import Sidebar from './Sidebar';
 import TopSearchAndFilter from './TopSearchAndFilter';
 import axios from './api'
 import moment from 'moment';
+import PaypalExpressBtn from 'react-paypal-express-checkout';
 
 class Feed extends React.Component {
     constructor(props) {
@@ -185,6 +186,64 @@ class Feed extends React.Component {
       render() {
         const { profile } = this.state;
         const { speciality } = this.state; 
+
+        const onSuccess = (payment, info) => {
+
+            const userObj=JSON.parse(localStorage.getItem('appState'));
+			const userObjUpdated={...userObj}
+			userObjUpdated.user.payment_id=payment.paymentID;
+			localStorage.setItem("appState", JSON.stringify(userObjUpdated));
+			
+			//Storing Payment ID to user record
+			//let history = useHistory();
+			const userId = userObjUpdated.user.id;
+			const userTocken= userObjUpdated.user.access_token;
+        	let formData = new FormData();
+
+			formData.append('payment_id', JSON.stringify(payment));
+			formData.append('package', info);
+			formData.append('_method', 'patch');
+
+			axios.post(`/api/auth/profile/${userId}`,formData,{
+				headers: {    
+					'Accept' : 'application/json',
+					'Authorization': `Bearer ${userTocken}`,
+				}
+			}).then(data=>{
+				this.updateState(data.data.payment_info);
+				return this.props.history.push('/feed');
+				//history.push("/feed");
+			})
+			// 1, 2, and ... Poof! You made it, everything's fine and dandy!
+			//console.log("Payment successful!", payment);
+			alert('Thank you. Your payment is successfull');
+
+			// You can bind the "payment" object's value to your state or props or whatever here, please see below for sample returned data
+		}
+
+		const onCancel = (data) => {
+			// The user pressed "cancel" or closed the PayPal popup
+			console.log('Payment cancelled!', data);
+			alert('Payment Failed');
+			// You can bind the "data" object's value to your state or props or whatever here, please see below for sample returned data
+		}
+
+		const onError = (err) => {
+			// The main Paypal script could not be loaded or something blocked the script from loading
+			console.log("Error!", err);
+			alert('Payment Failed');
+			// Because the Paypal's main script is loaded asynchronously from "https://www.paypalobjects.com/api/checkout.js"
+			// => sometimes it may take about 0.5 second for everything to get set, or for the button to appear
+		}
+
+		let env = 'sandbox'; // you can set this string to 'production'
+		let currency = 'USD'; // you can set this string from your props or state  
+		// Document on Paypal's currency code: https://developer.paypal.com/docs/classic/api/currency_codes/
+
+		const client = {
+			sandbox:    'AboJPsDIg40RqUr3L8LbPresq0JPA_-7S6_XFX9FZSExLyF3PS5EH1KkeMo0r5gYWeYI7SNH4adt4X7Z',
+			production: 'YOUR-PRODUCTION-APP-ID',
+		}
         return (
           <>
             <InnerPageHeader />
@@ -242,8 +301,31 @@ class Feed extends React.Component {
 															// 		poster={`${baseurl}/storage/${data.video}.jpg`}
 															// 		type="video/mp4" />
                                                             // </video>
-                                                            <img width="100%" className="videoHeight" src={"https://img.youtube.com/vi/"+data?.video+"/sddefault.jpg"}/>
- 
+
+                                                            // Old Code for displaying videos without thumbnails
+
+
+                                                            // <img width="100%" className="videoHeight" src={"https://img.youtube.com/vi/"+data?.video+"/sddefault.jpg"}/>
+
+                                                            // New code for displaying videos with thumnails on Feeds Page
+
+                                                            <div style={{display: "flex", justifyContent: "center", flexDirection: "column", textAlign: "center"}}>
+                                                            <video
+                                                                    width="100%"
+                                                                    className="videoHeight"
+                                                                    control
+                                                                    poster={data.v_thumbnail != null ? `${baseurl}/storage/${data.v_thumbnail}` : ""}
+                                                                >
+                                                                    <source
+                                                                        src={"https://img.youtube.com/vi/"+data.video+"/sddefault.jpg"}
+                                                                    />
+                                                                </video>
+                                                                <div className="theme-btn">
+                                                                    <PaypalExpressBtn env={env} client={client} currency={currency} total={data.price} onError={onError} onSuccess={(payment) => onSuccess(payment, data.price)} onCancel={onCancel} />
+                                                                </div>
+        
+                                                        </div>
+
                                                             : 
                                                             null								
                                                             }
@@ -254,7 +336,29 @@ class Feed extends React.Component {
 															// 		poster={`${baseurl}/storage/${data.video}.jpg`}
 															// 			type="video/mp4" />
                                                             // </video>
-                                                            <img width="100%" className="videoHeight" src={"https://img.youtube.com/vi/"+data?.video+"/sddefault.jpg"}/>
+
+                                                            // Old code for displaying videos on Feed Page without thumbnail
+
+
+                                                            // <img width="100%" className="videoHeight" src={"https://img.youtube.com/vi/"+data?.video+"/sddefault.jpg"}/>
+
+                                                            // New code for diaplaying videos on Feed Page with Thumbnails
+
+                                                            <NavLink to={`/video-detail/${data.id}`}>
+                                                            {localStorage.setItem('videourl' + data.id, data.video)}
+                                                            {localStorage.setItem('videoTitle' + data.id, data.name)}{console.log(data, "DATAAAA")}
+                                                            <video
+                                                                    width="100%"
+                                                                    className="videoHeight"
+                                                                    control
+                                                                    poster={data.v_thumbnail != null ? `${baseurl}/storage/${data.v_thumbnail}` : ""}
+                                                                >
+                                                                    <source
+                                                                        src={"https://img.youtube.com/vi/"+data.video+"/sddefault.jpg"}
+                                                                    />
+                                                                </video>
+                                                           
+                                                        </NavLink>
 
                                                             : 
                                                             null								
