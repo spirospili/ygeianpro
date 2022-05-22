@@ -93,7 +93,7 @@
                     <div class="form-group row">
                             <div class="col-lg-3">Video Link:</div>
                             <div class="col-lg-8">
-                                <input type="text" class="form-control" name="video" value="{{old('video')}}" required>
+                                <input type="text" class="form-control" name="video" value="{{old('video') ?? $video->video}}" required>
                                 @if ($errors->has('title') )
                                     <span style="color:red">
                                 {{ $errors->first('title') }}

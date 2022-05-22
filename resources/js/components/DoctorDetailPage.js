@@ -26,6 +26,7 @@ import EmailOverlay from './EmailOverlay';
 import SearchBar from './SearchBar';
 
 import InviteEmailForm from './InviteEmailForm';
+import PaypalExpressBtn from 'react-paypal-express-checkout';
 
 function DoctorDetailPage(){
     var duration;
@@ -326,6 +327,64 @@ function DoctorDetailPage(){
 	
 	}
 
+    const onSuccess = (payment, info) => {
+
+        const userObj=JSON.parse(localStorage.getItem('appState'));
+        const userObjUpdated={...userObj}
+        userObjUpdated.user.payment_id=payment.paymentID;
+        localStorage.setItem("appState", JSON.stringify(userObjUpdated));
+        
+        //Storing Payment ID to user record
+        //let history = useHistory();
+        const userId = userObjUpdated.user.id;
+        const userTocken= userObjUpdated.user.access_token;
+        let formData = new FormData();
+
+        formData.append('payment_id', JSON.stringify(payment));
+        formData.append('package', info);
+        formData.append('_method', 'patch');
+
+        axios.post(`/api/auth/profile/${userId}`,formData,{
+            headers: {    
+                'Accept' : 'application/json',
+                'Authorization': `Bearer ${userTocken}`,
+            }
+        }).then(data=>{
+            this.updateState(data.data.payment_info);
+            return this.props.history.push('/feed');
+            //history.push("/feed");
+        })
+        // 1, 2, and ... Poof! You made it, everything's fine and dandy!
+        //console.log("Payment successful!", payment);
+        alert('Thank you. Your payment is successfull');
+
+        // You can bind the "payment" object's value to your state or props or whatever here, please see below for sample returned data
+    }
+
+    const onCancel = (data) => {
+        // The user pressed "cancel" or closed the PayPal popup
+        console.log('Payment cancelled!', data);
+        alert('Payment Failed');
+        // You can bind the "data" object's value to your state or props or whatever here, please see below for sample returned data
+    }
+
+    const onError = (err) => {
+        // The main Paypal script could not be loaded or something blocked the script from loading
+        console.log("Error!", err);
+        alert('Payment Failed');
+        // Because the Paypal's main script is loaded asynchronously from "https://www.paypalobjects.com/api/checkout.js"
+        // => sometimes it may take about 0.5 second for everything to get set, or for the button to appear
+    }
+
+    let env = 'sandbox'; // you can set this string to 'production'
+    let currency = 'USD'; // you can set this string from your props or state  
+    // Document on Paypal's currency code: https://developer.paypal.com/docs/classic/api/currency_codes/
+
+    const client = {
+        sandbox:    'AboJPsDIg40RqUr3L8LbPresq0JPA_-7S6_XFX9FZSExLyF3PS5EH1KkeMo0r5gYWeYI7SNH4adt4X7Z',
+        production: 'YOUR-PRODUCTION-APP-ID',
+    }
+
 
     console.log("follows", follows);
     console.log("follow", follow)
@@ -373,7 +432,9 @@ function DoctorDetailPage(){
                                 </ul>
                                 <ul className="sidebar-menu-list nav nav-tabs" id="nav-tab" role="tablist">
                                     {/*<li><a className="nav-item nav-link active" id="dr-feed-tab" data-toggle="tab" href="#dr-feed" role="tab" aria-controls="dr-feed" aria-selected="true">Feeds <i className="fa fa-chevron-right"></i></a></li>*/}
-                                    <li><a className="nav-item nav-link active" id="dr-feed-tab" data-toggle="tab" href="#dr-feed" role="tab" aria-controls="dr-feed" aria-selected="true">Feeds <i className="fa fa-chevron-right"></i></a></li>
+                                    <li><a className="nav-item nav-link active" id="dr-bio-tab" data-toggle="tab" href="#dr-bio" role="tab" aria-controls="dr-bio" aria-selected="true">Bio <i className="fa fa-chevron-right"></i></a></li>
+
+                                    <li><a className="nav-item nav-link" id="dr-feed-tab" data-toggle="tab" href="#dr-feed" role="tab" aria-controls="dr-feed" aria-selected="true">Feeds <i className="fa fa-chevron-right"></i></a></li>
                                     <li>
                                         <a className="nav-item nav-link" id="dr-video-tab" data-toggle="tab" href="#dr-video" role="tab" aria-controls="dr-video" aria-selected="true">
                                             Videos <i className="fa fa-chevron-right"></i>
@@ -523,61 +584,134 @@ function DoctorDetailPage(){
                                                                 
                                                                 if (payment && data.type == 'paid') {
                                                                     return (
-                                                                        <NavLink to={`/video-detail/${data.id}`}>
-                                                                            {/* <video width="100%" className="videoHeight"
-                                                                            onLoadedMetadata={e => {
-                                                                                
-                                                                                duration=e.target.duration;
-    
-                                                                                setMetadata(
-                                                                    
-                                                                                  Array => [...Array, duration]
-                                                                                  
-                                                                                );
-                                                                              }} 
-                                                                               poster={`${baseurl}/storage/${data.video.jpg}`}>
-                                                                                <source
-                                                                                    src={`${baseurl}/storage/${data.video}`}
-                                                                                    type="video/mp4"
-                                                                                    />
-                                                                            </video> */}
-                                                                        <img width="100%" className="videoHeight" src={"https://img.youtube.com/vi/"+data.video+"/sddefault.jpg"}/>
 
-                                                                        </NavLink>
+                                                                        // Old Code
+
+                                                                        // <NavLink to={`/video-detail/${data.id}`}>
+                                                                        //     {/* <video width="100%" className="videoHeight"
+                                                                        //     onLoadedMetadata={e => {
+                                                                                
+                                                                        //         duration=e.target.duration;
+    
+                                                                        //         setMetadata(
+                                                                    
+                                                                        //           Array => [...Array, duration]
+                                                                                  
+                                                                        //         );
+                                                                        //       }} 
+                                                                        //        poster={`${baseurl}/storage/${data.video.jpg}`}>
+                                                                        //         <source
+                                                                        //             src={`${baseurl}/storage/${data.video}`}
+                                                                        //             type="video/mp4"
+                                                                        //             />
+                                                                        //     </video> */}
+                                                                        // <img width="100%" className="videoHeight" src={"https://img.youtube.com/vi/"+data.video+"/sddefault.jpg"}/>
+
+                                                                        // </NavLink>
+
+                                                                        // New Code
+
+                                                                        <div style={{display: "flex", justifyContent: "center", flexDirection: "column", textAlign: "center"}}>
+                                                    <video
+                                                            width="100%"
+                                                            className="videoHeight"
+                                                            control
+                                                            poster={data.v_thumbnail != null ? `${baseurl}/storage/${data.v_thumbnail}` : ""}
+                                                        >
+                                                            <source
+                                                                src={"https://img.youtube.com/vi/"+data.video+"/sddefault.jpg"}
+                                                            />
+                                                        </video>
+                                                        <div className="theme-btn">
+                                                            <PaypalExpressBtn env={env} client={client} currency={currency} total={data.price} onError={onError} onSuccess={(payment) => onSuccess(payment, data.price)} onCancel={onCancel} />
+                                                        </div>
+
+                                                </div>
                                                                     )
                                                                 } else if (!payment && data.type == 'paid') {
                                                                     return (
-                                                                        <img width="100%" className="videoHeight" src={"https://img.youtube.com/vi/"+data.video+"/sddefault.jpg"}/>
 
+                                                                        // Old Code
+
+                                                                        // <img width="100%" className="videoHeight" src={"https://img.youtube.com/vi/"+data.video+"/sddefault.jpg"}/>
+
+                                                                        // New Code
+
+                                                                        <NavLink
+                                                                        to={
+                                                                            "/signin"
+                                                                        }
+                                                                    >
+                                                                        <video
+                                                                            width="100%"
+                                                                            className="videoHeight"
+                                                                            control
+                                                                            poster={
+                                                                                data.v_thumbnail !=
+                                                                                null
+                                                                                    ? `${baseurl}/storage/${data.v_thumbnail}`
+                                                                                    : ""
+                                                                            }
+                                                                        >
+                                                                            <source
+                                                                                src={
+                                                                                    "https://img.youtube.com/vi/" +
+                                                                                    data.video +
+                                                                                    "/sddefault.jpg"
+                                                                                }
+                                                                            />
+                                                                        </video>
+                                                                    </NavLink>
                                                                     )
                                                                 } else {
                                                                     return (
-                                                                        <NavLink to={`/video-detail/${data.id}`}>
-                                                                            {localStorage.setItem('videourl' + data.id, data.video)}
-                                                                            {localStorage.setItem('videoTitle' + data.id, data.name)}
-                                                                            {/* <video width="100%" className="videoHeight"
-                                                                                   poster={`${baseurl}/storage/${data.video}.jpg`}
-                                                                                   onLoadedMetadata={e => {
+
+                                                                        // Old code
+                                                //                         <NavLink to={`/video-detail/${data.id}`}>
+                                                //                             {localStorage.setItem('videourl' + data.id, data.video)}
+                                                //                             {localStorage.setItem('videoTitle' + data.id, data.name)}
+                                                //                             {/* <video width="100%" className="videoHeight"
+                                                //                                    poster={`${baseurl}/storage/${data.video}.jpg`}
+                                                //                                    onLoadedMetadata={e => {
                                                                                     
-                                                                                    const el1 = document.querySelector("#index"+index)
-                                                                                    duration=e.target.duration; 
-                                                                                    setMetadata(
+                                                //                                     const el1 = document.querySelector("#index"+index)
+                                                //                                     duration=e.target.duration; 
+                                                //                                     setMetadata(
                                                                                     
-                                                                                         Array => [...Array, duration]
-                                                                                    );
+                                                //                                          Array => [...Array, duration]
+                                                //                                     );
 
                                                                                    
 
 
-                                                                                  }}
-                                                                            >
-                                                                                <source
-                                                                                    src={`${baseurl}/storage/${data.video}`}
-                                                                                    type="video/mp4"/>
-                                                                            </video> */}
-                                                <img width="100%" className="videoHeight" src={"https://img.youtube.com/vi/"+data.video+"/sddefault.jpg"}/>
+                                                //                                   }}
+                                                //                             >
+                                                //                                 <source
+                                                //                                     src={`${baseurl}/storage/${data.video}`}
+                                                //                                     type="video/mp4"/>
+                                                //                             </video> */}
+                                                // <img width="100%" className="videoHeight" src={"https://img.youtube.com/vi/"+data.video+"/sddefault.jpg"}/>
 
-                                                                        </NavLink>
+                                                //                         </NavLink>
+
+                                                // New Code
+
+                                                <NavLink to={`/video-detail/${data.id}`}>
+                                                                {localStorage.setItem('videourl' + data.id, data.video)}
+                                                                {localStorage.setItem('videoTitle' + data.id, data.name)}
+                                                                <video
+                                                                        width="100%"
+                                                                        className="videoHeight"
+                                                                        control
+                                                                        poster={data.v_thumbnail != null ? `${baseurl}/storage/${data.v_thumbnail}` : ""}
+                                                                    >
+                                                                        <source
+                                                                            src={"https://img.youtube.com/vi/"+data.video+"/sddefault.jpg"}
+                                                                        />
+                                                                    </video>
+                                                                {/* <img width="100%" className="videoHeight" src={"https://img.youtube.com/vi/"+video.video+"/sddefault.jpg"}/> */}
+            
+                                                            </NavLink>
                                                                     )
                                                                 }
                                                             })()}
